@@ -27,9 +27,9 @@ class TransitionArrayClass extends PureComponent<{}, { items: Items }> {
             <div style={{ display: 'flex' }}>
                 <Transition
                     items={this.state.items}
-                    from={{ opacity: 0 }}
-                    enter={{ opacity: 1 }}
-                    leave={{ opacity: 0 }}
+                    from={{ opacity: 0.5 }}
+                    enter={{ opacity: 0.7 }}
+                    leave={{ opacity: 0.5 }}
                     delay={200}
                     config={config.molasses}
                     onRest={() => this.setState({ items: [] })}>

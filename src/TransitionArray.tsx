@@ -47,7 +47,7 @@ export const NUM_TRANS: Items = [
         // The pixel values are then used to translate over `y` axis via `to` function in animated.div's style.
         //
         // Note that you can chain `to`s to fuse together two or more transitions.
-        op: { range: [0.0, 0.9], output: [0, 1] },
+        op: { range: [0.0, 0.1], output: [0, 1] },
         trans: { range: [0.0, 0.25, 0.66, 0.75], output: [-40, 0, 40, -40], extrapolate: 'clamp' },
     },
     {
@@ -63,31 +63,53 @@ export const NUM_TRANS: Items = [
 ];
 
 function TransitionArray() {
-    const [items, setItems] = useState(NUM_TRANS)
+    const [items, setItems] = useState(NUM_TRANS);
+    const [ticks, setTicks] = useState(0);
+    const [perf, setPerf] = useState(performance.now());
+
+    const duration = 900;
+    const safetyMsec = 50;
+    const delay = 300;
 
     const transitions = useTransition(items, {
         from: { opacity: 0 },
         enter: { opacity: 1 },
         leave: { opacity: 0 },
-        delay: 100,
-        config: config.molasses,
-        onRest: () => setItems([]),
+        delay,
+        config: { ...config.slow, duration },
+        onRest: () => {
+            console.log("RESTING", ticks)
+            setItems([]);
+            setTimeout(() => {
+                setTicks(ticks + 1);
+                setPerf(performance.now());
+            }, delay + duration + safetyMsec);
+        },
     })
-
-    const loopDelayMsec = 300;
 
     // This is a self-dependent loop. Every time setItems gets called, a timeout for another setItems gets called,
     // which makes an infinite animation loop.
     useEffect(() => {
+        console.log("Rested is now", ticks, performance.now() - perf);
         if (items.length === 0) {
             setTimeout(() => {
-                setItems(NUM_TRANS)
-            }, loopDelayMsec)
+                // x -- we have some value
+                // xs -- we have an array of some values
+                // xkv -- we have a key-value collection of some values
+                setItems(
+                    NUM_TRANS.map(xkv => ({ ...xkv, fig: xkv.fig - ticks }))
+                )
+            }, duration + delay + safetyMsec)
         }
-    }, [items])
+    }, [ticks])
 
     return (
-        <div style={{ display: 'flex' }}>
+        <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+        }}>
             {transitions(({ opacity }, item) => (
                 <animated.div
                     style={{
