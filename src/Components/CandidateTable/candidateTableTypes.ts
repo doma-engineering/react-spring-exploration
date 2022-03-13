@@ -6,7 +6,7 @@ export type candidate = {
   taskStartDate: string,
   taskEndDate: string,
   rank: string,
-}
+};
 
 export type rank = {
   name: string,
@@ -14,4 +14,4 @@ export type rank = {
   valueTo?: number,
   color: string,
   isSelected: boolean,
-}
+};
