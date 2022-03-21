@@ -2,7 +2,7 @@ import { config, useTransition, animated } from "@react-spring/web";
 import { atom, useAtom } from "jotai";
 import { candidatesData, filterData } from "./candidateTableAtoms";
 
-const tableData = atom(
+export const tableData = atom(
   (get) => get(candidatesData)
     .sort((item1, item2) => (item2.score - item1.score))
     .filter((candidate) => (
