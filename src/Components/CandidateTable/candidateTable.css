@@ -1,6 +1,4 @@
 body {
-  display: flex;
-  justify-content: center;
   background-color: rgb(87, 105, 206);
   font-size: larger;
 }

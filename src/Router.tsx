@@ -3,32 +3,30 @@
 //
 // This module is testing for render multipages in React
 //
-//   there compose 2 pages:
+//   there compose 3 pages:
+//    - simple login
 //    - Hiring compaigns 
 //    - Candidate table 
 //
 //  ------------------------------------------------------
 
-import { BrowserRouter as Router, Navigate, Route, Routes, useParams } from "react-router-dom"
-import HiringCompaign from "./Pages/HiringCompaign";
-import CandidateTable, { filterLink } from "./Pages/CandidatesTable"
-import { atom, useAtom } from "jotai";
-import { Component } from "react";
-import { filterData } from "./Components/CandidateTable/candidateTableAtoms";
+import "./Components/CandidateTable/candidateTable.css"
 
-export const companyName = atom("/Empty");
+import { BrowserRouter as Router, Navigate, Route, Routes, useParams } from "react-router-dom"
+import CandidateTable from "./Pages/CandidatesTablePage"
+import LoginPage from "./Pages/LoginPage";
+import HiringCampaignsPageValidator from "./Components/Validators/HiringCampaignsValidator";
+import Error404Page from "./Pages/Error404Page";
 
 const Multipage = () => {
-
-  const [CN] = useAtom(companyName)
-
   return (
     <Router>
-      <Login />
       <Routes>
-        <Route path="/" element={<Navigate to={`Compaigns${CN}/Filter:TTTF:3`} />} />
-        <Route path="/Compaigns/:CompanyName/:FilterProps" element={<HiringCompaign />} />
-        <Route path="/CandidateTables/:CandidateTable/:FilterProps" element={<CandidateTable />} />
+        <Route path="/" element={<Navigate to={`Login`} />} />
+        <Route path="/Login" element={<LoginPage />} />
+        <Route path="/Companies/:CompanyName/Campaigns" element={<HiringCampaignsPageValidator />} />
+        <Route path="/CandidateTables/:CandidateTable" element={<CandidateTable />} />
+        <Route path="*" element={<Error404Page />} />
       </Routes>
     </Router>
   );
@@ -36,28 +34,4 @@ const Multipage = () => {
 
 export default Multipage;
 
-// TODO: move to another file
-const Login = () => {
-  const [CN, setCN] = useAtom(companyName)
-  return (
-    <div
-      className="login"
-      style={{
-        position: "absolute",
-        left: 10,
-      }}
-    >
-      <label>
-        Login as:
-        <input
-          type="text"
-          onChange={(e) => setCN("/" + e.target.value)}
-        />
-      </label>
-      <div>
-        Current Company Logined as
-        <span style={{ fontWeight: "bold" }}> {CN.substring(1)} </span>
-      </div>
-    </div>
-  );
-}
+//TODO: check all subfiles for bad validations as "?.", "??".

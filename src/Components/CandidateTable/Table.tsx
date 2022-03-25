@@ -1,14 +1,16 @@
 import { config, useTransition, animated } from "@react-spring/web";
 import { atom, useAtom } from "jotai";
-import { candidatesData, filterData } from "./candidateTableAtoms";
+import { currentTable } from "../../Atoms/CandidateTables";
+import { currentFilters } from "../../Atoms/Filters";
+import { filterData } from "../../Atoms/LoadData";
 
 export const tableData = atom(
-  (get) => get(candidatesData)
+  (get) => get(currentTable).table
     .sort((item1, item2) => (item2.score - item1.score))
     .filter((candidate) => (
       get(filterData)
-        .filter(rank => rank.isSelected)
-        .map(rank => rank.name)
+        .filter((_rank, index) => get(currentFilters)[index])
+        .map(rank => rank.id)
         .includes(candidate.rank)
     ))
 )
@@ -27,7 +29,7 @@ const Table = () => {
   });
 
   const rankColor = (rankName: string): string => {
-    const rank = filter.find(rank => rank.name === rankName);
+    const rank = filter.find(rank => rank.id === rankName);
     return rank === undefined ? "FFFFFF" : rank.color;
   }
 
