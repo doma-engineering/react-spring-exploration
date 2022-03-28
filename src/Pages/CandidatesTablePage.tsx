@@ -1,16 +1,16 @@
 import { useAtom } from "jotai";
 import { Link } from "react-router-dom";
 import Filter from "../Components/CandidateTable/Filter";
-import Login from "../Components/Login/Login";
 import Table from "../Components/CandidateTable/Table";
 import { companyName } from "../Atoms/Company";
+import DisplayUser from "../Components/Login/DisplayUser";
 
 const CandidateTablePage = () => {
   const [name] = useAtom(companyName);
 
   return (
     <div>
-      <Login />
+      <DisplayUser />
       <Link
         style={{ color: "#0303AF", fontSize: "large" }}
         to={`/Companies/${name}/Campaigns`}

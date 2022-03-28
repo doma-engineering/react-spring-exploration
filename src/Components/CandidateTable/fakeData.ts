@@ -226,3 +226,5 @@ export const fakeFilterData: FilterProperty[] = [
     defaultSelections: false,
   }
 ];
+
+export const defaultFilterParams = fakeFilterData.map((rank) => rank.defaultSelections ?? true);

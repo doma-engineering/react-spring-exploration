@@ -7,6 +7,7 @@ const HiringCampaignPage = () => {
   return (
     <div style={{ display: "flex", flexDirection: "row", fontSize: "25px", padding: "10px" }}>
       <div style={{ display: "flex", flexDirection: "column" }}>
+        {/* TODO: there was infinity load bug, fix it. */}
         <Login />
         <ToLoginButton />
       </div>

@@ -1,13 +1,13 @@
 import { atom } from "jotai";
 import { atomWithHash } from "jotai/utils";
 import { CandidateTableFilters } from "../Components/CandidateTable/candidateTableTypes";
-import { fakeFilterData, fakeTables } from "../Components/CandidateTable/fakeData";
+import { defaultFilterParams } from "../Components/CandidateTable/fakeData";
 import { currentTable } from "./CandidateTables";
 import { createLocalStorageAtom, createSessionStorageAtom } from "./storageHelpsFunctions";
 
 export const currentFilters = atom(
   //TODO: "?." is ok there?
-  (get): boolean[] => get(filters)?.find((filter: CandidateTableFilters) => filter.tableID === get(currentTable).id).tableFilters ?? [],
+  (get): boolean[] => get(filters)?.find((filter: CandidateTableFilters) => filter.tableID === get(currentTable).id).tableFilters ?? defaultFilterParams,
   (get, set, newFilterSelection: boolean[]) => set(filters,
     //TODO: ask john how better there.
     get(filters).map((filter: CandidateTableFilters) => {
@@ -29,10 +29,6 @@ export const filters = atom(
 );
 
 export const localStorageFilters = createLocalStorageAtom<CandidateTableFilters[]>("filters", []);
-
-// Save results of hirings compaigns, for possibility to say in new loading where added new candidates.  
-// TODO: implement this.
-// export const localStorageResults = createLocalStorageAtom<CandidateTableFilters[]>("results", []);
 
 export const sessionFilters = createSessionStorageAtom<CandidateTableFilters[]>("filters", []);
 

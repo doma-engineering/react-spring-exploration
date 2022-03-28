@@ -13,10 +13,10 @@
 import "./Components/CandidateTable/candidateTable.css"
 
 import { BrowserRouter as Router, Navigate, Route, Routes, useParams } from "react-router-dom"
-import CandidateTable from "./Pages/CandidatesTablePage"
 import LoginPage from "./Pages/LoginPage";
 import HiringCampaignsPageValidator from "./Components/Validators/HiringCampaignsValidator";
 import Error404Page from "./Pages/Error404Page";
+import CandidateTableValidator from "./Components/Validators/CandidateTableValidator";
 
 const Multipage = () => {
   return (
@@ -25,7 +25,7 @@ const Multipage = () => {
         <Route path="/" element={<Navigate to={`Login`} />} />
         <Route path="/Login" element={<LoginPage />} />
         <Route path="/Companies/:CompanyName/Campaigns" element={<HiringCampaignsPageValidator />} />
-        <Route path="/CandidateTables/:CandidateTable" element={<CandidateTable />} />
+        <Route path="/CandidateTables/:CandidateTable" element={<CandidateTableValidator />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>
     </Router>
@@ -33,5 +33,3 @@ const Multipage = () => {
 }
 
 export default Multipage;
-
-//TODO: check all subfiles for bad validations as "?.", "??".
