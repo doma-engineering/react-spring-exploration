@@ -1,17 +1,28 @@
 import { useAtom } from "jotai";
-import { useState } from "react";
-import { loginInputString } from "../../Atoms/Login";
-import TryToEnter from "../Validators/LoginValidator";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginInputString, tryToLogin } from "../../Atoms/Login";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [enterTo, setEnterStats] = useAtom(tryToLogin);
   const [logStr, setLogin] = useAtom(loginInputString)
   const [tryToEnter, setTryToEntery] = useState(false);
 
   const checkEnter = (e: any) => {
     if (e.key === 'Enter') {
+      setEnterStats();
       setTryToEntery(true);
     }
   }
+
+  useEffect(() => {
+    if (tryToEnter) {
+      setTryToEntery(false);
+      navigate(enterTo);
+    }
+  }
+    , [tryToEnter]);
 
   return (
     <div className="login" style={{ padding: "5px" }}>
@@ -23,7 +34,6 @@ const Login = () => {
           onKeyDown={checkEnter}
           defaultValue={`${logStr}`}
         />
-        {tryToEnter ? <TryToEnter /> : <></>}
       </label>
     </div>
   );

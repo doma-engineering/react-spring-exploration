@@ -1,11 +1,26 @@
-import { useState } from "react";
-import TryToEnter from "../Validators/LoginValidator";
+import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { tryToLogin } from "../../Atoms/Login";
 
 const EnterButton = () => {
+  const navigate = useNavigate();
   const [tryToEnter, setTryToEntery] = useState(false);
+  const [enterTo, setEnterStats] = useAtom(tryToLogin);
+
+  useEffect(() => {
+    if (tryToEnter) {
+      setTryToEntery(false);
+      navigate(enterTo);
+    }
+  }
+    , [tryToEnter]);
+
   const handleClick = () => {
     setTryToEntery(true);
+    setEnterStats();
   }
+
   return (
     <button
       onClick={handleClick}
@@ -16,7 +31,7 @@ const EnterButton = () => {
         height: "3rem",
       }}
     >
-      {tryToEnter ? <TryToEnter /> : "Enter"}
+      Enter
     </button>
   );
 }
