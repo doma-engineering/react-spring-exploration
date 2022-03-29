@@ -11,14 +11,18 @@ const CandidateTablePage = () => {
   return (
     <div>
       <DisplayUser />
-      <Link
-        style={{ color: "#0303AF", fontSize: "large" }}
-        to={`/Companies/${name}/Campaigns`}
-      >
-        Back to all compaigns
-      </Link>
-      <Filter />
-      <Table />
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Link
+          style={{ color: "#0303AF", fontSize: "large" }}
+          to={`/Companies/${name}/Campaigns`}
+        >
+          Back to all compaigns
+        </Link>
+        <div style={{ display: "flex", alignItems: "flex-start" }}>
+          <Filter />
+          <Table />
+        </div>
+      </div>
     </div>
   );
 }

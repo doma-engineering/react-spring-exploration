@@ -28,11 +28,11 @@ const HiringCampaigns = () => {
     <div>
       <table style={{ ...styles.table, borderCollapse: "collapse", }}>
         <thead>
-          <tr style={styles.tdTh}>
-            <th>Specialization</th>
-            <th>Pending</th>
-            <th>Filtred</th>
-            <th>Total</th>
+          <tr>
+            <th style={styles.tdTh}>Specialization</th>
+            <th style={styles.tdTh}>Pending</th>
+            <th style={styles.tdTh}>Filtred</th>
+            <th style={styles.tdTh}>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -41,12 +41,11 @@ const HiringCampaigns = () => {
               <tr
                 key={row.tableID}
                 onClick={() => hasClicked(row.tableID)}
-                style={styles.tdTh}
               >
-                <td> {displayName(row.tableID)} </td>
-                <td> {row.pending} </td>
-                <td> {row.filtred} </td>
-                <td> {row.total} </td>
+                <td style={{ ...styles.tdTh, textAlign: "center", }}> {displayName(row.tableID)} </td>
+                <td style={{ ...styles.tdTh, textAlign: "center", }}> {row.pending} </td>
+                <td style={{ ...styles.tdTh, textAlign: "center", }}> {row.filtred} </td>
+                <td style={{ ...styles.tdTh, textAlign: "center", }}> {row.total} </td>
               </tr>
             )
           }

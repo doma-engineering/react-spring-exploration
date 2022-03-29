@@ -12,9 +12,9 @@ body {
 .Filter {
   margin-top: 1rem;
   margin-right: 2rem;
-  height: 100%;
   display: flex;
   flex-wrap: wrap;
+  width: 11rem;
   flex-direction: column;
   justify-content: center;
   background-color: rgb(206, 161, 107);
