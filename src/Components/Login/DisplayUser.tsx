@@ -1,12 +1,18 @@
 import { useAtom } from "jotai";
-import { companyName } from "../../Atoms/Company";
+import { companies } from "../../Atoms/LoadData";
+import { loginedCompany } from "../../Atoms/Login";
 
 const DisplayUser = () => {
-  const [company] = useAtom(companyName);
+  const [companyID] = useAtom(loginedCompany);
+  const [allCompanies] = useAtom(companies);
+  const companyName = allCompanies.find(
+    (company) => company.id === companyID
+  )
+    ?.displayName ?? "";
   return (
     <div>
       Current Company Logined as
-      <span style={{ fontWeight: "bold" }}> {company} </span>
+      <span style={{ fontWeight: "bold" }}> {companyName} </span>
     </div>
   );
 }

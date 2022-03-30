@@ -17,13 +17,14 @@ import LoginPage from "./Pages/LoginPage";
 import HiringCampaignsPageValidator from "./Components/Validators/HiringCampaignsValidator";
 import Error404Page from "./Pages/Error404Page";
 import CandidateTableValidator from "./Components/Validators/CandidateTableValidator";
+import LoginValidator from "./Components/Validators/LoginValidator";
 
 const Multipage = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to={`Login`} />} />
-        <Route path="/Login" element={<LoginPage />} />
+        <Route path="/Login" element={<LoginValidator />} />
         <Route path="/Companies/:CompanyName/Campaigns" element={<HiringCampaignsPageValidator />} />
         <Route path="/CandidateTables/:CandidateTable" element={<CandidateTableValidator />} />
         <Route path="*" element={<Error404Page />} />

@@ -1,10 +1,10 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { currentCompany } from "../../Atoms/Company";
 import { companies, tables as allTables } from "../../Atoms/LoadData";
-import { loginInputString } from "../../Atoms/Login";
+import { currentPath } from "../../Atoms/Login";
 import { filters, urlFilters } from "../../Atoms/Filters";
 
 import { defaultFilterParams, fakeFilterData } from "../CandidateTable/fakeData";
@@ -18,16 +18,15 @@ import { tablesResult } from "../../Atoms/HiringCompaign";
 const HiringCampaignsPageValidator = () => {
 
   const { CompanyName } = useParams();
-  const navigate = useNavigate();
 
   const [currCompany, setCurrent] = useAtom(currentCompany);
   const [, setResult] = useAtom(tablesResult);
   const [filter, setFilters] = useAtom(filters);
   const [tables] = useAtom(allTables);
   const [urlFilter] = useAtom(urlFilters);
-  const [loginString, setLogin] = useAtom(loginInputString);
+  const [, setCurrentPath] = useAtom(currentPath);
 
-  const [havePage, setHavePage] = useState(false);
+  const [returnPage, setPage] = useState(<></>);
   const [previusName, setPrevius] = useState("");
   const [allCompanies] = useAtom(companies);
 
@@ -52,19 +51,12 @@ const HiringCampaignsPageValidator = () => {
     , [urlFilter]);
 
   useEffect(() => {
-    if ((CompanyName?.toLowerCase() ?? "") !== loginString.toLowerCase()) {
-      setLogin(CompanyName ? CompanyName : "");
-      navigate("/Login");
-    }
-  }
-    , [CompanyName]);
-
-  useEffect(() => {
     if ((CompanyName?.toLowerCase() ?? "") !== previusName.toLowerCase()) {
       setPrevius(CompanyName ? CompanyName : "");
       const company = allCompanies?.find(c => c.displayName.toLowerCase() === CompanyName?.toLowerCase() ?? "") ?? { id: "", tables: [], displayName: "" };
       if (company.id !== "") {
-        setHavePage(true);
+        setPage(<HiringCampaignPage />);
+        setCurrentPath(`/Companies/${CompanyName}/Campaigns`);
         setCurrent(company);
 
         if (filter.length === 0) {
@@ -76,13 +68,14 @@ const HiringCampaignsPageValidator = () => {
 
       }
       else {
-        setHavePage(false);
+        setPage(<ErrorPage />);
+        setCurrentPath(`/Companies/${CompanyName}/Campaigns`);
       }
     }
   }
     , [CompanyName]);
 
-  return (havePage ? <HiringCampaignPage /> : <ErrorPage />);
+  return (returnPage);
 }
 
 export default HiringCampaignsPageValidator;

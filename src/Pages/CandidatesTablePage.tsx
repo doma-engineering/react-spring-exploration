@@ -2,11 +2,11 @@ import { useAtom } from "jotai";
 import { Link } from "react-router-dom";
 import Filter from "../Components/CandidateTable/Filter";
 import Table from "../Components/CandidateTable/Table";
-import { companyName } from "../Atoms/Company";
 import DisplayUser from "../Components/Login/DisplayUser";
+import { loginedCompany } from "../Atoms/Login";
 
 const CandidateTablePage = () => {
-  const [name] = useAtom(companyName);
+  const [name] = useAtom(loginedCompany);
 
   return (
     <div>

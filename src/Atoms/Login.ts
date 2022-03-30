@@ -16,8 +16,10 @@ export const tryToLogin = atom(
       set(loginedCompany, get(companies)[index].id);
       set(loginNavigate, `/Companies/${get(companies)[index].id}/Campaigns`);
     } else {
-      set(loginNavigate, `/Companies/${loginInputString}/Campaigns`);
+      set(loginNavigate, `/Companies/${get(loginInputString)}/Campaigns`);
       set(loginedCompany, '');
     }
   }
 );
+
+export const currentPath = atomWithStorage("currentPath", "");

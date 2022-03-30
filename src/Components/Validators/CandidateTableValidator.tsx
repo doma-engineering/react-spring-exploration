@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { currentTable } from "../../Atoms/CandidateTables";
 import { filters, urlFilters } from "../../Atoms/Filters";
 import { tables as allTables } from "../../Atoms/LoadData";
+import { currentPath } from "../../Atoms/Login";
 import CandidateTablePage from "../../Pages/CandidatesTablePage";
 import Error404Page from "../../Pages/Error404Page";
 
@@ -16,10 +17,9 @@ const CandidateTableValidator = () => {
   const [tables] = useAtom(allTables);
   const [filter, setFilters] = useAtom(filters);
   const [urlFilter] = useAtom(urlFilters);
+  const [, setCurrentPath] = useAtom(currentPath);
 
   const [returnPage, setReturnPage] = useState(<></>);
-
-  // TODO: need to fix bug - if load as new window or use link to another table, it loose current logined company.
 
   useEffect(() => {
     if (urlFilter !== filter) {
@@ -40,6 +40,7 @@ const CandidateTableValidator = () => {
       setFilters([...filter]); // for always display filter propertys in URL!
       setCurrentTable(findedTable);
       setReturnPage(<CandidateTablePage />);
+      setCurrentPath(`/CandidateTables/${findedTable.id}`);
       return;
     }
 
