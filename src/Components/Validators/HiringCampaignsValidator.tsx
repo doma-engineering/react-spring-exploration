@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { currentCompany } from "../../Atoms/Company";
 import { comeChanges, companies, tables as allTables } from "../../Atoms/LoadData";
-import { currentPath } from "../../Atoms/Login";
+import { currentPath, loginedCompany } from "../../Atoms/Login";
 import { filters, urlFilters } from "../../Atoms/Filters";
 
 import { defaultFilterParams, fakeFilterData } from "../CandidateTable/fakeData";
@@ -13,7 +13,7 @@ import { CandidateTable, CandidateTableFilters, Company } from "../CandidateTabl
 
 import ErrorPage from "../../Pages/HiringCampaignsErrorPage";
 import HiringCampaignPage from "../../Pages/HiringCampaignsPage";
-import { tablesResult } from "../../Atoms/HiringCompaign";
+import { differentCompany, tablesResult } from "../../Atoms/HiringCompaign";
 
 const HiringCampaignsPageValidator = () => {
 
@@ -26,10 +26,12 @@ const HiringCampaignsPageValidator = () => {
   const [urlFilter] = useAtom(urlFilters);
   const [, setCurrentPath] = useAtom(currentPath);
   const [isChanges, setComeChange] = useAtom(comeChanges);
+  const [, setDifferentCompanyTable] = useAtom(differentCompany);
+  const [allCompanies] = useAtom(companies);
+  const [logined] = useAtom(loginedCompany);
 
   const [returnPage, setPage] = useState(<></>);
   const [previusURLFilter, setPreviusUrlFilter] = useState("hidden Egg");
-  const [allCompanies] = useAtom(companies);
 
   const updateHiringTablesResult = (company: Company, tfilters: CandidateTableFilters[]) => {
     setResult(
@@ -111,6 +113,12 @@ const HiringCampaignsPageValidator = () => {
       if (urlFilter.map(fi => fi.tableFilters).toString() !== previusURLFilter) {
         setPreviusUrlFilter(urlFilter.map(fi => fi.tableFilters).toString());
         updateFilters(company);
+      }
+
+      if (company.id !== logined) {
+        setDifferentCompanyTable(company.displayName);
+      } else {
+        setDifferentCompanyTable("");
       }
 
     }

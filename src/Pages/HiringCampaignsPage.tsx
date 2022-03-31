@@ -1,4 +1,5 @@
 import { useAtom } from "jotai";
+import { differentCompany } from "../Atoms/HiringCompaign";
 import { comeChanges } from "../Atoms/LoadData";
 import HiringCampaigns from "../Components/HiringCampaign/HiringCampaigns";
 import DisplayUser from "../Components/Login/DisplayUser";
@@ -8,6 +9,7 @@ import AcceptLine from "../Components/Validators/AcceptLine";
 
 const HiringCampaignPage = () => {
   const [isChanged] = useAtom(comeChanges);
+  const [isTableCompany] = useAtom(differentCompany);
   return (
     <div style={{ display: "flex", flexDirection: "row", fontSize: "25px", padding: "10px" }}>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -19,7 +21,10 @@ const HiringCampaignPage = () => {
           isChanged ? <AcceptLine /> : <></>
         }
         <DisplayUser />
-        <div>Hiring compaigns</div>
+        <div style={{ margin: "1rem" }}>
+          Hiring compaigns
+          {isTableCompany === "" ? <></> : <span> for <b>{isTableCompany}</b></span>}
+        </div>
         <HiringCampaigns />
       </div>
     </div>

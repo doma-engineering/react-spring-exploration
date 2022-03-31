@@ -25,7 +25,7 @@ const HiringCampaigns = () => {
       <table style={{ ...styles.table, borderCollapse: "collapse", }}>
         <thead>
           <tr>
-            <th style={styles.tdTh}>Specialization</th>
+            <th style={{ ...styles.tdTh, width: "15rem", }}>Specialization</th>
             <th style={styles.tdTh}>Pending</th>
             <th style={styles.tdTh}>Filtred</th>
             <th style={styles.tdTh}>Total</th>
@@ -62,5 +62,6 @@ const styles = {
   },
   tdTh: {
     border: "1px solid rgb(36, 34, 34)",
+    width: "10rem",
   }
 };

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import ToLoginButton from "../Components/Login/toLoginButton";
 
 const Error404Page = () => {
