@@ -7,6 +7,7 @@ import { tables as allTables } from "../../Atoms/LoadData";
 import { currentPath } from "../../Atoms/Login";
 import CandidateTablePage from "../../Pages/CandidatesTablePage";
 import Error404Page from "../../Pages/Error404Page";
+import { defaultFilterParams } from "../CandidateTable/fakeData";
 
 const CandidateTableValidator = () => {
 
@@ -21,12 +22,21 @@ const CandidateTableValidator = () => {
 
   const [returnPage, setReturnPage] = useState(<></>);
 
-  useEffect(() => {
-    if (urlFilter !== filter) {
-      setFilters(urlFilter);
+  const updateFilters = (tableID: string) => {
+
+    if (!filter.map((filter) => filter.tableID)
+      .includes(tableID)
+    ) {
+      setFilters([
+        ...filter,
+        { tableID, tableFilters: defaultFilterParams }
+      ]);
+      return;
     }
+
+    // for always display filter propertys in URL!
+    setFilters([...filter]);
   }
-    , [urlFilter]);
 
   useEffect(() => {
     const findedTable = tables?.find((t) => t.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "")) ?? { id: "", displayName: "Error!", table: [] };
@@ -37,7 +47,7 @@ const CandidateTableValidator = () => {
         return;
       }
 
-      setFilters([...filter]); // for always display filter propertys in URL!
+      updateFilters(findedTable.id);
       setCurrentTable(findedTable);
       setReturnPage(<CandidateTablePage />);
       setCurrentPath(`/CandidateTables/${findedTable.id}`);
@@ -47,6 +57,13 @@ const CandidateTableValidator = () => {
     setReturnPage(<Error404Page />);
   }
     , [CandidateTable]);
+
+  useEffect(() => {
+    if (urlFilter !== filter) {
+      setFilters(urlFilter);
+    }
+  }
+    , [urlFilter]);
 
   return (returnPage);
 }

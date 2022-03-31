@@ -6,10 +6,8 @@ import { currentTable } from "./CandidateTables";
 import { createLocalStorageAtom, createSessionStorageAtom } from "./storageHelpsFunctions";
 
 export const currentFilters = atom(
-  //TODO: "?." is ok there?
-  (get): boolean[] => get(filters)?.find((filter: CandidateTableFilters) => filter.tableID === get(currentTable).id).tableFilters ?? defaultFilterParams,
+  (get): boolean[] => get(filters)?.find((filter: CandidateTableFilters) => filter.tableID === get(currentTable).id)?.tableFilters ?? defaultFilterParams,
   (get, set, newFilterSelection: boolean[]) => set(filters,
-    //TODO: ask john how better there.
     get(filters).map((filter: CandidateTableFilters) => {
       if (filter.tableID === get(currentTable).id)
         return { tableID: get(currentTable).id, tableFilters: newFilterSelection };
@@ -19,7 +17,7 @@ export const currentFilters = atom(
 );
 
 export const filters = atom(
-  (get) =>
+  (get): CandidateTableFilters[] =>
     get(sessionFilters),
   (_get, set, arg: CandidateTableFilters[]) => {
     set(sessionFilters, arg);

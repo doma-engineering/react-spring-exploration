@@ -19,7 +19,7 @@ const HiringCampaignsPageValidator = () => {
 
   const { CompanyName } = useParams();
 
-  const [currCompany, setCurrent] = useAtom(currentCompany);
+  const [, setCurrentCompany] = useAtom(currentCompany);
   const [, setResult] = useAtom(tablesResult);
   const [filter, setFilters] = useAtom(filters);
   const [tables] = useAtom(allTables);
@@ -27,53 +27,92 @@ const HiringCampaignsPageValidator = () => {
   const [, setCurrentPath] = useAtom(currentPath);
 
   const [returnPage, setPage] = useState(<></>);
-  const [previusName, setPrevius] = useState("");
+  const [previusURLFilter, setPreviusUrlFilter] = useState("hidden Egg");
   const [allCompanies] = useAtom(companies);
 
-  const updateResult = (company: Company) => {
+  const updateHiringTablesResult = (company: Company, tfilters: CandidateTableFilters[]) => {
     setResult(
       company.tables.map(
         (tableID) => {
           const tableData = tables?.find((table) => table.id === tableID) ?? (() => { throw "error find Table"; })();
-          const filterData: boolean[] = filter?.find((filter: CandidateTableFilters) => filter.tableID === tableID)?.tableFilters ?? defaultFilterParams;
+          const filterData: boolean[] = tfilters?.find((filter: CandidateTableFilters) => filter.tableID === tableID)?.tableFilters ?? defaultFilterParams;
           return findResult(tableData, filterData);
         }
       )
     );
   }
 
-  useEffect(() => {
-    if (urlFilter !== filter) {
+  // differentsOfTables return   > tables ID <   who haven't in   > filter <   but is in   > company <  .
+  const differentsOfTables = (company: Company, filters: CandidateTableFilters[]): string[] => {
+    return company.tables
+      .filter((table) =>
+        !filters.map(filter => filter.tableID)
+          .includes(table)
+      );
+  }
+
+  const updateFilters = (company: Company) => {
+    if ((urlFilter.length > 0) && (urlFilter !== filter)) {
       setFilters(urlFilter);
-      updateResult(currCompany);
+      updateHiringTablesResult(company, urlFilter);
+      return;
     }
+
+    if (filter.length === 0) {
+      const newFilter = company.tables.map(
+        (tableID) => ({ tableID, tableFilters: defaultFilterParams })
+      )
+      setFilters(newFilter);
+      updateHiringTablesResult(company, newFilter);
+      return;
+    }
+
+    const different = differentsOfTables(company, filter);
+    if (different.length > 0) {
+      const newFilter = [...filter].concat(
+        different.map(tableID => ({ tableID, tableFilters: defaultFilterParams }))
+      )
+      setFilters(newFilter);
+      updateHiringTablesResult(company, newFilter);
+      return;
+    }
+
+    // for always display filter propertys in URL!
+    updateHiringTablesResult(company, filter);
+    setFilters([...filter]);
   }
-    , [urlFilter]);
 
   useEffect(() => {
-    if ((CompanyName?.toLowerCase() ?? "") !== previusName.toLowerCase()) {
-      setPrevius(CompanyName ? CompanyName : "");
-      const company = allCompanies?.find(c => c.displayName.toLowerCase() === CompanyName?.toLowerCase() ?? "") ?? { id: "", tables: [], displayName: "" };
-      if (company.id !== "") {
-        setPage(<HiringCampaignPage />);
-        setCurrentPath(`/Companies/${CompanyName}/Campaigns`);
-        setCurrent(company);
+    const company = allCompanies
+      ?.find(
+        c => ((c.displayName.toLowerCase() === CompanyName?.toLowerCase()) ?? ""))
+      ?? { id: "", tables: [], displayName: "" };
+    if (company.id !== "") {
 
-        if (filter.length === 0) {
-          setFilters(company.tables.map((table) => ({ tableID: table, tableFilters: defaultFilterParams })));
-        } else
-          setFilters([...filter]); // for always display filter propertys in URL!
+      setPage(<HiringCampaignPage />);
+      setCurrentPath(`/Companies/${CompanyName}/Campaigns`);
+      setCurrentCompany(company);
 
-        updateResult(company);
-
+      if (urlFilter.map(fi => fi.tableFilters).toString() !== previusURLFilter) {
+        setPreviusUrlFilter(urlFilter.map(fi => fi.tableFilters).toString());
+        updateFilters(company);
       }
-      else {
-        setPage(<ErrorPage />);
-        setCurrentPath(`/Companies/${CompanyName}/Campaigns`);
-      }
+
+    }
+    else {
+      setPage(<ErrorPage />);
+      setCurrentPath(`/Companies/${CompanyName}/Campaigns`);
     }
   }
-    , [CompanyName]);
+    , [CompanyName, urlFilter]);
+
+  // useEffect(() => {
+  //   if ((urlFilter.length > 0) && (urlFilter !== filter)) {
+  //     setFilters(urlFilter);
+  //     updateHiringTablesResult(currCompany, urlFilter);
+  //   }
+  // }
+  //   , [urlFilter]);
 
   return (returnPage);
 }

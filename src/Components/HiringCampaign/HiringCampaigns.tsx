@@ -1,12 +1,10 @@
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
-import { currentTable } from "../../Atoms/CandidateTables";
 import { tablesResult } from "../../Atoms/HiringCompaign";
 import { tables as allTables } from "../../Atoms/LoadData";
 
 const HiringCampaigns = () => {
   const [hiringsRows] = useAtom(tablesResult);
-  const [, updateCurrentTable] = useAtom(currentTable);
   const [tables] = useAtom(allTables);
   const navigate = useNavigate();
 
@@ -15,8 +13,6 @@ const HiringCampaigns = () => {
   }
 
   const hasClicked = (openTableByID: string) => {
-    // TODO: remove this line.
-    // updateCurrentTable(tables?.find((table) => table.id === openTableByID) ?? runException());
     navigate(`/CandidateTables/${openTableByID}`);
   }
 
