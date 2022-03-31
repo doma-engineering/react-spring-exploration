@@ -102,6 +102,16 @@ const HiringCampaignsPageValidator = () => {
   useEffect(() => {
     const company = allCompanies
       ?.find(
+        c => ((c.displayName.toLowerCase() === logined?.toLowerCase()) ?? ""))
+      ?? { id: "", tables: [], displayName: "" };
+    updateFilters(company)
+    updateHiringTablesResult(company, filter);
+  }
+    , [logined]);
+
+  useEffect(() => {
+    const company = allCompanies
+      ?.find(
         c => ((c.displayName.toLowerCase() === CompanyName?.toLowerCase()) ?? ""))
       ?? { id: "", tables: [], displayName: "" };
     if (company.id !== "") {
