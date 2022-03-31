@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { currentCompany } from "../../Atoms/Company";
-import { companies, tables as allTables } from "../../Atoms/LoadData";
+import { comeChanges, companies, tables as allTables } from "../../Atoms/LoadData";
 import { currentPath } from "../../Atoms/Login";
 import { filters, urlFilters } from "../../Atoms/Filters";
 
@@ -19,12 +19,13 @@ const HiringCampaignsPageValidator = () => {
 
   const { CompanyName } = useParams();
 
-  const [, setCurrentCompany] = useAtom(currentCompany);
+  const [currCompany, setCurrentCompany] = useAtom(currentCompany);
   const [, setResult] = useAtom(tablesResult);
   const [filter, setFilters] = useAtom(filters);
   const [tables] = useAtom(allTables);
   const [urlFilter] = useAtom(urlFilters);
   const [, setCurrentPath] = useAtom(currentPath);
+  const [isChanges, setComeChange] = useAtom(comeChanges);
 
   const [returnPage, setPage] = useState(<></>);
   const [previusURLFilter, setPreviusUrlFilter] = useState("hidden Egg");
@@ -52,12 +53,19 @@ const HiringCampaignsPageValidator = () => {
   }
 
   const updateFilters = (company: Company) => {
-    if ((urlFilter.length > 0) && (urlFilter !== filter)) {
-      setFilters(urlFilter);
-      updateHiringTablesResult(company, urlFilter);
+
+    if (
+      (urlFilter.length > 0)
+      // && (urlFilter !== filter)
+      && (!urlFilter.reduce((answ, filtr, index) => (
+        answ
+        && filtr.tableID === filter[index].tableID
+        && filtr.tableFilters.toString() === filter[index].tableFilters.toString()
+      ), true))
+    ) {
+      setComeChange(true);
       return;
     }
-
     if (filter.length === 0) {
       const newFilter = company.tables.map(
         (tableID) => ({ tableID, tableFilters: defaultFilterParams })
@@ -83,6 +91,13 @@ const HiringCampaignsPageValidator = () => {
   }
 
   useEffect(() => {
+    if (!isChanges) {
+      updateHiringTablesResult(currCompany, filter);
+    }
+  }
+    , [isChanges]);
+
+  useEffect(() => {
     const company = allCompanies
       ?.find(
         c => ((c.displayName.toLowerCase() === CompanyName?.toLowerCase()) ?? ""))
@@ -105,14 +120,6 @@ const HiringCampaignsPageValidator = () => {
     }
   }
     , [CompanyName, urlFilter]);
-
-  // useEffect(() => {
-  //   if ((urlFilter.length > 0) && (urlFilter !== filter)) {
-  //     setFilters(urlFilter);
-  //     updateHiringTablesResult(currCompany, urlFilter);
-  //   }
-  // }
-  //   , [urlFilter]);
 
   return (returnPage);
 }
