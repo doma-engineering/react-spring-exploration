@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { currentTable } from "../../Atoms/CandidateTables";
 import { filters, urlFilters } from "../../Atoms/Filters";
-import { tables as allTables } from "../../Atoms/LoadData";
+import { comeChanges, tables as allTables } from "../../Atoms/LoadData";
 import { currentPath } from "../../Atoms/Login";
 import CandidateTablePage from "../../Pages/CandidatesTablePage";
 import Error404Page from "../../Pages/Error404Page";
@@ -19,6 +19,7 @@ const CandidateTableValidator = () => {
   const [filter, setFilters] = useAtom(filters);
   const [urlFilter] = useAtom(urlFilters);
   const [, setCurrentPath] = useAtom(currentPath);
+  const [isChanges, setComeChange] = useAtom(comeChanges);
 
   const [returnPage, setReturnPage] = useState(<></>);
 
@@ -59,8 +60,17 @@ const CandidateTableValidator = () => {
     , [CandidateTable]);
 
   useEffect(() => {
-    if (urlFilter !== filter) {
-      setFilters(urlFilter);
+    if (
+      (urlFilter.length > 0)
+      // && (urlFilter !== filter)
+      && (!urlFilter.reduce((answ, filtr, index) => (
+        answ
+        && filtr.tableID === filter[index].tableID
+        && filtr.tableFilters.toString() === filter[index].tableFilters.toString()
+      ), true))
+    ) {
+      setComeChange(true);
+      return;
     }
   }
     , [urlFilter]);
