@@ -144,11 +144,81 @@ export const fakeCandidatesDataHaskell: Candidate[] = [
 ];
 
 export const fakeCandidatesDataTypescript: Candidate[] = [
-
+  {
+    name: "Emerson Porter",
+    nick: "EP",
+    score: 292,
+    scoreProcent: 58.9,
+    taskStartDate: "11.24.2003 12:06",
+    taskEndDate: "11.24.2003 15:33",
+    rank: "Middle",
+  },
+  {
+    name: "Fiona Cherry",
+    nick: "FC",
+    score: 168,
+    scoreProcent: 58.9,
+    taskStartDate: "11.24.2003 12:06",
+    taskEndDate: "11.24.2003 15:33",
+    rank: "Junior",
+  },
+  {
+    name: "Klara Taylor",
+    nick: "KT",
+    score: 884,
+    scoreProcent: 58.9,
+    taskStartDate: "11.24.2003 12:06",
+    taskEndDate: "11.24.2003 15:33",
+    rank: "Senior",
+  },
+  {
+    name: "Eli Cantu",
+    nick: "EC",
+    score: 54,
+    scoreProcent: 58.9,
+    taskStartDate: "11.24.2003 12:06",
+    taskEndDate: "11.24.2003 15:33",
+    rank: "Junior",
+  },
+  {
+    name: "Zayan Christie",
+    nick: "ZC",
+    score: 357,
+    scoreProcent: 58.9,
+    taskStartDate: "11.24.2003 12:06",
+    taskEndDate: "11.24.2003 15:33",
+    rank: "Middle",
+  },
+  {
+    name: "Mallory O'Reilly",
+    nick: "MO",
+    score: 222,
+    scoreProcent: 58.9,
+    taskStartDate: "11.24.2003 12:06",
+    taskEndDate: "11.24.2003 15:33",
+    rank: "Middle",
+  },
+  {
+    name: "Selin Cervantes",
+    nick: "SC",
+    score: 2,
+    scoreProcent: 58.9,
+    taskStartDate: "11.24.2003 12:06",
+    taskEndDate: "11.24.2003 15:33",
+    rank: "N/m",
+  },
 ];
 
 export const fakeCandidatesDataPython: Candidate[] = [
-
+  {
+    name: "Krzysztof Joseph",
+    nick: "ST",
+    score: 12000,
+    scoreProcent: 100,
+    taskStartDate: "13.04.2021 15:00",
+    taskEndDate: "13.04.2021 15:05",
+    rank: "Senior",
+  },
 ];
 
 // -------- fake companies data --------- //
@@ -166,7 +236,7 @@ export const fakeCompanyWHALEData: Company = {
   id: "WHALE",
   displayName: "WHALE",
   tables: [
-    "Typescript",
+    "Typescript", "Java", "Python",
   ],
 };
 
