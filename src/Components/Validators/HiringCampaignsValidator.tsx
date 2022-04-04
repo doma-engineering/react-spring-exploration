@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { currentCompany } from "../../Atoms/Company";
 import { comeChanges, companies, tables as allTables } from "../../Atoms/LoadData";
@@ -18,6 +18,7 @@ import { differentCompany, tablesResult } from "../../Atoms/HiringCompaign";
 const HiringCampaignsPageValidator = () => {
 
   const { CompanyName } = useParams();
+  const navigate = useNavigate();
 
   const [currCompany, setCurrentCompany] = useAtom(currentCompany);
   const [, setResult] = useAtom(tablesResult);
@@ -65,7 +66,8 @@ const HiringCampaignsPageValidator = () => {
         && filtr.tableFilters.toString() === filter[index].tableFilters.toString()
       ), true))
     ) {
-      setComeChange(true);
+      //setComeChange(true);
+      navigate("/Companies/:CompanyName/Campaigns/swithMode");
       return;
     }
     if (filter.length === 0) {
@@ -144,7 +146,7 @@ const HiringCampaignsPageValidator = () => {
 
 export default HiringCampaignsPageValidator;
 
-const findResult = (table: CandidateTable, filter: boolean[]) => {
+export const findResult = (table: CandidateTable, filter: boolean[]) => {
   return {
     tableID: table.id,
 

@@ -34,6 +34,7 @@ import HiringCampaignsPageValidator from "./Components/Validators/HiringCampaign
 import Error404Page from "./Pages/Error404Page";
 import CandidateTableValidator from "./Components/Validators/CandidateTableValidator";
 import LoginValidator from "./Components/Validators/LoginValidator";
+import SwitchHiringCampaignsValidator from "./Components/Validators/SwitchHiringCampaignsValidator";
 
 const Multipage = () => {
   return (
@@ -42,6 +43,7 @@ const Multipage = () => {
         <Route path="/" element={<Navigate to={`Login`} />} />
         <Route path="/Login" element={<LoginValidator />} />
         <Route path="/Companies/:CompanyName/Campaigns" element={<HiringCampaignsPageValidator />} />
+        <Route path="/Companies/:CompanyName/Campaigns/swithMode" element={<SwitchHiringCampaignsValidator />} />
         <Route path="/Companies//Campaigns" element={<Navigate to={`/Login`} />} />
         <Route path="/CandidateTables/:CandidateTable" element={<CandidateTableValidator />} />
         <Route path="*" element={<Error404Page />} />
