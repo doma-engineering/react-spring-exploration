@@ -7,6 +7,7 @@ import { comeChanges, tables as allTables } from "../../Atoms/LoadData";
 import { currentPath } from "../../Atoms/Login";
 import CandidateTablePage from "../../Pages/CandidatesTablePage";
 import Error404Page from "../../Pages/Error404Page";
+import { CANDIDATE_TABLE_URL } from "../../routes";
 import { defaultFilterParams } from "../CandidateTable/fakeData";
 
 const CandidateTableValidator = () => {
@@ -19,7 +20,7 @@ const CandidateTableValidator = () => {
   const [filter, setFilters] = useAtom(filters);
   const [urlFilter] = useAtom(urlFilters);
   const [, setCurrentPath] = useAtom(currentPath);
-  const [isChanges, setComeChange] = useAtom(comeChanges);
+  const [, setComeChange] = useAtom(comeChanges);
 
   const [returnPage, setReturnPage] = useState(<></>);
 
@@ -44,14 +45,14 @@ const CandidateTableValidator = () => {
     if (findedTable.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "").toLowerCase()) {
 
       if (findedTable.id !== CandidateTable) {
-        navigate(`/CandidateTables/${findedTable.id}`);
+        navigate(CANDIDATE_TABLE_URL(findedTable.id));
         return;
       }
 
       updateFilters(findedTable.id);
       setCurrentTable(findedTable);
       setReturnPage(<CandidateTablePage />);
-      setCurrentPath(`/CandidateTables/${findedTable.id}`);
+      setCurrentPath(CANDIDATE_TABLE_URL(findedTable.id));
       return;
     }
 

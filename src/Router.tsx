@@ -35,17 +35,18 @@ import Error404Page from "./Pages/Error404Page";
 import CandidateTableValidator from "./Components/Validators/CandidateTableValidator";
 import LoginValidator from "./Components/Validators/LoginValidator";
 import SwitchHiringCampaignsValidator from "./Components/Validators/SwitchHiringCampaignsValidator";
+import { CANDIDATE_TABLE_URL_path, HIRINGS_COMPAIGNS_MISS_COMPANY_URL_errorPath, HIRINGS_COMPAIGNS_SWITCH_MODE_URL_path, HIRINGS_COMPAIGNS_URL_path, LOGIN_URL, ROOT_URL } from "./routes";
 
 const Multipage = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to={`Login`} />} />
-        <Route path="/Login" element={<LoginValidator />} />
-        <Route path="/Companies/:CompanyName/Campaigns" element={<HiringCampaignsPageValidator />} />
-        <Route path="/Companies/:CompanyName/Campaigns/swithMode" element={<SwitchHiringCampaignsValidator />} />
-        <Route path="/Companies//Campaigns" element={<Navigate to={`/Login`} />} />
-        <Route path="/CandidateTables/:CandidateTable" element={<CandidateTableValidator />} />
+        <Route path={ROOT_URL} element={<Navigate to={`Login`} />} />
+        <Route path={LOGIN_URL} element={<LoginValidator />} />
+        <Route path={HIRINGS_COMPAIGNS_URL_path} element={<HiringCampaignsPageValidator />} />
+        <Route path={HIRINGS_COMPAIGNS_SWITCH_MODE_URL_path} element={<SwitchHiringCampaignsValidator />} />
+        <Route path={CANDIDATE_TABLE_URL_path} element={<CandidateTableValidator />} />
+        <Route path={HIRINGS_COMPAIGNS_MISS_COMPANY_URL_errorPath} element={<Navigate to={LOGIN_URL} />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>
     </Router>

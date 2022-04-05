@@ -277,7 +277,7 @@ const styles = {
   colors: {
     selectedOld: "#DDAAAA",
     selectedNew: "#AADDAA",
-    rowWithDifferenceDefault: "#EEEEEE",
+    rowWithDifferenceDefault: "#CCCCCC",
     rowWithoutDifference: "#CCCCCC",
     textDifferenceNew: "#058005",
     textDifferenceOld: "#F02222",

@@ -3,26 +3,27 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentPath, loginedCompany } from "../../Atoms/Login";
 import LoginPage from "../../Pages/LoginPage";
+import { LOGIN_URL } from "../../routes";
 
 const LoginValidator = () => {
   const navigate = useNavigate();
-  const [loginedCompanyName] = useAtom(loginedCompany);
+  const [loginedCompanyID] = useAtom(loginedCompany);
   const [path, setPath] = useAtom(currentPath);
   const [returnPage, setReturnPage] = useState(<></>);
 
 
   useEffect(() => {
     //try to redirect to previus logined open page;
-    if (loginedCompanyName !== "") {
-      if ((path.indexOf("/Companies/") !== -1) && (path.indexOf("/Campaigns") !== -1))
-        navigate(`/Companies/${loginedCompanyName}/Campaigns`);
+    if (loginedCompanyID !== "") {
+      if ((path.indexOf("/Companies/") !== -1) && (path.indexOf("/Campaigns") !== -1)) //TODO: think what will if path will changes? How we can fix it?
+        navigate(path);
       if (path.indexOf("/CandidateTables/") !== -1)
-        navigate(`/CandidateTables/${path.substring(17, path.length)}`);
+        navigate(path);
     }
     setReturnPage(<LoginPage />);
-    setPath("/Login");
-  },
-    [loginedCompanyName]);
+    setPath(LOGIN_URL);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loginedCompanyID]);
 
   return (returnPage);
 }

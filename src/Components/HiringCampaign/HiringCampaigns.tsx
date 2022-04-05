@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { tablesResult } from "../../Atoms/HiringCompaign";
 import { tables as allTables } from "../../Atoms/LoadData";
+import { CANDIDATE_TABLE_URL } from "../../routes";
 
 const HiringCampaigns = () => {
   const [hiringsRows] = useAtom(tablesResult);
@@ -13,7 +14,7 @@ const HiringCampaigns = () => {
   }
 
   const hasClicked = (openTableByID: string) => {
-    navigate(`/CandidateTables/${openTableByID}`);
+    navigate(CANDIDATE_TABLE_URL(openTableByID));
   }
 
   const displayName = (id: string): string => {

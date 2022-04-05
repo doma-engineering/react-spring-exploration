@@ -14,6 +14,7 @@ import { CandidateTable, CandidateTableFilters, Company } from "../CandidateTabl
 import ErrorPage from "../../Pages/HiringCampaignsErrorPage";
 import HiringCampaignPage from "../../Pages/HiringCampaignsPage";
 import { differentCompany, tablesResult } from "../../Atoms/HiringCompaign";
+import { HIRINGS_COMPAIGNS_SWITCH_MODE_URL, HIRINGS_COMPAIGNS_URL } from "../../routes";
 
 const HiringCampaignsPageValidator = () => {
 
@@ -38,7 +39,7 @@ const HiringCampaignsPageValidator = () => {
     setResult(
       company.tables.map(
         (tableID) => {
-          const tableData = tables?.find((table) => table.id === tableID) ?? (() => { throw "error find Table"; })();
+          const tableData = tables?.find((table) => table.id === tableID) ?? { id: "", displayName: "", table: [] };
           const filterData: boolean[] = tfilters?.find((filter: CandidateTableFilters) => filter.tableID === tableID)?.tableFilters ?? defaultFilterParams;
           return findResult(tableData, filterData);
         }
@@ -66,8 +67,8 @@ const HiringCampaignsPageValidator = () => {
         && filtr.tableFilters.toString() === filter[index].tableFilters.toString()
       ), true))
     ) {
-      //setComeChange(true);
-      navigate("/Companies/:CompanyName/Campaigns/swithMode");
+      setComeChange(true);
+      navigate(HIRINGS_COMPAIGNS_SWITCH_MODE_URL(company.id));
       return;
     }
     if (filter.length === 0) {
@@ -98,8 +99,8 @@ const HiringCampaignsPageValidator = () => {
     if (!isChanges) {
       updateHiringTablesResult(currCompany, filter);
     }
-  }
-    , [isChanges]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isChanges]);
 
   useEffect(() => {
     const company = allCompanies
@@ -108,8 +109,8 @@ const HiringCampaignsPageValidator = () => {
       ?? { id: "", tables: [], displayName: "" };
     updateFilters(company)
     updateHiringTablesResult(company, filter);
-  }
-    , [logined]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [logined]);
 
   useEffect(() => {
     const company = allCompanies
@@ -119,7 +120,7 @@ const HiringCampaignsPageValidator = () => {
     if (company.id !== "") {
 
       setPage(<HiringCampaignPage />);
-      setCurrentPath(`/Companies/${CompanyName}/Campaigns`);
+      setCurrentPath(HIRINGS_COMPAIGNS_URL(company.id));
       setCurrentCompany(company);
 
       if (urlFilter.map(fi => fi.tableFilters).toString() !== previusURLFilter) {
@@ -136,10 +137,10 @@ const HiringCampaignsPageValidator = () => {
     }
     else {
       setPage(<ErrorPage />);
-      setCurrentPath(`/Companies/${CompanyName}/Campaigns`);
+      setCurrentPath(HIRINGS_COMPAIGNS_URL(CompanyName || ""));
     }
-  }
-    , [CompanyName, urlFilter]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [CompanyName, urlFilter]);
 
   return (returnPage);
 }
