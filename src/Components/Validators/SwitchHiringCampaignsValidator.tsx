@@ -1,12 +1,14 @@
 import { useAtom } from "jotai";
-import { Fragment, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentCompany } from "../../Atoms/Company";
 import { filters, urlFilters } from "../../Atoms/Filters";
 import { selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/HiringCompaign";
 import { comeChanges } from "../../Atoms/LoadData";
+import { currentPath, loginedCompany } from "../../Atoms/Login";
+import ErrorSwitchModePage from "../../Pages/ErrorSwitchModePage";
 import SwitcherHiringCampaignsPage from "../../Pages/SwitcherHiringCampaignsPage";
-import { HIRINGS_COMPAIGNS_URL } from "../../routes";
+import { HIRINGS_COMPAIGNS_URL, LOGIN_URL } from "../../routes";
 
 const SwitchHiringCampaignsValidator = () => {
 
@@ -19,6 +21,8 @@ const SwitchHiringCampaignsValidator = () => {
   const [, setMousehover] = useAtom(switcherMouseHoverTable);
   const [, setComeChange] = useAtom(comeChanges);
 
+  const [returnPage, setReturnPage] = useState(<SwitcherHiringCampaignsPage />);
+
   useEffect(() => {
     if (selected !== selectedType.none) {
       if (selected === selectedType.new) setFilters([...newFilter]);
@@ -29,13 +33,22 @@ const SwitchHiringCampaignsValidator = () => {
       navigate(HIRINGS_COMPAIGNS_URL(company.id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected])
+  }, [selected]);
 
-  return (
-    <Fragment>
-      <SwitcherHiringCampaignsPage />
-    </Fragment>
-  );
+  useEffect(() => {
+    if (
+      //Check is newFilter === oldFilter
+      newFilter.reduce((ans, filtr, index) => (
+        ans
+        && filtr.tableID === oldFilter[index].tableID
+        && filtr.tableFilters.toString() === oldFilter[index].tableFilters.toString()
+      ), true)
+    ) {
+      setReturnPage(ErrorSwitchModePage);
+    }
+  }, [newFilter, oldFilter])
+
+  return (returnPage);
 }
 
 export default SwitchHiringCampaignsValidator;
