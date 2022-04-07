@@ -7,7 +7,7 @@ import { comeChanges, tables as allTables } from "../../Atoms/LoadData";
 import { currentPath } from "../../Atoms/Login";
 import CandidateTablePage from "../../Pages/CandidatesTablePage";
 import Error404Page from "../../Pages/Error404Page";
-import { CANDIDATE_TABLE_URL } from "../../routes";
+import { CANDIDATE_TABLE_SWITCH_MODE_URL, CANDIDATE_TABLE_URL } from "../../routes";
 import { defaultFilterParams } from "../CandidateTable/fakeData";
 
 const CandidateTableValidator = () => {
@@ -71,6 +71,7 @@ const CandidateTableValidator = () => {
       ), true))
     ) {
       setComeChange(true);
+      navigate(CANDIDATE_TABLE_SWITCH_MODE_URL(CandidateTable || ""));
       return;
     }
   }

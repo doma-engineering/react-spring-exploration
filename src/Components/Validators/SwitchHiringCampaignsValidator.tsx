@@ -3,12 +3,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentCompany } from "../../Atoms/Company";
 import { filters, urlFilters } from "../../Atoms/Filters";
-import { selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/HiringCompaign";
 import { comeChanges } from "../../Atoms/LoadData";
-import { currentPath, loginedCompany } from "../../Atoms/Login";
+import { selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 import ErrorSwitchModePage from "../../Pages/ErrorSwitchModePage";
 import SwitcherHiringCampaignsPage from "../../Pages/SwitcherHiringCampaignsPage";
-import { HIRINGS_COMPAIGNS_URL, LOGIN_URL } from "../../routes";
+import { HIRINGS_COMPAIGNS_URL } from "../../routes";
 
 const SwitchHiringCampaignsValidator = () => {
 

@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/HiringCompaign";
+import { selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 
 const SwitherButtons = () => {
 

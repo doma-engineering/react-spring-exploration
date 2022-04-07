@@ -35,7 +35,8 @@ import Error404Page from "./Pages/Error404Page";
 import CandidateTableValidator from "./Components/Validators/CandidateTableValidator";
 import LoginValidator from "./Components/Validators/LoginValidator";
 import SwitchHiringCampaignsValidator from "./Components/Validators/SwitchHiringCampaignsValidator";
-import { CANDIDATE_TABLE_URL_path, HIRINGS_COMPAIGNS_MISS_COMPANY_URL_errorPath, HIRINGS_COMPAIGNS_SWITCH_MODE_URL_path, HIRINGS_COMPAIGNS_URL_path, LOGIN_URL, ROOT_URL } from "./routes";
+import { CANDIDATE_TABLE_SWITCH_MODE_URL_path, CANDIDATE_TABLE_URL_path, HIRINGS_COMPAIGNS_MISS_COMPANY_URL_errorPath, HIRINGS_COMPAIGNS_SWITCH_MODE_URL_path, HIRINGS_COMPAIGNS_URL_path, LOGIN_URL, ROOT_URL } from "./routes";
+import CandidateTableSwitcherValidator from "./Components/Validators/SwitchCandidateTableValidator";
 
 const Multipage = () => {
   return (
@@ -46,6 +47,7 @@ const Multipage = () => {
         <Route path={HIRINGS_COMPAIGNS_URL_path} element={<HiringCampaignsPageValidator />} />
         <Route path={HIRINGS_COMPAIGNS_SWITCH_MODE_URL_path} element={<SwitchHiringCampaignsValidator />} />
         <Route path={CANDIDATE_TABLE_URL_path} element={<CandidateTableValidator />} />
+        <Route path={CANDIDATE_TABLE_SWITCH_MODE_URL_path} element={<CandidateTableSwitcherValidator />} />
         <Route path={HIRINGS_COMPAIGNS_MISS_COMPANY_URL_errorPath} element={<Navigate to={LOGIN_URL} />} />
         <Route path="*" element={<Error404Page />} />
       </Routes>
