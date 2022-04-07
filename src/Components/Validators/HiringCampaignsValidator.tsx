@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { currentCompany } from "../../Atoms/Company";
-import { comeChanges, companies, tables as allTables } from "../../Atoms/LoadData";
+import { companies, tables as allTables } from "../../Atoms/LoadData";
 import { currentPath, loginedCompany } from "../../Atoms/Login";
 import { filters, urlFilters } from "../../Atoms/Filters";
 
@@ -15,6 +15,7 @@ import ErrorPage from "../../Pages/HiringCampaignsErrorPage";
 import HiringCampaignPage from "../../Pages/HiringCampaignsPage";
 import { differentCompany, tablesResult } from "../../Atoms/HiringCompaign";
 import { HIRINGS_COMPAIGNS_SWITCH_MODE_URL, HIRINGS_COMPAIGNS_URL } from "../../routes";
+import { comeChanges } from "../../Atoms/SwithersAtoms";
 
 const HiringCampaignsPageValidator = () => {
 

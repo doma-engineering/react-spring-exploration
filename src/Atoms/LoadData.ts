@@ -5,6 +5,3 @@ import { fakeCompanies, fakeFilterData, fakeTables } from "../Components/Candida
 export const companies = atom<Company[]>(fakeCompanies);
 export const tables = atom<CandidateTable[]>(fakeTables);
 export const filterData = atom<FilterProperty[]>(fakeFilterData);
-
-
-export const comeChanges = atom(false);
