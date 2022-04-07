@@ -2,7 +2,7 @@ import { atom, useAtom } from "jotai";
 import { currentTable } from "../../Atoms/CandidateTables";
 import { filters, urlFilters } from "../../Atoms/Filters";
 import { filterData } from "../../Atoms/LoadData";
-import { candidateStatus, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
+import { candidateStatus, selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 
 const tableData = atom(
   (get) => get(currentTable).table
@@ -31,8 +31,7 @@ const tableData = atom(
 const CandidateTableSwitcher = () => {
 
   const [filter] = useAtom(filterData);
-  const [selectedVersion, setSelectedVersion] = useAtom(switcherSelectedTable);
-  const [mouseHoverVersion, setMouseHoverVersion] = useAtom(switcherMouseHoverTable);
+  const [mouseHoverVersion] = useAtom(switcherMouseHoverTable);
   const [data] = useAtom(tableData);
 
   const rankColor = (rankName: string): string => {
@@ -40,25 +39,37 @@ const CandidateTableSwitcher = () => {
     return rank === undefined ? "FFFFFF" : rank.color;
   }
 
-  const findBackground = (status: candidateStatus) => {
-    if (status === candidateStatus.added) return "#DDFFDD"
-    if (status === candidateStatus.inBoth) return "#DDDDDD"
-    if (status === candidateStatus.removed) return "#FFDDDD"
-    return "#FF0000" //error
+  const findBackground = (candidate: candidateStatus, selection: selectedType) => {
+    if (selection === selectedType.none) {
+      return (candidate === candidateStatus.inBoth) ? "#CCCCCC" : "#EEEEEE";
+    }
+    if (selection === selectedType.new) {
+      return candidate !== candidateStatus.removed ? "#DDFFDD" : "#EEEEEE";
+    }
+    if (selection === selectedType.old) {
+      return (candidate !== candidateStatus.added) ? "#DDFFDD" : "#EEEEEE";
+    }
+    return "#FF0000" // error 
+  }
+
+  const findTextColor = (candidate: candidateStatus) => {
+    if (candidate === candidateStatus.inBoth) return "#777777";
+    if (candidate === candidateStatus.added) return "#33AA33";
+    if (candidate === candidateStatus.removed) return "#990000";
+    return "#FF0000" // error
   }
 
   return (
     <div className='CandidateTable'>
-      <div>
-        {selectedVersion} : {mouseHoverVersion}
-      </div>
       {
         data.map((candidate) => (
           <div
             className="CandidateBox"
             style={{
               borderLeftColor: rankColor(candidate?.rank ?? ""),
-              background: findBackground(candidate?.swithStatus ?? candidateStatus.removed),
+              background: findBackground(candidate?.swithStatus ?? candidateStatus.removed, mouseHoverVersion),
+              textDecoration: candidate?.swithStatus === candidateStatus.removed ? "line-through" : "none",
+              color: findTextColor(candidate?.swithStatus ?? candidateStatus.removed),
               borderLeftWidth: "0.4rem"
             }}
           >
@@ -66,7 +77,7 @@ const CandidateTableSwitcher = () => {
           </div>
         ))
       }
-    </div>
+    </div >
   )
 }
 

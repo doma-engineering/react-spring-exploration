@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { filters, urlFilters } from "../../Atoms/Filters";
-import { comeChanges } from "../../Atoms/LoadData";
+import { comeChanges } from "../../Atoms/SwithersAtoms";
 
 const AcceptLine = () => {
 

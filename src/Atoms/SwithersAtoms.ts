@@ -14,3 +14,5 @@ export enum candidateStatus {
 
 export const switcherMouseHoverTable = atom<selectedType>(selectedType.none);
 export const switcherSelectedTable = atom<selectedType>(selectedType.none);
+
+export const comeChanges = atom(false);
