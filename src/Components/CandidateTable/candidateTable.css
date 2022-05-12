@@ -1,0 +1,56 @@
+body {
+  background-color: rgb(87, 105, 206);
+  font-size: larger;
+}
+
+.TestCandidateTable {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.Filter {
+  margin-top: 1rem;
+  margin-right: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: 11rem;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgb(206, 161, 107);
+}
+
+.FilterButton {
+  display: flex;
+  justify-content: center;
+  width: 10rem;
+  margin: 3px;
+  padding: 4px;
+  font-size: 20pt;
+}
+
+.CandidateListRow {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+}
+
+.AddCandidateButton {
+  height: 3rem;
+  width: 13rem;
+  font-size: 18pt;
+}
+
+.CandidateTable {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.CandidateBox {
+  width: 10rem;
+  border: 1px solid rgb(36, 34, 34);
+  color: rgb(28, 37, 37);
+  text-align: center;
+}
