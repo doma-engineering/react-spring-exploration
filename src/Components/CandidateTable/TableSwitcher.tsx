@@ -15,7 +15,7 @@ const tableData = atom(
           .findIndex((rankType) => rankType.id === candidate.rank);
 
         if (rankIndex === -1)
-          throw `error candidate rank. ${candidate.name}:${candidate.rank}`;
+          throw `error candidate rank. ${candidate.userID}:${candidate.rank}`;
         if (oldF[rankIndex] && newF[rankIndex]) {
           return { ...candidate, swithStatus: candidateStatus.inBoth }
         }
@@ -73,7 +73,7 @@ const CandidateTableSwitcher = () => {
               borderLeftWidth: "0.4rem"
             }}
           >
-            {candidate?.nick}: {candidate?.score}
+            {candidate?.hashName}: {candidate?.score}
           </div>
         ))
       }

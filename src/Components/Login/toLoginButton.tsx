@@ -14,12 +14,6 @@ const ToLoginButton = () => {
   return (
     <button
       onClick={handleClick}
-      style={{
-        position: "relative",
-        width: "15rem",
-        height: "3rem",
-        left: "rem",
-      }}
     >
       Back to Login
     </button>

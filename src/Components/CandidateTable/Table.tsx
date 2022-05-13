@@ -21,9 +21,9 @@ const Table = () => {
   const [filter] = useAtom(filterData);
 
   const transitions = useTransition(candidates, {
-    keys: item => item.name,
+    keys: item => item.userID,
     from: { opacity: 0, height: 0 },
-    enter: { opacity: 1, height: 40 },
+    enter: { opacity: 1, height: 60 },
     leave: { opacity: 0, height: 0 },
     config: { ...config.slow, duration: 400 }
   });
@@ -34,9 +34,18 @@ const Table = () => {
   }
 
   return (
-    <div className='CandidateTable'>{
-      transitions(({ opacity, height }, candidate, _, index) => (
-        <animated.div
+    <div className='CandidateTable'>
+      <tr>
+        <th>Candidate</th>
+        <th>Score</th>
+        <th>Score(%)</th>
+        <th>Languages</th>
+        <th>Location</th>
+        <th>Status</th>
+        <th>Finish date</th>
+      </tr>
+      {transitions(({ opacity, height }, candidate, _, index) => (
+        <animated.tr
           className="CandidateBox"
           style={{
             borderLeftColor: rankColor(candidate.rank),
@@ -47,10 +56,16 @@ const Table = () => {
             borderLeftWidth: "0.4rem"
           }}
         >
-          {candidate.nick}: {candidate.score}
-        </animated.div>
-      ))
-    }</div>
+          <td>{candidate.hashName}</td>
+          <td>{candidate.score}</td>
+          <td>{candidate.scoreProcent}</td>
+          <td>{candidate.userLanguages.join(", ")}</td>
+          <td>{candidate.userLocation}</td>
+          <td>{candidate.userStatus}</td>
+          <td>{candidate.taskEndDate.substring(0, 10)}</td>
+        </animated.tr>
+      ))}
+    </div>
   );
 }
 

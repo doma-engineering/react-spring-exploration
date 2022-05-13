@@ -25,10 +25,8 @@ const EnterButton = () => {
     <button
       onClick={handleClick}
       style={{
-        position: "relative",
-        fontSize: "30px",
-        width: "8rem",
-        height: "3rem",
+        fontSize: "18px",
+        margin: "1rem"
       }}
     >
       Enter
