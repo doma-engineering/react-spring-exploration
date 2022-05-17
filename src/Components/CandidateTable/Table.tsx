@@ -21,9 +21,9 @@ const Table = () => {
   const [filter] = useAtom(filterData);
 
   const transitions = useTransition(candidates, {
-    keys: item => item.name,
+    keys: item => item.hash,
     from: { opacity: 0, height: 0 },
-    enter: { opacity: 1, height: 40 },
+    enter: { opacity: 1, height: 60 },
     leave: { opacity: 0, height: 0 },
     config: { ...config.slow, duration: 400 }
   });
@@ -33,10 +33,20 @@ const Table = () => {
     return rank === undefined ? "FFFFFF" : rank.color;
   }
 
+  const formatDate = (date: Date) => (date.toLocaleDateString());
+  const formatHash = (hash: string) => (hash.substring(hash.length - 8));
+
   return (
-    <div className='CandidateTable'>{
-      transitions(({ opacity, height }, candidate, _, index) => (
-        <animated.div
+    <div className='CandidateTable'>
+      <tr>
+        <th>Candidate</th>
+        <th>Score</th>
+        <th>Score(%)</th>
+        <th>Status</th>
+        <th>Finish date</th>
+      </tr>
+      {transitions(({ opacity, height }, candidate, _, index) => (
+        <animated.tr
           className="CandidateBox"
           style={{
             borderLeftColor: rankColor(candidate.rank),
@@ -47,10 +57,14 @@ const Table = () => {
             borderLeftWidth: "0.4rem"
           }}
         >
-          {candidate.nick}: {candidate.score}
-        </animated.div>
-      ))
-    }</div>
+          <animated.td style={{ height }}> {formatHash(candidate.hash)} </animated.td>
+          <animated.td style={{ height }}> {candidate.score}                </animated.td>
+          <animated.td style={{ height }}> {candidate.scorePercent}         </animated.td>
+          <animated.td style={{ height }}> {candidate.userStatus}           </animated.td>
+          <animated.td style={{ height }}> {formatDate(candidate.taskEndDate)} </animated.td>
+        </animated.tr>
+      ))}
+    </div>
   );
 }
 

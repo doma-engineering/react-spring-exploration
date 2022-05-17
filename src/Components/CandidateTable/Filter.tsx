@@ -26,10 +26,12 @@ const Filter = () => {
             <button
               className="FilterButton"
               key={"FB" + index.toString()}
-              onClick={() => { rankOnClick(index); }}
+              onClick={() => rankOnClick(index)}
               style={{
                 textDecoration: isSelected[index] ? "none" : "line-through",
                 background: rank.color + "AA",
+                color: "#000000",
+
               }}
             >
               {rank.displayName}

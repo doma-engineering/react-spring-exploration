@@ -1,17 +1,63 @@
+
+export enum Gender {
+  Male = "male",
+  Female = "female",
+  Other = "other",
+}
+
+export enum UserStatus {
+  NotSelected = "",
+  FindNewJob = "Want to find new job",
+  TestSelfSkills = "Only test self skils",
+  TryChangeJob = "Have job, but want to change job",
+  HaveJob = "Already have a job"
+}
+
+export enum Rank {
+  NM = "N/m",
+  Senior = "Senior",
+  Middle = "Middle",
+  Junior = "Junior",
+}
+
 export type Company = {
   id: string,
   displayName: string,
   tables: string[],
 };
 
+export type User = {
+  id: number,
+  hash: string,
+
+  nick?: string,
+  avatarImage?: string,
+  firstName: string,
+  lastName: string,
+  emailAdress: string,
+  gender: Gender,
+  birthday: Date,
+  country?: string,
+  adress?: string,
+  phoneNumber?: string,
+  languages?: string[],
+  programLanguages?: string[],
+  status: UserStatus,
+
+  taskInProgress?: string[],
+  taskComplited?: string[],
+  taskNotFinished?: string[],
+}
+
+
 export type Candidate = {
-  name: string,
-  nick: string,
+  hash: string,
   score: number,
-  scoreProcent: number,
-  taskStartDate: string,
-  taskEndDate: string,
-  rank: string,
+  scorePercent: number,
+  rank: Rank,
+  taskStartDate: Date,
+  taskEndDate: Date,
+  userStatus: UserStatus,
 };
 
 export type CandidateTable = {
