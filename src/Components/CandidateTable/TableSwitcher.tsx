@@ -11,18 +11,15 @@ const tableData = atom(
         const oldF = get(filters).find((filter) => (filter.tableID === get(currentTable).id))?.tableFilters ?? [false, false, false, false];
         const newF = get(urlFilters).find((filter) => (filter.tableID === get(currentTable).id))?.tableFilters ?? [false, false, false, false];
 
-        const rankIndex = get(filterData)
-          .findIndex((rankType) => rankType.id === candidate.rank);
+        const rankIndex = get(filterData).findIndex((rank) => rank.id === candidate.rank);
 
-        if (rankIndex === -1)
-          throw `error candidate rank. ${candidate.userID}:${candidate.rank}`;
         if (oldF[rankIndex] && newF[rankIndex]) {
-          return { ...candidate, swithStatus: candidateStatus.inBoth }
+          return { ...candidate, switchStatus: candidateStatus.inBoth }
         }
         if (oldF[rankIndex])
-          return { ...candidate, swithStatus: candidateStatus.removed }
+          return { ...candidate, switchStatus: candidateStatus.removed }
         if (newF[rankIndex])
-          return { ...candidate, swithStatus: candidateStatus.added }
+          return { ...candidate, switchStatus: candidateStatus.added }
       }
     )
     .filter(c => c) // check to not undefined, becouse map before return <undefind> for candidates who isn't in both tables.
@@ -67,13 +64,13 @@ const CandidateTableSwitcher = () => {
             className="CandidateBox"
             style={{
               borderLeftColor: rankColor(candidate?.rank ?? ""),
-              background: findBackground(candidate?.swithStatus ?? candidateStatus.removed, mouseHoverVersion),
-              textDecoration: candidate?.swithStatus === candidateStatus.removed ? "line-through" : "none",
-              color: findTextColor(candidate?.swithStatus ?? candidateStatus.removed),
+              background: findBackground(candidate?.switchStatus ?? candidateStatus.removed, mouseHoverVersion),
+              textDecoration: candidate?.switchStatus === candidateStatus.removed ? "line-through" : "none",
+              color: findTextColor(candidate?.switchStatus ?? candidateStatus.removed),
               borderLeftWidth: "0.4rem"
             }}
           >
-            {candidate?.hashName}: {candidate?.score}
+            {candidate?.hash}: {candidate?.score}
           </div>
         ))
       }

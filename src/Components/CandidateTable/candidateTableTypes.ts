@@ -28,7 +28,7 @@ export type Company = {
 
 export type User = {
   id: number,
-  hashName: string,
+  hash: string,
 
   nick?: string,
   avatarImage?: string,
@@ -36,11 +36,11 @@ export type User = {
   lastName: string,
   emailAdress: string,
   gender: Gender,
-  birthday: string,
-  country: string,
+  birthday: Date,
+  country?: string,
   adress?: string,
   phoneNumber?: string,
-  languages: string[],
+  languages?: string[],
   programLanguages?: string[],
   status: UserStatus,
 
@@ -51,15 +51,12 @@ export type User = {
 
 
 export type Candidate = {
-  userID: number,
-  hashName: string,
+  hash: string,
   score: number,
-  scoreProcent: number,
+  scorePercent: number,
   rank: Rank,
-  taskStartDate: string,
-  taskEndDate: string,
-  userLocation: string,
-  userLanguages: string[],
+  taskStartDate: Date,
+  taskEndDate: Date,
   userStatus: UserStatus,
 };
 
