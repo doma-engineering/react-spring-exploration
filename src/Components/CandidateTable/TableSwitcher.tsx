@@ -2,7 +2,7 @@ import { atom, useAtom } from "jotai";
 import { currentTable } from "../../Atoms/CandidateTables";
 import { filters, urlFilters } from "../../Atoms/Filters";
 import { filterData } from "../../Atoms/LoadData";
-import { candidateStatus, selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
+import { candidateSwitchStatus, selectedType, switcherMouseHoverTable } from "../../Atoms/SwithersAtoms";
 
 const tableData = atom(
   (get) => get(currentTable).table
@@ -14,15 +14,17 @@ const tableData = atom(
         const rankIndex = get(filterData).findIndex((rank) => rank.id === candidate.rank);
 
         if (oldF[rankIndex] && newF[rankIndex]) {
-          return { ...candidate, switchStatus: candidateStatus.inBoth }
+          return { ...candidate, switchStatus: candidateSwitchStatus.inBoth }
         }
         if (oldF[rankIndex])
-          return { ...candidate, switchStatus: candidateStatus.removed }
+          return { ...candidate, switchStatus: candidateSwitchStatus.removed }
         if (newF[rankIndex])
-          return { ...candidate, switchStatus: candidateStatus.added }
+          return { ...candidate, switchStatus: candidateSwitchStatus.added }
+
+        return { ...candidate, switchStatus: candidateSwitchStatus.notDisplayed }
       }
     )
-    .filter(c => c) // check to not undefined, becouse map before return <undefind> for candidates who isn't in both tables.
+    .filter(c => c.switchStatus !== candidateSwitchStatus.notDisplayed)
 )
 
 const CandidateTableSwitcher = () => {
@@ -36,23 +38,23 @@ const CandidateTableSwitcher = () => {
     return rank === undefined ? "FFFFFF" : rank.color;
   }
 
-  const findBackground = (candidate: candidateStatus, selection: selectedType) => {
+  const findBackground = (candidate: candidateSwitchStatus, selection: selectedType) => {
     if (selection === selectedType.none) {
-      return (candidate === candidateStatus.inBoth) ? "#CCCCCC" : "#EEEEEE";
+      return (candidate === candidateSwitchStatus.inBoth) ? "#CCCCCC" : "#EEEEEE";
     }
     if (selection === selectedType.new) {
-      return candidate !== candidateStatus.removed ? "#DDFFDD" : "#EEEEEE";
+      return candidate !== candidateSwitchStatus.removed ? "#DDFFDD" : "#EEEEEE";
     }
     if (selection === selectedType.old) {
-      return (candidate !== candidateStatus.added) ? "#DDFFDD" : "#EEEEEE";
+      return (candidate !== candidateSwitchStatus.added) ? "#DDFFDD" : "#EEEEEE";
     }
     return "#FF0000" // error 
   }
 
-  const findTextColor = (candidate: candidateStatus) => {
-    if (candidate === candidateStatus.inBoth) return "#777777";
-    if (candidate === candidateStatus.added) return "#33AA33";
-    if (candidate === candidateStatus.removed) return "#990000";
+  const findTextColor = (candidate: candidateSwitchStatus) => {
+    if (candidate === candidateSwitchStatus.inBoth) return "#777777";
+    if (candidate === candidateSwitchStatus.added) return "#33AA33";
+    if (candidate === candidateSwitchStatus.removed) return "#990000";
     return "#FF0000" // error
   }
 
@@ -64,9 +66,9 @@ const CandidateTableSwitcher = () => {
             className="CandidateBox"
             style={{
               borderLeftColor: rankColor(candidate?.rank ?? ""),
-              background: findBackground(candidate?.switchStatus ?? candidateStatus.removed, mouseHoverVersion),
-              textDecoration: candidate?.switchStatus === candidateStatus.removed ? "line-through" : "none",
-              color: findTextColor(candidate?.switchStatus ?? candidateStatus.removed),
+              background: findBackground(candidate?.switchStatus ?? candidateSwitchStatus.removed, mouseHoverVersion),
+              textDecoration: candidate?.switchStatus === candidateSwitchStatus.removed ? "line-through" : "none",
+              color: findTextColor(candidate?.switchStatus ?? candidateSwitchStatus.removed),
               borderLeftWidth: "0.4rem"
             }}
           >

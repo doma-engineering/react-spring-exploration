@@ -6,7 +6,8 @@ export enum selectedType {
   new = "new",
 }
 
-export enum candidateStatus {
+export enum candidateSwitchStatus {
+  notDisplayed = "notDisplayed",
   removed = "removed",
   added = "added",
   inBoth = "inBoth",
