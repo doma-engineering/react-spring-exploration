@@ -37,34 +37,51 @@ const Table = () => {
   const formatHash = (hash: string) => (hash.substring(hash.length - 8));
 
   return (
-    <div className='CandidateTable'>
-      <tr>
-        <th>Candidate</th>
-        <th>Score</th>
-        <th>Score(%)</th>
-        <th>Status</th>
-        <th>Finish date</th>
-      </tr>
-      {transitions(({ opacity, height }, candidate, _, index) => (
-        <animated.tr
-          className="CandidateBox"
-          style={{
-            borderLeftColor: rankColor(candidate.rank),
-            opacity,
-            height,
-            scaleY: opacity,
-            background: (index % 2 === 0) ? "rgb(280, 190, 100)" : "rgb(230, 100, 37)",
-            borderLeftWidth: "0.4rem"
-          }}
-        >
-          <animated.td style={{ height }}> {formatHash(candidate.hash)} </animated.td>
-          <animated.td style={{ height }}> {candidate.score}                </animated.td>
-          <animated.td style={{ height }}> {candidate.scorePercent}         </animated.td>
-          <animated.td style={{ height }}> {candidate.userStatus}           </animated.td>
-          <animated.td style={{ height }}> {formatDate(candidate.taskEndDate)} </animated.td>
-        </animated.tr>
-      ))}
-    </div>
+    <div className="bg-gray-700 p-3 rounded drop-shadow-xl">
+      <div className="flex text-stone-300 text-lg font-medium">
+        <div className="w-52 pb-2 text-center border-b-2 border-slate-800">Candidate</div>
+        <div className="w-24 pb-2 text-center border-b-2 border-slate-800">Score</div>
+        <div className="w-32 pb-2 text-center border-b-2 border-slate-800">Score(%)</div>
+        <div className="w-40 pb-2 text-center border-b-2 border-slate-800 px-12">Status</div>
+        <div className="w-52 pb-2 text-center border-b-2 border-slate-800">Finish date</div>
+      </div>
+      <div>
+        {transitions(({ opacity }, candidate, _, index) => (
+          <animated.div
+            className="flex text-center align-middle h-16"
+            style={{
+              opacity,
+            }}
+          >
+            <div className="w-52 text-center border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
+              <div className={`border-l-4 w-40 border-${rankColor(candidate.rank)}`}>
+                {formatHash(candidate.hash)}
+              </div>
+            </div>
+            <div className="w-24 border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
+              <div>
+                {candidate.score}
+              </div>
+            </div>
+            <div className="w-32 border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
+              <div>
+                {candidate.scorePercent}%
+              </div>
+            </div>
+            <div className="w-40 border-b-2 border-slate-800 text-slate-200 h-16" >
+              <div>
+                {candidate.userStatus}
+              </div>
+            </div>
+            <div className="w-52 border-b-2 border-slate-800 text-slate-200 h-16" >
+              <div>
+                {formatDate(candidate.taskEndDate)}
+              </div>
+            </div>
+          </animated.div>
+        ))}
+      </div>
+    </div >
   );
 }
 

@@ -27,7 +27,7 @@
 //
 //  ------------------------------------------------------
 
-import "./Components/CandidateTable/candidateTable.css"
+//import "./Components/CandidateTable/candidateTable.css"
 
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom"
 import HiringCampaignsPageValidator from "./Components/Validators/HiringCampaignsValidator";
@@ -35,23 +35,41 @@ import Error404Page from "./Pages/Error404Page";
 import CandidateTableValidator from "./Components/Validators/CandidateTableValidator";
 import LoginValidator from "./Components/Validators/LoginValidator";
 import SwitchHiringCampaignsValidator from "./Components/Validators/SwitchHiringCampaignsValidator";
-import { CANDIDATE_TABLE_SWITCH_MODE_URL_path, CANDIDATE_TABLE_URL_path, HIRINGS_COMPAIGNS_MISS_COMPANY_URL_errorPath, HIRINGS_COMPAIGNS_SWITCH_MODE_URL_path, HIRINGS_COMPAIGNS_URL_path, LOGIN_URL, ROOT_URL } from "./routes";
+import {
+  CANDIDATE_TABLE_SWITCH_MODE_URL_path,
+  CANDIDATE_TABLE_URL_path,
+  HIRINGS_COMPAIGNS_MISS_COMPANY_URL_errorPath,
+  HIRINGS_COMPAIGNS_SWITCH_MODE_URL_path,
+  HIRINGS_COMPAIGNS_URL_path,
+  LOGIN_URL,
+  ROOT_URL
+} from "./routes";
 import CandidateTableSwitcherValidator from "./Components/Validators/SwitchCandidateTableValidator";
+
+import "./styles.css"
 
 const Multipage = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path={ROOT_URL} element={<Navigate to={`Login`} />} />
-        <Route path={LOGIN_URL} element={<LoginValidator />} />
-        <Route path={HIRINGS_COMPAIGNS_URL_path} element={<HiringCampaignsPageValidator />} />
-        <Route path={HIRINGS_COMPAIGNS_SWITCH_MODE_URL_path} element={<SwitchHiringCampaignsValidator />} />
-        <Route path={CANDIDATE_TABLE_URL_path} element={<CandidateTableValidator />} />
-        <Route path={CANDIDATE_TABLE_SWITCH_MODE_URL_path} element={<CandidateTableSwitcherValidator />} />
-        <Route path={HIRINGS_COMPAIGNS_MISS_COMPANY_URL_errorPath} element={<Navigate to={LOGIN_URL} />} />
-        <Route path="*" element={<Error404Page />} />
-      </Routes>
-    </Router>
+    <div className="bg-slate-800 w-screen h-screen">
+      <Router>
+        <div className="bg-slate-900 p-2 border-b border-slate-600">
+          <div className="flex">
+            <img className="w-10 h-10 ml-5 invert" src="https://raw.githubusercontent.com/doma-engineering/design-exploration/main/layout%20prototype/LogoPlay-04.png" alt="OHR logo" />
+            <div className="text-white font-mono text-4xl">∅HR</div>
+          </div>
+        </div>
+        <Routes>
+          <Route path={ROOT_URL} element={<Navigate to={`Login`} />} />
+          <Route path={LOGIN_URL} element={<LoginValidator />} />
+          <Route path={HIRINGS_COMPAIGNS_URL_path} element={<HiringCampaignsPageValidator />} />
+          <Route path={HIRINGS_COMPAIGNS_SWITCH_MODE_URL_path} element={<SwitchHiringCampaignsValidator />} />
+          <Route path={CANDIDATE_TABLE_URL_path} element={<CandidateTableValidator />} />
+          <Route path={CANDIDATE_TABLE_SWITCH_MODE_URL_path} element={<CandidateTableSwitcherValidator />} />
+          <Route path={HIRINGS_COMPAIGNS_MISS_COMPANY_URL_errorPath} element={<Navigate to={LOGIN_URL} />} />
+          <Route path="*" element={<Error404Page />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

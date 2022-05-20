@@ -10,9 +10,9 @@ const DisplayUser = () => {
   )
     ?.displayName ?? "";
   return (
-    <div>
+    <div className="text-gray-100 font-thin m-2">
       Current Company Logined as
-      <span style={{ fontWeight: "bold" }}> {companyName} </span>
+      <span className="text-white font-bold"> {companyName} </span>
     </div>
   );
 }

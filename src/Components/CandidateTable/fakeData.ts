@@ -443,25 +443,25 @@ export const fakeFilterData: FilterProperty[] = [
   {
     id: Rank.Senior,
     displayName: "Senior",
-    color: "#00FF00",
+    color: "btn-Senior",
     defaultSelections: true,
   },
   {
     id: Rank.Middle,
     displayName: "Middle",
-    color: "#FFFF00",
+    color: "btn-Middle",
     defaultSelections: true,
   },
   {
     id: Rank.Junior,
     displayName: "Junior",
-    color: "#FF0000",
+    color: "btn-Junior",
     defaultSelections: true,
   },
   {
     id: Rank.NM,
     displayName: "N/m",
-    color: "#000000",
+    color: "btn-NM",
     defaultSelections: false,
   }
 ];
