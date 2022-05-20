@@ -25,16 +25,15 @@ const Login = () => {
     , [tryToEnter]);
 
   return (
-    <div className="login" style={{ padding: "5px" }}>
-      <label>
-        Login as:
-        <input
-          type="text"
-          onChange={(e) => setLogin(e.target.value)}
-          onKeyDown={checkEnter}
-          defaultValue={`${logStr}`}
-        />
-      </label>
+    <div className="flex items-center text-stone-200 ">
+      <span className="mr-2">Login as:</span>
+      <input
+        className="bg-slate-900 p-1 px-2"
+        type="text"
+        onChange={(e) => setLogin(e.target.value)}
+        onKeyDown={checkEnter}
+        defaultValue={`${logStr}`}
+      />
     </div>
   );
 }

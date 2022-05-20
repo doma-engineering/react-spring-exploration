@@ -46,9 +46,6 @@ const Filter = () => {
                             disabled:brightness-100 disabled:bg-gray-700/50 disabled:text-slate-400`}
                 key={"FB" + index.toString()}
                 onClick={() => rankOnClick(index)}
-              // style={{
-              //   background: rank.color,
-              // }}
               >
                 {rank.displayName}
               </button>

@@ -2,26 +2,25 @@ import { useAtom } from "jotai";
 import { differentCompany } from "../Atoms/HiringCompaign";
 import HiringCampaigns from "../Components/HiringCampaign/HiringCampaigns";
 import DisplayUser from "../Components/Login/DisplayUser";
-import Login from "../Components/Login/Login";
-import ToLoginButton from "../Components/Login/toLoginButton";
 
 const HiringCampaignPage = () => {
-  const [isTableCompany] = useAtom(differentCompany);
+  //const [isTableCompany] = useAtom(differentCompany);
   return (
-    <div style={{ display: "flex", flexDirection: "row", fontSize: "25px", padding: "10px" }}>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <Login />
-        <ToLoginButton />
+    <div className="flex">
+      <div className="flex fixed flex-col ml-10 mx-4 my-4 justify-center">
+        <div>
+          <DisplayUser />
+        </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "80rem" }}>
-        <DisplayUser />
-        <div style={{ margin: "1rem" }}>
+
+      <div className="z-50 flex flex-col w-full items-center justify-center mt-10">
+        {/* <div className="text-2xl text-center text-stone-300 border-b-2 border-slate-600 pb-3 w-full mb-5">
           Hiring compaigns
           {isTableCompany === "" ? <></> : <span> for <b>{isTableCompany}</b></span>}
-        </div>
+        </div> */}
         <HiringCampaigns />
       </div>
-    </div>
+    </div >
   );
 }
 

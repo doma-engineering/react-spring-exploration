@@ -23,11 +23,8 @@ const EnterButton = () => {
 
   return (
     <button
+      className="bg-sky-900 shadow rounded-lg text-slate-300 py-1 px-9 hover:bg-slate-600 hover:text-white"
       onClick={handleClick}
-      style={{
-        fontSize: "18px",
-        margin: "1rem"
-      }}
     >
       Enter
     </button>

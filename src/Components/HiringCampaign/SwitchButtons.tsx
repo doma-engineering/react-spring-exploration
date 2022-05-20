@@ -15,35 +15,20 @@ const SwitherButtons = () => {
   }
 
   return (
-    <div
-      className="switherButtonsBody"
-      style={{
-        width: style.width,
-        height: style.height,
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-      }}
-    >
+    <div className="flex justify-center content-center text-slate-300 space-x-2">
       <button
+        className="px-2 py-1 outline outline-blue-500 rounded-full outline-red-800 hover:text-slate-200 hover:outline-transparent hover:bg-red-800"
         onMouseEnter={() => setHover(selectedType.old)}
         onMouseLeave={() => setHover(selectedType.none)}
         onClick={hasClickedOld}
-        style={{
-          ...style.buttonStyle,
-          background: hover === selectedType.old ? "#DDAAAA" : "#EEEEEE"
-        }}
       >
         select Old
       </button>
       <button
+        className="px-2 py-1 outline outline-blue-500 rounded-full outline-green-700 hover:text-slate-200 hover:outline-transparent hover:bg-green-700"
         onMouseEnter={() => setHover(selectedType.new)}
         onMouseLeave={() => setHover(selectedType.none)}
         onClick={hasClickedNew}
-        style={{
-          ...style.buttonStyle,
-          background: hover === selectedType.new ? "#AADDAA" : "#EEEEEE"
-        }}
       >
         select New
       </button>
@@ -52,13 +37,3 @@ const SwitherButtons = () => {
 }
 
 export default SwitherButtons;
-
-const style = {
-  width: "17rem",
-  height: "4rem",
-  buttonStyle: {
-    width: "8rem",
-    height: "2rem",
-    margin: "0.5"
-  }
-}

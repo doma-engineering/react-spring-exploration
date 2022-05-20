@@ -42,7 +42,7 @@ const SwitchHiringCampaignsValidator = () => {
         && filtr.tableFilters.toString() === oldFilter[index].tableFilters.toString()
       ), true)
     ) {
-      setReturnPage(ErrorSwitchModePage);
+      setReturnPage(<ErrorSwitchModePage />);
     }
   }, [newFilter, oldFilter])
 

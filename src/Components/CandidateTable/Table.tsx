@@ -68,12 +68,12 @@ const Table = () => {
                 {candidate.scorePercent}%
               </div>
             </div>
-            <div className="w-40 border-b-2 border-slate-800 text-slate-200 h-16" >
+            <div className="w-40 border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
               <div>
                 {candidate.userStatus}
               </div>
             </div>
-            <div className="w-52 border-b-2 border-slate-800 text-slate-200 h-16" >
+            <div className="w-52 border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
               <div>
                 {formatDate(candidate.taskEndDate)}
               </div>

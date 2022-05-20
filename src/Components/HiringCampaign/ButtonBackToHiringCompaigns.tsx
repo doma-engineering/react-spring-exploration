@@ -9,7 +9,7 @@ const ButtonBackToHiringCompaigns = () => {
 
   return (
     <button
-      className="bg-sky-900 px-6 py-3  mx-2 my-2 shadow rounded-lg text-slate-300 hover:bg-slate-600 hover:text-white"
+      className="bg-sky-900 px-6 py-3  mx-2 my-2 shadow rounded-lg text-base text-slate-300 hover:bg-slate-600 hover:text-white"
       onClick={() => navigate(HIRINGS_COMPAIGNS_URL(name))}
     >
       Back to compaigns

@@ -11,7 +11,7 @@ const CandidateTablePage = () => {
   return (
     <div className="flex w-full">
       <InitBTNsClolors />
-      <div className="flex fixed flex-col ml-10 mx-2 my-2 justify-center">
+      <div className="flex fixed flex-col ml-10 mx-4 my-4 justify-center">
         <div>
           <DisplayUser />
         </div>

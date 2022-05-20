@@ -22,27 +22,28 @@ const HiringCampaigns = () => {
   }
 
   return (
-    <div>
-      <table style={{ ...styles.table, borderCollapse: "collapse", }}>
+    <div className="bg-gray-700 p-3 rounded drop-shadow-xl">
+      <table>
         <thead>
           <tr>
-            <th style={{ ...styles.tdTh, width: "15rem", }}>Specialization</th>
-            <th style={styles.tdTh}>Pending</th>
-            <th style={styles.tdTh}>Filtred</th>
-            <th style={styles.tdTh}>Total</th>
+            <th className="w-40 text-stone-300 text-xl font-medium pb-2 text-center border-b-2 border-slate-800">Specialization</th>
+            <th className="w-40 text-stone-300 text-xl font-medium pb-2 text-center border-b-2 border-slate-800">Pending</th>
+            <th className="w-40 text-stone-300 text-xl font-medium pb-2 text-center border-b-2 border-slate-800">Filtred</th>
+            <th className="w-40 text-stone-300 text-xl font-medium pb-2 text-center border-b-2 border-slate-800">Total</th>
           </tr>
         </thead>
         <tbody>
           {
             hiringsRows.map((row) =>
               <tr
+                className="hover:bg-gray-800"
                 key={row.tableID}
                 onClick={() => hasClicked(row.tableID)}
               >
-                <td style={{ ...styles.tdTh, textAlign: "center", }}> {displayName(row.tableID)} </td>
-                <td style={{ ...styles.tdTh, textAlign: "center", }}> {row.pending} </td>
-                <td style={{ ...styles.tdTh, textAlign: "center", }}> {row.filtred} </td>
-                <td style={{ ...styles.tdTh, textAlign: "center", }}> {row.total} </td>
+                <td className="w-40 text-slate-200 text-lg text-center pb-2 text-center border-b-2 border-slate-800"> {displayName(row.tableID)} </td>
+                <td className="w-40 text-slate-200 text-lg text-center pb-2 text-center border-b-2 border-slate-800"> {row.pending} </td>
+                <td className="w-40 text-slate-200 text-lg text-center pb-2 text-center border-b-2 border-slate-800"> {row.filtred} </td>
+                <td className="w-40 text-slate-200 text-lg text-center pb-2 text-center border-b-2 border-slate-800"> {row.total} </td>
               </tr>
             )
           }
@@ -53,16 +54,3 @@ const HiringCampaigns = () => {
 }
 
 export default HiringCampaigns;
-
-const styles = {
-  table: {
-    background: "#A0A0C0",
-    borders: "1px solid rgb(36, 34, 34)",
-    width: "50rem",
-    border: "1px solid rgb(36, 34, 34)",
-  },
-  tdTh: {
-    border: "1px solid rgb(36, 34, 34)",
-    width: "10rem",
-  }
-};

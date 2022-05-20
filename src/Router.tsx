@@ -30,11 +30,13 @@
 //import "./Components/CandidateTable/candidateTable.css"
 
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom"
-import HiringCampaignsPageValidator from "./Components/Validators/HiringCampaignsValidator";
-import Error404Page from "./Pages/Error404Page";
-import CandidateTableValidator from "./Components/Validators/CandidateTableValidator";
+import UpsideMenu from "./Components/UpsideMenu/UpsideMenu";
 import LoginValidator from "./Components/Validators/LoginValidator";
+import HiringCampaignsPageValidator from "./Components/Validators/HiringCampaignsValidator";
 import SwitchHiringCampaignsValidator from "./Components/Validators/SwitchHiringCampaignsValidator";
+import CandidateTableValidator from "./Components/Validators/CandidateTableValidator";
+import CandidateTableSwitcherValidator from "./Components/Validators/SwitchCandidateTableValidator";
+import Error404Page from "./Pages/Error404Page";
 import {
   CANDIDATE_TABLE_SWITCH_MODE_URL_path,
   CANDIDATE_TABLE_URL_path,
@@ -44,7 +46,6 @@ import {
   LOGIN_URL,
   ROOT_URL
 } from "./routes";
-import CandidateTableSwitcherValidator from "./Components/Validators/SwitchCandidateTableValidator";
 
 import "./styles.css"
 
@@ -52,12 +53,7 @@ const Multipage = () => {
   return (
     <div className="bg-slate-800 w-screen h-screen">
       <Router>
-        <div className="bg-slate-900 p-2 border-b border-slate-600">
-          <div className="flex">
-            <img className="w-10 h-10 ml-5 invert" src="https://raw.githubusercontent.com/doma-engineering/design-exploration/main/layout%20prototype/LogoPlay-04.png" alt="OHR logo" />
-            <div className="text-white font-mono text-4xl">∅HR</div>
-          </div>
-        </div>
+        <UpsideMenu />
         <Routes>
           <Route path={ROOT_URL} element={<Navigate to={`Login`} />} />
           <Route path={LOGIN_URL} element={<LoginValidator />} />

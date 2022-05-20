@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { currentPath, loginedCompany } from "../Atoms/Login";
+import ButtonBackToHiringCompaigns from "../Components/HiringCampaign/ButtonBackToHiringCompaigns";
 import { HIRINGS_COMPAIGNS_URL, LOGIN_URL } from "../routes";
 
 const ErrorSwitchModePage = () => {
@@ -11,18 +12,13 @@ const ErrorSwitchModePage = () => {
   const [, setPatch] = useAtom(currentPath);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-      <span> Sorry but you can't go to <b>switch mode</b> without changes. </span>
+    <div className="flex flex-col justify-center items-center text-stone-200 text-4xl">
+      <span className="mt-10"> Sorry but you can't go to <b>switch mode</b> without changes. </span>
       {
         nowLogined !== "" ?
-          <button
-            onClick={() => {
-              setPatch(HIRINGS_COMPAIGNS_URL(nowLogined));
-              navigate(HIRINGS_COMPAIGNS_URL(nowLogined));
-            }}
-          >
-            to Hiring compaigns
-          </button>
+          <div className="mt-5">
+            <ButtonBackToHiringCompaigns />
+          </div>
           :
           <button
             onClick={() => {

@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
+
+.btnAccent {
+  @apply bg-sky-900 px-6 py-3 mx-2 my-2 shadow rounded-lg text-slate-300;
+}
+
 @tailwind utilities;
+
+@layer components {}
