@@ -7,7 +7,7 @@ import { companies, tables as allTables } from "../../Atoms/LoadData";
 import { currentPath, loginedCompany } from "../../Atoms/Login";
 import { filters, urlFilters } from "../../Atoms/Filters";
 
-import { defaultFilterParams, fakeFilterData } from "../CandidateTable/fakeData";
+import { defaultFilterParams, fakeFilterData } from "../../Atoms/fakeData";
 
 import { CandidateTable, CandidateTableFilters, Company } from "../CandidateTable/candidateTableTypes";
 
