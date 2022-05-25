@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { atomWithHash } from "jotai/utils";
 import { CandidateTableFilters } from "../Components/CandidateTable/candidateTableTypes";
-import { defaultFilterParams } from "../Components/CandidateTable/fakeData";
+import { defaultFilterParams } from "./fakeData";
 import { currentTable } from "./CandidateTables";
 import { createLocalStorageAtom, createSessionStorageAtom } from "./storageHelpsFunctions";
 

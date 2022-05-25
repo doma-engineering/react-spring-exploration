@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { CandidateTable, Company, FilterProperty } from "../Components/CandidateTable/candidateTableTypes";
-import { fakeCompanies, fakeFilterData, fakeTables } from "../Components/CandidateTable/fakeData";
+import { fakeCompanies, fakeFilterData, fakeTables } from "./fakeData";
 
 export const companies = atom<Company[]>(fakeCompanies);
 export const tables = atom<CandidateTable[]>(fakeTables);

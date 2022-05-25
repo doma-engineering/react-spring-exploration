@@ -5,7 +5,7 @@ import { filters, urlFilters } from "../../Atoms/Filters";
 import { tables as allTables } from "../../Atoms/LoadData"
 import { selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 import { CandidateTableFilters, Company, TableResult, TablesResult } from "../CandidateTable/candidateTableTypes";
-import { defaultFilterParams } from "../CandidateTable/fakeData";
+import { defaultFilterParams } from "../../Atoms/fakeData";
 import { findResult } from "../Validators/HiringCampaignsValidator";
 
 

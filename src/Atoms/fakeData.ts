@@ -1,4 +1,4 @@
-import { Candidate, CandidateTable, Company, FilterProperty, Gender, Rank, User, UserStatus } from "./candidateTableTypes";
+import { Candidate, CandidateTable, Company, FilterProperty, Gender, Rank, User, UserStatus } from "../Components/CandidateTable/candidateTableTypes";
 
 // -------- fake tables data --------- //
 
@@ -443,25 +443,25 @@ export const fakeFilterData: FilterProperty[] = [
   {
     id: Rank.Senior,
     displayName: "Senior",
-    color: "btn-Senior",
+    color: "Senior",
     defaultSelections: true,
   },
   {
     id: Rank.Middle,
     displayName: "Middle",
-    color: "btn-Middle",
+    color: "Middle",
     defaultSelections: true,
   },
   {
     id: Rank.Junior,
     displayName: "Junior",
-    color: "btn-Junior",
+    color: "Junior",
     defaultSelections: true,
   },
   {
     id: Rank.NM,
     displayName: "N/m",
-    color: "btn-NM",
+    color: "NM",
     defaultSelections: false,
   }
 ];
