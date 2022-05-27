@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { Company } from "../Components/CandidateTable/candidateTableTypes";
+import { Company } from "./candidateTableTypes";
 
 export const currentCompany = atom<Company>({ id: "", displayName: "", tables: [] });
 export const companyName = atom(

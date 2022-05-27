@@ -1,4 +1,4 @@
-import { Candidate, CandidateTable, Company, FilterProperty, Gender, Rank, User, UserStatus } from "../Components/CandidateTable/candidateTableTypes";
+import { Candidate, CandidateTable, Company, FilterProperty, Gender, Rank, User, UserStatus } from "./candidateTableTypes";
 
 // -------- fake tables data --------- //
 

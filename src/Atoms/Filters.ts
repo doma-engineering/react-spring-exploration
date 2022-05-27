@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomWithHash } from "jotai/utils";
-import { CandidateTableFilters } from "../Components/CandidateTable/candidateTableTypes";
+import { CandidateTableFilters } from "./candidateTableTypes";
 import { defaultFilterParams } from "./fakeData";
 import { currentTable } from "./CandidateTables";
 import { createLocalStorageAtom, createSessionStorageAtom } from "./storageHelpsFunctions";
@@ -31,3 +31,5 @@ export const localStorageFilters = createLocalStorageAtom<CandidateTableFilters[
 export const sessionFilters = createSessionStorageAtom<CandidateTableFilters[]>("filters", []);
 
 export const urlFilters = atomWithHash<CandidateTableFilters[]>("Filters", []);
+
+export const savedUrlFilters = atom<CandidateTableFilters[]>([]);
