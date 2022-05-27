@@ -10,7 +10,6 @@ const CandidateTablePage = () => {
 
   return (
     <div className="flex w-full">
-      <InitBTNsClolors />
       <div className="flex fixed flex-col ml-10 mx-4 my-4 justify-center">
         <div>
           <DisplayUser />
@@ -36,13 +35,13 @@ const CandidateTablePage = () => {
   );
 }
 
-const InitBTNsClolors = () => (
-  <div className="absolute invisible">                              {/*  That only initialization for not default tailwind colors :(                                       */}
-    <div className="bg-btn-Senior border-btn-Senior">Senior</div>   {/*  becouse if no where not writed not defoult color in simple classname string as there,             */}
-    <div className="bg-btn-Middle border-btn-Middle">Middle</div>   {/*  line like   classname=`bg-${function()}`   will NOT work      function = () => ("btn-Middle")     */}
-    <div className="bg-btn-Junior border-btn-Junior">Junior</div>   {/*  I think for solve that problem need save that colors as final css, bc if write them simple (line 2), and delite after, they also work in (line 3).*/}
-    <div className="bg-btn-NM border-btn-NM">NM</div>
-  </div>
-)
+// const InitBTNsClolors = () => (
+//   <div className="absolute invisible">                          {/*  That only initialization for not default tailwind colors :(                                       */}
+//     <div className="bg-Senior border-Senior">Senior</div>   {/*  becouse if no where not writed not defoult color in simple classname string as there,             */}
+//     <div className="bg-Middle border-Middle">Middle</div>   {/*  line like   classname=`bg-${function()}`   will NOT work      function = () => ("btn-Middle")     */}
+//     <div className="bg-Junior border-Junior">Junior</div>   {/*  I think for solve that problem need save that colors as final css, bc if write them simple (line 2), and delite after, they also work in (line 3).*/}
+//     <div className="bg-NM     border-NM"    >NM</div>
+//   </div>
+// )
 
 export default CandidateTablePage;
