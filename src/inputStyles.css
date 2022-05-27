@@ -1,10 +1,61 @@
 @tailwind base;
 @tailwind components;
-
-.btnAccent {
-  @apply bg-sky-900 px-6 py-3 mx-2 my-2 shadow rounded-lg text-slate-300;
-}
-
 @tailwind utilities;
 
-@layer components {}
+@layer base {
+  td, th {
+    @apply w-40 text-slate-200 text-lg text-center pb-2 border-b-2 border-slate-800;
+  }
+  th {
+    @apply text-stone-300 text-xl font-medium
+  }
+}
+
+@layer components {
+  .tableDiv {
+    @apply bg-gray-700 p-3 rounded drop-shadow-xl
+  }
+  .tableDivHeaderRow {
+    @apply flex text-stone-300 text-lg font-medium
+  }
+  .tableDivHeaderCell {
+    @apply pb-2 text-center border-b-2 border-slate-800
+  }
+  .tableDivRow {
+    @apply flex text-center align-middle h-16 text-slate-200
+  }
+  .tableDivRow-lowContrast {
+    @apply tableDivRow text-slate-300/60
+  }
+  .tableDivRow-new {
+    @apply tableDivRow font-medium text-green-400
+  }
+  .tableDivRow-removed {
+    @apply tableDivRow font-medium text-red-500 decoration-stone-100 line-through
+  }
+  .tableDivRow-selected {
+    @apply tableDivRow font-medium text-green-300 
+  }
+  .tableDivCell {
+    @apply border-b-2 border-slate-800 h-16 flex justify-center items-center
+  }
+  
+  .btnAccent {
+    @apply bg-sky-900 px-6 py-3 mx-2 my-2 shadow rounded-lg 
+           text-slate-300 
+           hover:bg-slate-600 hover:text-white
+  }
+  .btnFilter {
+    @apply rounded mx-1 my-1 px-3 py-1 shadow-md bg-lime-800
+           text-base text-stone-200
+           decoration-2 decoration-sky-800
+           hover:brightness-110 active:brightness-125 
+           disabled:brightness-100 disabled:bg-gray-700/50 disabled:text-slate-400
+  }
+  .lblFilter {
+    @apply text-stone-300 text-lg font-medium flex w-full justify-center mb-3 border-b border-slate-600 pb-2
+  }
+  .upsideCategory {
+    @apply text-2xl text-slate-300 text-center hover:bg-slate-800/50
+  }
+}

@@ -1,12 +1,14 @@
 import SwitcherTables from "../Components/HiringCampaign/HiringCampaignsSwitcher";
-import SwitherButtons from "../Components/HiringCampaign/SwitchButtons";
+import SwitherButtons from "../Components/Validators/SwitchButtons";
 
 const SwitcherHiringCampaignsPage = () => {
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "3rem" }}>
+    <div className="flex flex-col justify-center items-center mt-12">
       <SwitherButtons />
-      <SwitcherTables />
+      <div className="flex mt-6">
+        <SwitcherTables />
+      </div>
     </div>
   );
 }

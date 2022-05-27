@@ -7,7 +7,7 @@ const Error404Page = () => {
         404 page not found.
       </div>
       <div className="flex justify-center m-2">
-        <ToLoginButton text="Go to login" style="btnAccent py-1 px-8 hover:bg-slate-600 hover:text-white" />
+        <ToLoginButton text="Go to login" style="btnAccent py-1 px-8" />
       </div>
     </div>
   );

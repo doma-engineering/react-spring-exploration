@@ -8,7 +8,7 @@ const ErrorSwitherCandidateTable = () => {
         Error in switch!
       </div>
       <div className="flex justify-center items-center mt-5">
-        <ToLoginButton text="Go to login" style="btnAccent py-1 px-8 hover:bg-slate-600 hover:text-white" />
+        <ToLoginButton text="Go to login" style="btnAccent py-1 px-8" />
       </div>
     </div>
   )

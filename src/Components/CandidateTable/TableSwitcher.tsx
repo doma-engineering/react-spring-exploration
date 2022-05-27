@@ -1,15 +1,27 @@
 import { atom, useAtom } from "jotai";
 import { currentTable } from "../../Atoms/CandidateTables";
-import { filters, urlFilters } from "../../Atoms/Filters";
+import { Rank, UserStatus } from "../../Atoms/candidateTableTypes";
+import { filters, savedUrlFilters } from "../../Atoms/Filters";
 import { filterData } from "../../Atoms/LoadData";
 import { candidateSwitchStatus, selectedType, switcherMouseHoverTable } from "../../Atoms/SwithersAtoms";
+
+type CandidateInSwithing = {
+  switchStatus: candidateSwitchStatus;
+  hash: string;
+  score: number;
+  scorePercent: number;
+  rank: Rank;
+  taskStartDate: Date;
+  taskEndDate: Date;
+  userStatus: UserStatus;
+};
 
 const tableData = atom(
   (get) => get(currentTable).table
     .map(
       (candidate) => {
         const oldF = get(filters).find((filter) => (filter.tableID === get(currentTable).id))?.tableFilters ?? [false, false, false, false];
-        const newF = get(urlFilters).find((filter) => (filter.tableID === get(currentTable).id))?.tableFilters ?? [false, false, false, false];
+        const newF = get(savedUrlFilters).find((filter) => (filter.tableID === get(currentTable).id))?.tableFilters ?? [false, false, false, false];
 
         const rankIndex = get(filterData).findIndex((rank) => rank.id === candidate.rank);
 
@@ -33,46 +45,67 @@ const CandidateTableSwitcher = () => {
   const [mouseHoverVersion] = useAtom(switcherMouseHoverTable);
   const [data] = useAtom(tableData);
 
+  const formatDate = (date: Date) => (date.toLocaleDateString());
+  const formatHash = (hash: string) => (hash.substring(hash.length - 8));
   const rankColor = (rankName: string): string => {
     const rank = filter.find(rank => (rank.id === rankName));
-    return rank === undefined ? "FFFFFF" : rank.color;
+    return rank === undefined ? "white" : rank.color;
   }
 
-  const findBackground = (candidate: candidateSwitchStatus, selection: selectedType) => {
-    if (selection === selectedType.none) {
-      return (candidate === candidateSwitchStatus.inBoth) ? "#CCCCCC" : "#EEEEEE";
+  const displayType = (candidate: CandidateInSwithing): string => {
+    if (mouseHoverVersion === selectedType.new) {
+      if (candidate.switchStatus !== candidateSwitchStatus.removed)
+        return "tableDivRow-selected";
+      return "tableDivRow-lowContrast line-through";
     }
-    if (selection === selectedType.new) {
-      return candidate !== candidateSwitchStatus.removed ? "#DDFFDD" : "#EEEEEE";
+    if (mouseHoverVersion === selectedType.old) {
+      if (candidate.switchStatus !== candidateSwitchStatus.added)
+        return "tableDivRow-selected";
+      return "tableDivRow-lowContrast line-through";
     }
-    if (selection === selectedType.old) {
-      return (candidate !== candidateSwitchStatus.added) ? "#DDFFDD" : "#EEEEEE";
-    }
-    return "#FF0000" // error 
-  }
 
-  const findTextColor = (candidate: candidateSwitchStatus) => {
-    if (candidate === candidateSwitchStatus.inBoth) return "#777777";
-    if (candidate === candidateSwitchStatus.added) return "#33AA33";
-    if (candidate === candidateSwitchStatus.removed) return "#990000";
-    return "#FF0000" // error
+    if (candidate.switchStatus === candidateSwitchStatus.added) return "tableDivRow-new";
+    if (candidate.switchStatus === candidateSwitchStatus.removed) return "tableDivRow-removed";
+    return "tableDivRow"
   }
 
   return (
-    <div className='CandidateTable'>
+    <div className='tableDiv'>
+      <div className="tableDivHeaderRow">
+        <div className="w-52 tableDivHeaderCell">Candidate</div>
+        <div className="w-24 tableDivHeaderCell">Score</div>
+        <div className="w-32 tableDivHeaderCell">Score(%)</div>
+        <div className="w-40 tableDivHeaderCell px-12">Status</div>
+        <div className="w-52 tableDivHeaderCell">Finish date</div>
+      </div>
       {
         data.map((candidate) => (
-          <div
-            className="CandidateBox"
-            style={{
-              borderLeftColor: rankColor(candidate?.rank ?? ""),
-              background: findBackground(candidate?.switchStatus ?? candidateSwitchStatus.removed, mouseHoverVersion),
-              textDecoration: candidate?.switchStatus === candidateSwitchStatus.removed ? "line-through" : "none",
-              color: findTextColor(candidate?.switchStatus ?? candidateSwitchStatus.removed),
-              borderLeftWidth: "0.4rem"
-            }}
-          >
-            {candidate?.hash}: {candidate?.score}
+          <div className={displayType(candidate)} key={candidate.hash}>
+            <div className="w-52 tableDivCell" >
+              <div className={`border-l-4 w-40 border-${rankColor(candidate.rank)}`}>
+                {formatHash(candidate.hash)}
+              </div>
+            </div>
+            <div className="w-24 tableDivCell" >
+              <div>
+                {candidate.score}
+              </div>
+            </div>
+            <div className="w-32 tableDivCell" >
+              <div>
+                {candidate.scorePercent}%
+              </div>
+            </div>
+            <div className="w-40 tableDivCell" >
+              <div>
+                {candidate.userStatus}
+              </div>
+            </div>
+            <div className="w-52 tableDivCell" >
+              <div>
+                {formatDate(candidate.taskEndDate)}
+              </div>
+            </div>
           </div>
         ))
       }

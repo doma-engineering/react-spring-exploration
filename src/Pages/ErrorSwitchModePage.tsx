@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { currentPath, loginedCompany } from "../Atoms/Login";
 import ButtonBackToHiringCompaigns from "../Components/HiringCampaign/ButtonBackToHiringCompaigns";
-import { HIRINGS_COMPAIGNS_URL, LOGIN_URL } from "../routes";
+import { LOGIN_URL } from "../routes";
 
 const ErrorSwitchModePage = () => {
 

@@ -2,7 +2,7 @@ import { atom, useAtom } from "jotai";
 import { currentTable } from "../../Atoms/CandidateTables";
 import { currentFilters } from "../../Atoms/Filters";
 import { filterData } from "../../Atoms/LoadData";
-import { FilterProperty } from "./candidateTableTypes";
+import { FilterProperty } from "../../Atoms/candidateTableTypes";
 
 const ActiveButtons = atom(
   (get) =>
@@ -28,8 +28,8 @@ const Filter = () => {
   }
 
   return (
-    <div className="flex flex-col items-center px-2 py-1 mx-2 my-2"> {/*can try set to back as card: bg-sky-900 shadow-md rounded-lg*/}
-      <div className="text-stone-300 text-lg font-medium flex w-full justify-center mb-3 border-b border-slate-600 pb-2">
+    <div className="flex flex-col items-center px-2 py-1 mx-2 my-2">
+      <div className="lblFilter">
         Filter by rank
       </div>
       <div className="flex flex-col w-40">
@@ -39,11 +39,8 @@ const Filter = () => {
             (
               <button
                 disabled={!isActive(rank)}
-                className={`rounded mx-1 my-1 px-3 py-1 shadow-md bg-${rank.color}
-                            text-base text-stone-200 text-thin
-                            decoration-2 decoration-sky-800 ${isSelected[index] ? "no-underline" : "line-through"}
-                            hover:brightness-110 active:brightness-125 
-                            disabled:brightness-100 disabled:bg-gray-700/50 disabled:text-slate-400`}
+                className={`btnFilter bg-${rank.color}
+                            ${isSelected[index] ? "no-underline" : "line-through"}`}
                 key={"FB" + index.toString()}
                 onClick={() => rankOnClick(index)}
               >

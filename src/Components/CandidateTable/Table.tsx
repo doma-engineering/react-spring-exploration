@@ -37,43 +37,43 @@ const Table = () => {
   const formatHash = (hash: string) => (hash.substring(hash.length - 8));
 
   return (
-    <div className="bg-gray-700 p-3 rounded drop-shadow-xl">
-      <div className="flex text-stone-300 text-lg font-medium">
-        <div className="w-52 pb-2 text-center border-b-2 border-slate-800">Candidate</div>
-        <div className="w-24 pb-2 text-center border-b-2 border-slate-800">Score</div>
-        <div className="w-32 pb-2 text-center border-b-2 border-slate-800">Score(%)</div>
-        <div className="w-40 pb-2 text-center border-b-2 border-slate-800 px-12">Status</div>
-        <div className="w-52 pb-2 text-center border-b-2 border-slate-800">Finish date</div>
+    <div className="tableDiv">
+      <div className="tableDivHeaderRow">
+        <div className="w-52 tableDivHeaderCell">Candidate</div>
+        <div className="w-24 tableDivHeaderCell">Score</div>
+        <div className="w-32 tableDivHeaderCell">Score(%)</div>
+        <div className="w-40 tableDivHeaderCell px-12">Status</div>
+        <div className="w-52 tableDivHeaderCell">Finish date</div>
       </div>
       <div>
-        {transitions(({ opacity }, candidate, _, index) => (
+        {transitions(({ opacity }, candidate) => (
           <animated.div
-            className="flex text-center align-middle h-16"
+            className="tableDivRow"
             style={{
               opacity,
             }}
           >
-            <div className="w-52 text-center border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
+            <div className="w-52 tableDivCell" >
               <div className={`border-l-4 w-40 border-${rankColor(candidate.rank)}`}>
                 {formatHash(candidate.hash)}
               </div>
             </div>
-            <div className="w-24 border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
+            <div className="w-24 tableDivCell" >
               <div>
                 {candidate.score}
               </div>
             </div>
-            <div className="w-32 border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
+            <div className="w-32 tableDivCell" >
               <div>
                 {candidate.scorePercent}%
               </div>
             </div>
-            <div className="w-40 border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
+            <div className="w-40 tableDivCell" >
               <div>
                 {candidate.userStatus}
               </div>
             </div>
-            <div className="w-52 border-b-2 border-slate-800 text-slate-200 h-16 flex justify-center items-center" >
+            <div className="w-52 tableDivCell" >
               <div>
                 {formatDate(candidate.taskEndDate)}
               </div>

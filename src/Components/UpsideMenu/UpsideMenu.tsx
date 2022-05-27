@@ -11,13 +11,13 @@ const UpsideMenu = () => {
         </button>
 
         <div className="ml-10">
-          <button className="px-4 h-full text-2xl text-slate-300 text-center hover:bg-slate-800/50">
+          <button className="px-4 h-full upsideCategory">
             Companies
           </button>
-          <button className="px-4 h-full text-2xl text-slate-300 text-center hover:bg-slate-800/50">
+          <button className="px-4 h-full upsideCategory">
             Tasks
           </button>
-          <button className="px-4 h-full text-2xl text-slate-300 text-center hover:bg-slate-800/50">
+          <button className="px-4 h-full upsideCategory">
             Community
           </button>
         </div>

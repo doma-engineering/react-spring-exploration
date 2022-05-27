@@ -13,7 +13,7 @@ const EnterButton = () => {
       setTryToEntery(false);
       navigate(enterTo);
     }
-  }
+  } // eslint-disable-next-line react-hooks/exhaustive-deps
     , [tryToEnter]);
 
   const handleClick = () => {
@@ -23,7 +23,7 @@ const EnterButton = () => {
 
   return (
     <button
-      className="bg-sky-900 shadow rounded-lg text-slate-300 py-1 px-9 hover:bg-slate-600 hover:text-white"
+      className="btnAccent py-1 px-9"
       onClick={handleClick}
     >
       Enter
