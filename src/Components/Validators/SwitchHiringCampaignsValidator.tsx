@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentCompany } from "../../Atoms/Company";
-import { filters, urlFilters } from "../../Atoms/Filters";
+import { filters, savedUrlFilters } from "../../Atoms/Filters";
 import { comeChanges, selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 import ErrorSwitchModePage from "../../Pages/ErrorSwitchModePage";
 import SwitcherHiringCampaignsPage from "../../Pages/SwitcherHiringCampaignsPage";
@@ -14,7 +14,7 @@ const SwitchHiringCampaignsValidator = () => {
 
   const [company] = useAtom(currentCompany);
   const [oldFilter, setFilters] = useAtom(filters);
-  const [newFilter] = useAtom(urlFilters);
+  const [newFilter] = useAtom(savedUrlFilters);
   const [selected, setSelected] = useAtom(switcherSelectedTable);
   const [, setMousehover] = useAtom(switcherMouseHoverTable);
   const [, setComeChange] = useAtom(comeChanges);
@@ -40,7 +40,7 @@ const SwitchHiringCampaignsValidator = () => {
         ans
         && filtr.tableID === oldFilter[index].tableID
         && filtr.tableFilters.toString() === oldFilter[index].tableFilters.toString()
-      ), true)
+      ), true) || (newFilter === null)
     ) {
       setReturnPage(<ErrorSwitchModePage />);
     }

@@ -5,11 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { currentCompany } from "../../Atoms/Company";
 import { companies, tables as allTables } from "../../Atoms/LoadData";
 import { currentPath, loginedCompany } from "../../Atoms/Login";
-import { filters, urlFilters } from "../../Atoms/Filters";
+import { filters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
 
 import { defaultFilterParams, fakeFilterData } from "../../Atoms/fakeData";
 
-import { CandidateTable, CandidateTableFilters, Company } from "../CandidateTable/candidateTableTypes";
+import { CandidateTable, CandidateTableFilters, Company } from "../../Atoms/candidateTableTypes";
 
 import ErrorPage from "../../Pages/HiringCampaignsErrorPage";
 import HiringCampaignPage from "../../Pages/HiringCampaignsPage";
@@ -36,11 +36,13 @@ const HiringCampaignsPageValidator = () => {
   const [returnPage, setPage] = useState(<></>);
   const [previusURLFilter, setPreviusUrlFilter] = useState("hidden Egg");
 
+  const [, setSavedUrlFilter] = useAtom(savedUrlFilters);
+
   const updateHiringTablesResult = (company: Company, tfilters: CandidateTableFilters[]) => {
     setResult(
       company.tables.map(
         (tableID) => {
-          const tableData = tables?.find((table) => table.id === tableID) ?? { id: "", displayName: "", table: [] };
+          const tableData = tables?.find((table) => table.id === tableID) ?? { id: "", displayName: "Table not found", table: [] };
           const filterData: boolean[] = tfilters?.find((filter: CandidateTableFilters) => filter.tableID === tableID)?.tableFilters ?? defaultFilterParams;
           return findResult(tableData, filterData);
         }
@@ -61,7 +63,6 @@ const HiringCampaignsPageValidator = () => {
 
     if (
       (urlFilter.length > 0)
-      // && (urlFilter !== filter)
       && (!urlFilter.reduce((answ, filtr, index) => (
         answ
         && filtr.tableID === filter[index].tableID
@@ -69,6 +70,7 @@ const HiringCampaignsPageValidator = () => {
       ), true))
     ) {
       setComeChange(true);
+      setSavedUrlFilter([...urlFilter])
       navigate(HIRINGS_COMPAIGNS_SWITCH_MODE_URL(company.id));
       return;
     }
@@ -86,7 +88,7 @@ const HiringCampaignsPageValidator = () => {
       const newFilter = [...filter].concat(
         different.map(tableID => ({ tableID, tableFilters: defaultFilterParams }))
       )
-      setFilters(newFilter);
+      setFilters([...newFilter]);
       updateHiringTablesResult(company, newFilter);
       return;
     }
