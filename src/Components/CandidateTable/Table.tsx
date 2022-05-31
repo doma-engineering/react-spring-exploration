@@ -20,12 +20,21 @@ const Table = () => {
   const [candidates] = useAtom(tableData);
   const [filter] = useAtom(filterData);
 
+  const randomOffset = () => {
+    return Math.random() > .5 ?
+      (Math.random() + .6) * 200 :
+      -(Math.random() + .6) * 100;
+  }
+  const random2 = (left: number, index: number) => {
+    return left / index;
+  }
+
   const transitions = useTransition(candidates, {
     keys: item => item.hash,
-    from: { opacity: 0, height: 0 },
-    enter: { opacity: 1, height: 60 },
-    leave: { opacity: 0, height: 0 },
-    config: { ...config.slow, duration: 400 }
+    from: (candidate) => ({ opacity: 0, left: randomOffset() }),
+    enter: { opacity: 1, left: 0 },
+    leave: (candidate) => ({ opacity: 0, left: randomOffset() }),
+    config: { ...config.slow, duration: 200 }
   });
 
   const rankColor = (rankName: string): string => {
@@ -46,11 +55,12 @@ const Table = () => {
         <div className=" w-20 sm:w-24 md:w-32 lg:w-52 tableDivHeaderCell">Finish date</div>
       </div>
       <div>
-        {transitions(({ opacity }, candidate) => (
+        {transitions((style, candidate, _, index) => (
           <animated.div
             className="tableDivRow"
             style={{
-              opacity,
+              position: "relative",
+              ...style
             }}
           >
             <div className=" w-20 sm:w-24 md:w-32 lg:w-52 tableDivCell" >

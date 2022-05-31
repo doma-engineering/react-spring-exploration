@@ -37,7 +37,7 @@
     @apply tableDivRow font-medium text-green-300 
   }
   .tableDivCell {
-    @apply border-b-2 border-slate-800 h-16 flex justify-center items-center
+    @apply bg-gray-700 border-b-2 border-slate-800 h-16 flex justify-center items-center
   }
   
   .btnAccent {
