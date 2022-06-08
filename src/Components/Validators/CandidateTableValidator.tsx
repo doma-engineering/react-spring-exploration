@@ -9,7 +9,7 @@ import { comeChanges } from "../../Atoms/SwithersAtoms";
 import CandidateTablePage from "../../Pages/CandidatesTablePage";
 import Error404Page from "../../Pages/Error404Page";
 import { CANDIDATE_TABLE_SWITCH_MODE_URL, CANDIDATE_TABLE_URL } from "../../routes";
-import { defaultFilterParams } from "../../Atoms/fakeData";
+import { defaultFilterParams } from "../../Atoms/mocks/fakeData";
 
 const CandidateTableValidator = () => {
 
@@ -41,6 +41,10 @@ const CandidateTableValidator = () => {
     // for always display filter propertys in URL!
     setFilters([...filter]);
   }
+
+  useEffect(() => {
+
+  }, []);
 
   useEffect(() => {
     const findedTable = tables?.find((t) => t.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "")) ?? { id: "", displayName: "Error!", table: [] };

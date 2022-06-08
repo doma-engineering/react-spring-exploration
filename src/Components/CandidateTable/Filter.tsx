@@ -1,8 +1,8 @@
 import { atom, useAtom } from "jotai";
 import { currentTable } from "../../Atoms/CandidateTables";
 import { currentFilters } from "../../Atoms/Filters";
-import { filterData } from "../../Atoms/LoadData";
 import { FilterProperty } from "../../Atoms/candidateTableTypes";
+import { filterData } from "./filterData";
 
 const ActiveButtons = atom(
   (get) =>
@@ -16,7 +16,6 @@ const ActiveButtons = atom(
 
 const Filter = () => {
 
-  const [filterProps] = useAtom(filterData);
   const [isSelected, setSelected] = useAtom(currentFilters);
 
   const [isActive] = useAtom(ActiveButtons);
@@ -34,7 +33,7 @@ const Filter = () => {
       </div>
       <div className="flex flex-col w-40">
         {
-          filterProps.map(
+          filterData.map(
             (rank, index) =>
             (
               <button

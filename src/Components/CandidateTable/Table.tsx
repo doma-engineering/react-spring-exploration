@@ -2,13 +2,13 @@ import { config, useTransition, animated } from "@react-spring/web";
 import { atom, useAtom } from "jotai";
 import { currentTable } from "../../Atoms/CandidateTables";
 import { currentFilters } from "../../Atoms/Filters";
-import { filterData } from "../../Atoms/LoadData";
+import { filterData } from "./filterData";
 
 export const tableData = atom(
   (get) => get(currentTable).table
     .sort((item1, item2) => (item2.score - item1.score))
     .filter((candidate) => (
-      get(filterData)
+      filterData
         .filter((_rank, index) => get(currentFilters)[index])
         .map(rank => rank.id)
         .includes(candidate.rank)
@@ -18,15 +18,11 @@ export const tableData = atom(
 const Table = () => {
 
   const [candidates] = useAtom(tableData);
-  const [filter] = useAtom(filterData);
 
   const randomOffset = () => {
     return Math.random() > .5 ?
       (Math.random() + .6) * 200 :
       -(Math.random() + .6) * 100;
-  }
-  const random2 = (left: number, index: number) => {
-    return left / index;
   }
 
   const transitions = useTransition(candidates, {
@@ -38,7 +34,7 @@ const Table = () => {
   });
 
   const rankColor = (rankName: string): string => {
-    const rank = filter.find(rank => rank.id === rankName);
+    const rank = filterData.find(rank => rank.id === rankName);
     return rank === undefined ? "FFFFFF" : rank.color;
   }
 
@@ -55,7 +51,7 @@ const Table = () => {
         <div className=" w-20 sm:w-24 md:w-32 lg:w-52 tableDivHeaderCell">Finish date</div>
       </div>
       <div>
-        {transitions((style, candidate, _, index) => (
+        {transitions((style, candidate, _) => (
           <animated.div
             className="tableDivRow"
             style={{

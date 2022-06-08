@@ -38,7 +38,7 @@ const HiringCampaigns = () => {
               >
                 <td> {displayName(row.tableID)} </td>
                 <td> {row.pending} </td>
-                <td> {row.filtred} </td>
+                <td> {row.filtered} </td>
                 <td> {row.total} </td>
               </tr>
             )

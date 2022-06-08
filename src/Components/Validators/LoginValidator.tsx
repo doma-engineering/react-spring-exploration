@@ -11,7 +11,6 @@ const LoginValidator = () => {
   const [path] = useAtom(currentPath);
   const [returnPage, setReturnPage] = useState(<></>);
 
-
   useEffect(() => {
     //try to redirect to previus logined open page;
     if (loginedCompanyID !== "") {

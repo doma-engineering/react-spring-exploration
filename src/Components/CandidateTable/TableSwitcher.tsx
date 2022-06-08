@@ -2,8 +2,8 @@ import { atom, useAtom } from "jotai";
 import { currentTable } from "../../Atoms/CandidateTables";
 import { Rank, UserStatus } from "../../Atoms/candidateTableTypes";
 import { filters, savedUrlFilters } from "../../Atoms/Filters";
-import { filterData } from "../../Atoms/LoadData";
 import { candidateSwitchStatus, selectedType, switcherMouseHoverTable } from "../../Atoms/SwithersAtoms";
+import { filterData } from "./filterData";
 
 type CandidateInSwithing = {
   switchStatus: candidateSwitchStatus;
@@ -23,7 +23,7 @@ const tableData = atom(
         const oldF = get(filters).find((filter) => (filter.tableID === get(currentTable).id))?.tableFilters ?? [false, false, false, false];
         const newF = get(savedUrlFilters).find((filter) => (filter.tableID === get(currentTable).id))?.tableFilters ?? [false, false, false, false];
 
-        const rankIndex = get(filterData).findIndex((rank) => rank.id === candidate.rank);
+        const rankIndex = filterData.findIndex((rank) => rank.id === candidate.rank);
 
         if (oldF[rankIndex] && newF[rankIndex]) {
           return { ...candidate, switchStatus: candidateSwitchStatus.inBoth }
@@ -41,14 +41,13 @@ const tableData = atom(
 
 const CandidateTableSwitcher = () => {
 
-  const [filter] = useAtom(filterData);
   const [mouseHoverVersion] = useAtom(switcherMouseHoverTable);
   const [data] = useAtom(tableData);
 
   const formatDate = (date: Date) => (date.toLocaleDateString());
   const formatHash = (hash: string) => (hash.substring(hash.length - 8));
   const rankColor = (rankName: string): string => {
-    const rank = filter.find(rank => (rank.id === rankName));
+    const rank = filterData.find(rank => (rank.id === rankName));
     return rank === undefined ? "white" : rank.color;
   }
 

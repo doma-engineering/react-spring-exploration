@@ -7,7 +7,7 @@ import { companies, tables as allTables } from "../../Atoms/LoadData";
 import { currentPath, loginedCompany } from "../../Atoms/Login";
 import { filters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
 
-import { defaultFilterParams, fakeFilterData } from "../../Atoms/fakeData";
+import { defaultFilterParams, fakeFilterData } from "../../Atoms/mocks/fakeData";
 
 import { CandidateTable, CandidateTableFilters, Company } from "../../Atoms/candidateTableTypes";
 
@@ -161,7 +161,7 @@ export const findResult = (table: CandidateTable, filter: boolean[]) => {
         .includes(candidate.rank)
     )).length,
 
-    filtred: table.table.length - table.table.filter((candidate) => (
+    filtered: table.table.length - table.table.filter((candidate) => (
       fakeFilterData
         .filter((_rank, index) => filter[index])
         .map(rank => rank.id)

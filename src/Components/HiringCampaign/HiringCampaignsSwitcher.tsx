@@ -12,8 +12,8 @@ type ChangingTableResult = {
   switchStatus: tableSwitchStatus,
   pendingOld: number,
   pendingNew: number,
-  filtredOld: number,
-  filtredNew: number,
+  filteredOld: number,
+  filteredNew: number,
   total: number,
 }
 
@@ -41,7 +41,7 @@ const tableData = atom(
             (get(savedUrlFilters).find((filter) => filter.tableID === table.id)?.tableFilters)!
           )
 
-          const haveUpdates = resultNew.filtred !== resultOld.filtred;
+          const haveUpdates = resultNew.filtered !== resultOld.filtered;
           const switchStatus = haveUpdates ? tableSwitchStatus.changed : tableSwitchStatus.notChanged;
 
           return {
@@ -50,8 +50,8 @@ const tableData = atom(
             switchStatus: switchStatus,
             pendingOld: resultOld.pending,
             pendingNew: resultNew.pending,
-            filtredOld: resultOld.filtred,
-            filtredNew: resultNew.filtred,
+            filteredOld: resultOld.filtered,
+            filteredNew: resultNew.filtered,
             total: resultNew.total,
           }
         }
@@ -95,7 +95,7 @@ const SwitcherTables = () => {
           <tr>
             <th> Specialization </th>
             <th> Pending        </th>
-            <th> Filtred        </th>
+            <th> filtered        </th>
             <th> Total          </th>
           </tr>
         </thead>
@@ -110,7 +110,7 @@ const SwitcherTables = () => {
                   tdChangable(row.pendingOld, row.pendingNew, row.switchStatus)
                 }
                 {
-                  tdChangable(row.filtredOld, row.filtredNew, row.switchStatus)
+                  tdChangable(row.filteredOld, row.filteredNew, row.switchStatus)
                 }
                 <td>
                   {row.total}
