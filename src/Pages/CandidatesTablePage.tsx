@@ -1,7 +1,7 @@
 import Filter from "../Components/CandidateTable/Filter";
 import Table from "../Components/CandidateTable/Table";
 import DisplayUser from "../Components/Login/DisplayUser";
-import ButtonBackToHiringCompaigns from "../Components/HiringCampaign/ButtonBackToHiringCompaigns";
+import ButtonBackToHiringCampaigns from "../Components/HiringCampaign/ButtonBackToHiringCampaigns";
 import { useAtom } from "jotai";
 import { currentTable } from "./../Atoms/CandidateTables";
 import { useState } from "react";
@@ -27,7 +27,7 @@ const CandidateTablePage = () => {
             {table.displayName}
           </div>
           <div>
-            <ButtonBackToHiringCompaigns />
+            <ButtonBackToHiringCampaigns />
           </div>
           <div className="flex">
             <Filter />
@@ -41,7 +41,7 @@ const CandidateTablePage = () => {
         <div className="flex">
           <div className={isLeftMenu ? "bg-gray-700 px-4 py-4" : "hidden"}>
             <div>
-              <ButtonBackToHiringCompaigns />
+              <ButtonBackToHiringCampaigns />
             </div>
             <div className="flex">
               <Filter />
@@ -60,11 +60,11 @@ const CandidateTablePage = () => {
   );
 }
 
-// const InitBTNsClolors = () => (                                 {/*  Work commented! o-o}
+// const InitBTNsColors = () => (                                  {/*  Work when commented! o-o}
 //   <div className="absolute invisible">                          {/*  That only initialization for not default tailwind colors :(                                       */}
-//     <div className="bg-Senior border-Senior">Senior</div>   {/*  becouse if no where not writed not defoult color in simple classname string as there,             */}
-//     <div className="bg-Middle border-Middle">Middle</div>   {/*  line like   classname=`bg-${function()}`   will NOT work      function = () => ("btn-Middle")     */}
-//     <div className="bg-Junior border-Junior">Junior</div>   {/*  I think for solve that problem need save that colors as final css, bc if write them simple (line 2), and delite after, they also work in (line 3).*/}
+//     <div className="bg-Senior border-Senior">Senior</div>   {/*  because if no where not written not default color in simple className string as there,             */}
+//     <div className="bg-Middle border-Middle">Middle</div>   {/*  line like   className=`bg-${function()}`   will NOT work      function = () => ("btn-Middle")     */}
+//     <div className="bg-Junior border-Junior">Junior</div>   {/*  I think for solve that problem need save that colors as final css, bc if write them simple (line 2), and delete after, they also work in (line 3).*/}
 //     <div className="bg-NM     border-NM"    >NM</div>
 //   </div>
 // )

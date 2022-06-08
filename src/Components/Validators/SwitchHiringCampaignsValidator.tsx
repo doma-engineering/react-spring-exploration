@@ -6,7 +6,7 @@ import { filters, savedUrlFilters } from "../../Atoms/Filters";
 import { comeChanges, selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 import ErrorSwitchModePage from "../../Pages/ErrorSwitchModePage";
 import SwitcherHiringCampaignsPage from "../../Pages/SwitcherHiringCampaignsPage";
-import { HIRINGS_COMPAIGNS_URL } from "../../routes";
+import { HIRING_CAMPAIGNS_URL } from "../../routes";
 
 const SwitchHiringCampaignsValidator = () => {
 
@@ -16,7 +16,7 @@ const SwitchHiringCampaignsValidator = () => {
   const [oldFilter, setFilters] = useAtom(filters);
   const [newFilter] = useAtom(savedUrlFilters);
   const [selected, setSelected] = useAtom(switcherSelectedTable);
-  const [, setMousehover] = useAtom(switcherMouseHoverTable);
+  const [, setMouseHover] = useAtom(switcherMouseHoverTable);
   const [, setComeChange] = useAtom(comeChanges);
 
   const [returnPage, setReturnPage] = useState(<SwitcherHiringCampaignsPage />);
@@ -26,9 +26,9 @@ const SwitchHiringCampaignsValidator = () => {
       if (selected === selectedType.new) setFilters([...newFilter]);
       if (selected === selectedType.old) setFilters([...oldFilter]);
       setSelected(selectedType.none);
-      setMousehover(selectedType.none);
+      setMouseHover(selectedType.none);
       setComeChange(false);
-      navigate(HIRINGS_COMPAIGNS_URL(company.id));
+      navigate(HIRING_CAMPAIGNS_URL(company.id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
@@ -36,10 +36,10 @@ const SwitchHiringCampaignsValidator = () => {
   useEffect(() => {
     if (
       //Check is newFilter === oldFilter
-      newFilter.reduce((ans, filtr, index) => (
-        ans
-        && filtr.tableID === oldFilter[index].tableID
-        && filtr.tableFilters.toString() === oldFilter[index].tableFilters.toString()
+      newFilter.reduce((answer, filterItem, index) => (
+        answer
+        && filterItem.tableID === oldFilter[index].tableID
+        && filterItem.tableFilters.toString() === oldFilter[index].tableFilters.toString()
       ), true) || (newFilter === null)
     ) {
       setReturnPage(<ErrorSwitchModePage />);

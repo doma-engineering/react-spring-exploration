@@ -5,7 +5,7 @@ import { filters, savedUrlFilters } from "../../Atoms/Filters";
 import { candidateSwitchStatus, selectedType, switcherMouseHoverTable } from "../../Atoms/SwithersAtoms";
 import { filterData } from "./filterData";
 
-type CandidateInSwithing = {
+type CandidateInSwitching = {
   switchStatus: candidateSwitchStatus;
   hash: string;
   score: number;
@@ -51,7 +51,7 @@ const CandidateTableSwitcher = () => {
     return rank === undefined ? "white" : rank.color;
   }
 
-  const displayType = (candidate: CandidateInSwithing): string => {
+  const displayType = (candidate: CandidateInSwitching): string => {
     if (mouseHoverVersion === selectedType.new) {
       if (candidate.switchStatus !== candidateSwitchStatus.removed)
         return "tableDivRow-selected";
