@@ -34,6 +34,7 @@ type SortingTriangle = {
   mode: SortingMode,
   sortingFunction: SortingFunction,
   isReverse: boolean,
+  linkedTriangles: string[], //names from SortedTriangles
 }
 
 type SortingTriangles = Map<string, SortingTriangle>;
@@ -65,19 +66,22 @@ const getDefaultValuesSortingTriangles = () => {
     {
       mode: SortingMode.decPassive,
       sortingFunction: sortByScore,
-      isReverse: false
+      isReverse: false,
+      linkedTriangles: ["scorePercent"],
     });
   sortingTriangles.set("scorePercent",
     {
       mode: SortingMode.decPassive,
       sortingFunction: sortByScore,
-      isReverse: false
+      isReverse: false,
+      linkedTriangles: ["score"],
     });
   sortingTriangles.set("date",
     {
       mode: SortingMode.decPassive,
       sortingFunction: sortByDate,
-      isReverse: false
+      isReverse: false,
+      linkedTriangles: [],
     });
   return sortingTriangles;
 }
@@ -124,27 +128,37 @@ const Table = () => {
     if (currentTriangle === undefined) return;
 
     const newTriangleMode = findNewSortingMode(currentTriangle.mode);
+    const newCurrentTriangle: SortingTriangle = {
+      mode: newTriangleMode,
+      sortingFunction: currentTriangle.sortingFunction,
+      isReverse: ((newTriangleMode === SortingMode.incActive) || (newTriangleMode === SortingMode.incPassive)),
+      linkedTriangles: currentTriangle.linkedTriangles,
+    };
 
     const newSortingTriangles = new Map<string, SortingTriangle>()
     sortingTriangles.forEach((triangleItem, columKey) => {
       if (columKey === columName) {
-        newSortingTriangles.set(columKey,
-          {
-            mode: newTriangleMode,
-            sortingFunction: currentTriangle.sortingFunction,
-            isReverse: ((newTriangleMode === SortingMode.incActive) || (newTriangleMode === SortingMode.incPassive))
-          }
-        );
+        newSortingTriangles.set(columKey, newCurrentTriangle);
       } else {
         newSortingTriangles.set(columKey,
           {
             mode: doPassiveMode(triangleItem.mode),
             sortingFunction: triangleItem.sortingFunction,
-            isReverse: ((triangleItem.mode === SortingMode.incActive) || (triangleItem.mode === SortingMode.incPassive))
+            isReverse: ((triangleItem.mode === SortingMode.incActive) || (triangleItem.mode === SortingMode.incPassive)),
+            linkedTriangles: triangleItem.linkedTriangles,
           }
         );
       }
     })
+
+    currentTriangle.linkedTriangles.forEach((linkedTriangle) => {
+      newSortingTriangles.set(linkedTriangle,
+        {
+          ...newCurrentTriangle,
+          linkedTriangles: sortingTriangles.get(linkedTriangle)!.linkedTriangles // need be save each triangles correct links
+        })
+    });
+
     setSortingTriangles(newSortingTriangles);
     setSortFunction({ fn: currentTriangle.sortingFunction, isReverse: newSortingTriangles.get(columName)!.isReverse });
   }
