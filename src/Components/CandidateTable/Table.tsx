@@ -1,16 +1,16 @@
 import { config, useTransition, animated } from "@react-spring/web";
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { candidateSortingFunctionsTypes, doPassiveMode, sortFunction } from "../../Atoms/CandidatesSorting";
-import { currentTable, tableData } from "../../Atoms/CandidateTables";
+import { doPassiveMode, sortFunction } from "../../Atoms/CandidatesSorting";
+import { tableData } from "../../Atoms/CandidateTables";
 import { SortingMode, SortingTriangle, SortingTriangles } from "../../Atoms/candidateTableTypes";
-import { currentFilters } from "../../Atoms/Filters";
 import { filterData } from "./filterData";
 
 const getDefaultValuesSortingTriangles = () => (
   new Map<string, SortingTriangle>([
     ["score", { mode: SortingMode.decPassive, }],
-    ["date", { mode: SortingMode.decPassive, }]
+    ["date", { mode: SortingMode.decPassive, }],
+    ["status", { mode: SortingMode.decPassive, }],
   ])
 )
 
@@ -96,8 +96,14 @@ const Table = () => {
             {sortingTriangles.get("score")?.mode ?? SortingMode.undefined}
           </div>
         </div>
-        <div className="flex w-20 sm:w-32 md:w-36 lg:w-40 tableDivHeaderCell md:px-12 items-center justify-center">
+        <div
+          className="flex w-20 sm:w-32 md:w-36 lg:w-40 tableDivHeaderCell md:px-12 items-center justify-center"
+          onClick={() => handleClickSorting("status")}
+        >
           Status
+          <div className="text-sm text-center p-2">
+            {sortingTriangles.get("status")?.mode ?? SortingMode.undefined}
+          </div>
         </div>
         <div
           className="flex w-20 sm:w-24 md:w-32 lg:w-52 tableDivHeaderCell items-center justify-center"

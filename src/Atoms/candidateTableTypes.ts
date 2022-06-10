@@ -13,6 +13,14 @@ export enum UserStatus {
   HaveJob = "Already have a job"
 }
 
+export const userStatusSortingWeight = new Map<UserStatus, number>([
+  [UserStatus.NotSelected, 0],
+  [UserStatus.HaveJob, 1],
+  [UserStatus.TestSelfSkills, 2],
+  [UserStatus.TryChangeJob, 3],
+  [UserStatus.FindNewJob, 4]
+]);
+
 export enum Rank {
   NM = "N/m",
   Senior = "Senior",
