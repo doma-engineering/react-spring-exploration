@@ -8,7 +8,7 @@ export enum Gender {
 export enum UserStatus {
   NotSelected = "",
   FindNewJob = "Want to find new job",
-  TestSelfSkills = "Only test self skils",
+  TestSelfSkills = "Only test self skills",
   TryChangeJob = "Have job, but want to change job",
   HaveJob = "Already have a job"
 }
@@ -34,18 +34,18 @@ export type User = {
   avatarImage?: string,
   firstName: string,
   lastName: string,
-  emailAdress: string,
+  emailAddress: string,
   gender: Gender,
   birthday: Date,
   country?: string,
-  adress?: string,
+  address?: string,
   phoneNumber?: string,
   languages?: string[],
   programLanguages?: string[],
   status: UserStatus,
 
   taskInProgress?: string[],
-  taskComplited?: string[],
+  taskCompleted?: string[],
   taskNotFinished?: string[],
 }
 
@@ -74,7 +74,7 @@ export type CandidateTableFilters = {
 export type TableResult = {
   tableID: string,
   pending: number,
-  filtred: number,
+  filtered: number,
   total: number,
 };
 

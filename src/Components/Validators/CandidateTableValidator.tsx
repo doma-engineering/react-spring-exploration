@@ -2,14 +2,14 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { currentTable } from "../../Atoms/CandidateTables";
-import { filters, urlFilters } from "../../Atoms/Filters";
+import { filters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
 import { tables as allTables } from "../../Atoms/LoadData";
 import { currentPath } from "../../Atoms/Login";
 import { comeChanges } from "../../Atoms/SwithersAtoms";
 import CandidateTablePage from "../../Pages/CandidatesTablePage";
 import Error404Page from "../../Pages/Error404Page";
 import { CANDIDATE_TABLE_SWITCH_MODE_URL, CANDIDATE_TABLE_URL } from "../../routes";
-import { defaultFilterParams } from "../CandidateTable/fakeData";
+import { defaultFilterParams } from "../../Atoms/mocks/fakeData";
 
 const CandidateTableValidator = () => {
 
@@ -20,6 +20,7 @@ const CandidateTableValidator = () => {
   const [tables] = useAtom(allTables);
   const [filter, setFilters] = useAtom(filters);
   const [urlFilter] = useAtom(urlFilters);
+  const [, setSavedUrlFilter] = useAtom(savedUrlFilters);
   const [, setCurrentPath] = useAtom(currentPath);
   const [, setComeChange] = useAtom(comeChanges);
 
@@ -42,6 +43,10 @@ const CandidateTableValidator = () => {
   }
 
   useEffect(() => {
+
+  }, []);
+
+  useEffect(() => {
     const findedTable = tables?.find((t) => t.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "")) ?? { id: "", displayName: "Error!", table: [] };
     if (findedTable.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "").toLowerCase()) {
 
@@ -58,7 +63,7 @@ const CandidateTableValidator = () => {
     }
 
     setReturnPage(<Error404Page />);
-  }
+  } // eslint-disable-next-line react-hooks/exhaustive-deps
     , [CandidateTable]);
 
   useEffect(() => {
@@ -72,10 +77,11 @@ const CandidateTableValidator = () => {
       ), true))
     ) {
       setComeChange(true);
+      setSavedUrlFilter([...urlFilter]);
       navigate(CANDIDATE_TABLE_SWITCH_MODE_URL(CandidateTable || ""));
       return;
     }
-  }
+  } // eslint-disable-next-line react-hooks/exhaustive-deps
     , [urlFilter]);
 
   return (returnPage);

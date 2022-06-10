@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentTable } from "../../Atoms/CandidateTables";
-import { filters, urlFilters } from "../../Atoms/Filters";
+import { filters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
 import { comeChanges, selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 import ErrorSwitherCandidateTable from "../../Pages/ErrorSwitcherCandidateTable";
 import CandidateTableSwitcherPage from "../../Pages/SwitcherCandidateTable";
@@ -17,7 +17,7 @@ const CandidateTableSwitcherValidator = () => {
   const [selected, setSelected] = useAtom(switcherSelectedTable);
   const [, setMousehover] = useAtom(switcherMouseHoverTable);
   const [oldFilter, setFilters] = useAtom(filters);
-  const [newFilter] = useAtom(urlFilters);
+  const [newFilter] = useAtom(savedUrlFilters);
   const [table] = useAtom(currentTable);
   const [, setComeChange] = useAtom(comeChanges);
 

@@ -1,15 +1,24 @@
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
+import { currentTable } from "../../Atoms/CandidateTables";
 import { currentFilters } from "../../Atoms/Filters";
-import { filterData } from "../../Atoms/LoadData";
+import { FilterProperty } from "../../Atoms/candidateTableTypes";
+import { filterData } from "./filterData";
+
+const ActiveButtons = atom(
+  (get) =>
+    (rank: FilterProperty) =>
+    (
+      get(currentTable).table.findIndex(
+        (candidate) => (candidate.rank === rank.id)
+      ) !== -1
+    ),
+)
 
 const Filter = () => {
 
-  const [filterProps] = useAtom(filterData);
-  const [isSelected, setSelected] = useAtom(currentFilters)
+  const [isSelected, setSelected] = useAtom(currentFilters);
 
-  if (isSelected == []) {
-    console.log("Warrning!");
-  }
+  const [isActive] = useAtom(ActiveButtons);
 
   const rankOnClick = (index: number): void => {
     const newSelection = [...isSelected];
@@ -18,27 +27,28 @@ const Filter = () => {
   }
 
   return (
-    <div className="Filter">
-      {
-        filterProps.map(
-          (rank, index) =>
-          (
-            <button
-              className="FilterButton"
-              key={"FB" + index.toString()}
-              onClick={() => rankOnClick(index)}
-              style={{
-                textDecoration: isSelected[index] ? "none" : "line-through",
-                background: rank.color + "AA",
-                color: "#000000",
-
-              }}
-            >
-              {rank.displayName}
-            </button>
+    <div className="flex flex-col items-center px-2 py-1 mx-2 my-2">
+      <div className="lblFilter">
+        Filter by rank
+      </div>
+      <div className="flex flex-col w-40">
+        {
+          filterData.map(
+            (rank, index) =>
+            (
+              <button
+                disabled={!isActive(rank)}
+                className={`btnFilter bg-${rank.color}
+                            ${isSelected[index] ? "no-underline" : "line-through"}`}
+                key={"FB" + index.toString()}
+                onClick={() => rankOnClick(index)}
+              >
+                {rank.displayName}
+              </button>
+            )
           )
-        )
-      }
+        }
+      </div>
     </div>
   );
 }

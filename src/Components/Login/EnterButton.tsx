@@ -13,7 +13,7 @@ const EnterButton = () => {
       setTryToEntery(false);
       navigate(enterTo);
     }
-  }
+  } // eslint-disable-next-line react-hooks/exhaustive-deps
     , [tryToEnter]);
 
   const handleClick = () => {
@@ -23,11 +23,8 @@ const EnterButton = () => {
 
   return (
     <button
+      className="btnAccent py-1 px-9"
       onClick={handleClick}
-      style={{
-        fontSize: "18px",
-        margin: "1rem"
-      }}
     >
       Enter
     </button>

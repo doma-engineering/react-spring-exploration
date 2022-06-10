@@ -1,19 +1,14 @@
 import EnterButton from "../Components/Login/EnterButton";
 import Login from "../Components/Login/Login";
 
-export default () => {
+const LoginPage = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        fontSize: "30px",
-        paddingTop: "10rem",
-      }}
+    <div className="flex justify-center mt-40 space-x-3"
     >
       <Login />
       <EnterButton />
     </div >
   );
 };
+
+export default LoginPage;

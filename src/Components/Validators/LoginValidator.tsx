@@ -1,26 +1,25 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { currentPath, loginedCompany } from "../../Atoms/Login";
+import { currentPath, loggedInCompany } from "../../Atoms/Login";
 import LoginPage from "../../Pages/LoginPage";
 import { LOGIN_URL } from "../../routes";
 
 const LoginValidator = () => {
   const navigate = useNavigate();
-  const [loginedCompanyID] = useAtom(loginedCompany);
+  const [loggedIn] = useAtom(loggedInCompany);
   const [path] = useAtom(currentPath);
   const [returnPage, setReturnPage] = useState(<></>);
 
-
   useEffect(() => {
-    //try to redirect to previus logined open page;
-    if (loginedCompanyID !== "") {
+    //try to redirect to previous open page;
+    if (loggedIn !== "") {
       if (path !== LOGIN_URL)
         navigate(path);
     }
     setReturnPage(<LoginPage />);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loginedCompanyID]);
+  }, [loggedIn]);
 
   return (returnPage);
 }

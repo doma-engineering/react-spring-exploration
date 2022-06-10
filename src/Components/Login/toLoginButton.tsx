@@ -3,7 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { currentPath } from "../../Atoms/Login";
 import { LOGIN_URL } from "../../routes";
 
-const ToLoginButton = () => {
+type buttonParameters = {
+  text: string;
+  style: string;
+}
+
+const ToLoginButton: React.FC<buttonParameters> = ({ text, style }) => {
   const navigate = useNavigate();
   const [, setPath] = useAtom(currentPath);
   const handleClick = () => {
@@ -13,9 +18,10 @@ const ToLoginButton = () => {
 
   return (
     <button
+      className={style}
       onClick={handleClick}
     >
-      Back to Login
+      {text}
     </button>
   )
 }

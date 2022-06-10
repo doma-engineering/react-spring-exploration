@@ -4,17 +4,17 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { currentCompany } from "../../Atoms/Company";
 import { companies, tables as allTables } from "../../Atoms/LoadData";
-import { currentPath, loginedCompany } from "../../Atoms/Login";
-import { filters, urlFilters } from "../../Atoms/Filters";
+import { currentPath, loggedInCompany } from "../../Atoms/Login";
+import { filters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
 
-import { defaultFilterParams, fakeFilterData } from "../CandidateTable/fakeData";
+import { defaultFilterParams, fakeFilterData } from "../../Atoms/mocks/fakeData";
 
-import { CandidateTable, CandidateTableFilters, Company } from "../CandidateTable/candidateTableTypes";
+import { CandidateTable, CandidateTableFilters, Company } from "../../Atoms/candidateTableTypes";
 
 import ErrorPage from "../../Pages/HiringCampaignsErrorPage";
 import HiringCampaignPage from "../../Pages/HiringCampaignsPage";
-import { differentCompany, tablesResult } from "../../Atoms/HiringCompaign";
-import { HIRINGS_COMPAIGNS_SWITCH_MODE_URL, HIRINGS_COMPAIGNS_URL } from "../../routes";
+import { differentCompany, tablesResult } from "../../Atoms/HiringCampaign";
+import { HIRING_CAMPAIGNS_SWITCH_MODE_URL, HIRING_CAMPAIGNS_URL } from "../../routes";
 import { comeChanges } from "../../Atoms/SwithersAtoms";
 
 const HiringCampaignsPageValidator = () => {
@@ -31,25 +31,27 @@ const HiringCampaignsPageValidator = () => {
   const [isChanges, setComeChange] = useAtom(comeChanges);
   const [, setDifferentCompanyTable] = useAtom(differentCompany);
   const [allCompanies] = useAtom(companies);
-  const [logined] = useAtom(loginedCompany);
+  const [loggedIn] = useAtom(loggedInCompany);
 
   const [returnPage, setPage] = useState(<></>);
-  const [previusURLFilter, setPreviusUrlFilter] = useState("hidden Egg");
+  const [previousURLFilter, setPreviousUrlFilter] = useState("hidden Egg");
 
-  const updateHiringTablesResult = (company: Company, tfilters: CandidateTableFilters[]) => {
+  const [, setSavedUrlFilter] = useAtom(savedUrlFilters);
+
+  const updateHiringTablesResult = (company: Company, filters: CandidateTableFilters[]) => {
     setResult(
       company.tables.map(
         (tableID) => {
-          const tableData = tables?.find((table) => table.id === tableID) ?? { id: "", displayName: "", table: [] };
-          const filterData: boolean[] = tfilters?.find((filter: CandidateTableFilters) => filter.tableID === tableID)?.tableFilters ?? defaultFilterParams;
+          const tableData = tables?.find((table) => table.id === tableID) ?? { id: "", displayName: "Table not found", table: [] };
+          const filterData: boolean[] = filters?.find((filter: CandidateTableFilters) => filter.tableID === tableID)?.tableFilters ?? defaultFilterParams;
           return findResult(tableData, filterData);
         }
       )
     );
   }
 
-  // differentsOfTables return   > tables ID <   who haven't in   > filter <   but is in   > company <  .
-  const differentsOfTables = (company: Company, filters: CandidateTableFilters[]): string[] => {
+  // differencesOfTables return   > tables ID <   who haven't in   > filter <   but is in   > company <  .
+  const differencesOfTables = (company: Company, filters: CandidateTableFilters[]): string[] => {
     return company.tables
       .filter((table) =>
         !filters.map(filter => filter.tableID)
@@ -61,15 +63,15 @@ const HiringCampaignsPageValidator = () => {
 
     if (
       (urlFilter.length > 0)
-      // && (urlFilter !== filter)
-      && (!urlFilter.reduce((answ, filtr, index) => (
-        answ
-        && filtr.tableID === filter[index].tableID
-        && filtr.tableFilters.toString() === filter[index].tableFilters.toString()
+      && (!urlFilter.reduce((answer, filterItem, index) => (
+        answer
+        && filterItem.tableID === filter[index].tableID
+        && filterItem.tableFilters.toString() === filter[index].tableFilters.toString()
       ), true))
     ) {
       setComeChange(true);
-      navigate(HIRINGS_COMPAIGNS_SWITCH_MODE_URL(company.id));
+      setSavedUrlFilter([...urlFilter])
+      navigate(HIRING_CAMPAIGNS_SWITCH_MODE_URL(company.id));
       return;
     }
     if (filter.length === 0) {
@@ -81,17 +83,17 @@ const HiringCampaignsPageValidator = () => {
       return;
     }
 
-    const different = differentsOfTables(company, filter);
+    const different = differencesOfTables(company, filter);
     if (different.length > 0) {
       const newFilter = [...filter].concat(
         different.map(tableID => ({ tableID, tableFilters: defaultFilterParams }))
       )
-      setFilters(newFilter);
+      setFilters([...newFilter]);
       updateHiringTablesResult(company, newFilter);
       return;
     }
 
-    // for always display filter propertys in URL!
+    // for always display filter properties in URL!
     updateHiringTablesResult(company, filter);
     setFilters([...filter]);
   }
@@ -106,12 +108,12 @@ const HiringCampaignsPageValidator = () => {
   useEffect(() => {
     const company = allCompanies
       ?.find(
-        c => ((c.displayName.toLowerCase() === logined?.toLowerCase()) ?? ""))
+        c => ((c.displayName.toLowerCase() === loggedIn?.toLowerCase()) ?? ""))
       ?? { id: "", tables: [], displayName: "" };
     updateFilters(company)
     updateHiringTablesResult(company, filter);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [logined]);
+  }, [loggedIn]);
 
   useEffect(() => {
     const company = allCompanies
@@ -121,15 +123,15 @@ const HiringCampaignsPageValidator = () => {
     if (company.id !== "") {
 
       setPage(<HiringCampaignPage />);
-      setCurrentPath(HIRINGS_COMPAIGNS_URL(company.id));
+      setCurrentPath(HIRING_CAMPAIGNS_URL(company.id));
       setCurrentCompany(company);
 
-      if (urlFilter.map(fi => fi.tableFilters).toString() !== previusURLFilter) {
-        setPreviusUrlFilter(urlFilter.map(fi => fi.tableFilters).toString());
+      if (urlFilter.map(fi => fi.tableFilters).toString() !== previousURLFilter) {
+        setPreviousUrlFilter(urlFilter.map(fi => fi.tableFilters).toString());
         updateFilters(company);
       }
 
-      if (company.id !== logined) {
+      if (company.id !== loggedIn) {
         setDifferentCompanyTable(company.displayName);
       } else {
         setDifferentCompanyTable("");
@@ -138,7 +140,7 @@ const HiringCampaignsPageValidator = () => {
     }
     else {
       setPage(<ErrorPage />);
-      setCurrentPath(HIRINGS_COMPAIGNS_URL(CompanyName || ""));
+      setCurrentPath(HIRING_CAMPAIGNS_URL(CompanyName || ""));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [CompanyName, urlFilter]);
@@ -159,7 +161,7 @@ export const findResult = (table: CandidateTable, filter: boolean[]) => {
         .includes(candidate.rank)
     )).length,
 
-    filtred: table.table.length - table.table.filter((candidate) => (
+    filtered: table.table.length - table.table.filter((candidate) => (
       fakeFilterData
         .filter((_rank, index) => filter[index])
         .map(rank => rank.id)
