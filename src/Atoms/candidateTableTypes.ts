@@ -49,7 +49,6 @@ export type User = {
   taskNotFinished?: string[],
 }
 
-
 export type Candidate = {
   hash: string,
   score: number,
@@ -86,3 +85,24 @@ export type FilterProperty = {
   color: string,
   defaultSelections?: boolean,
 };
+
+export enum SortingMode {
+  incPassive = "△",
+  incActive = "▲",
+  decPassive = "▽",
+  decActive = "▼",
+  undefined = "#",
+}
+
+export type SortingFunction = (candidate1: Candidate, candidate2: Candidate) => number;
+
+export type SortingTriangle = {
+  mode: SortingMode,
+};
+
+// string - name of type of sorting function (as 'date' => sortByDate()). 
+// Triangle characterizes function (down - decreases, up - increases).
+export type SortingTriangles = Map<string, SortingTriangle>;
+
+// by default sort function need be decreased (from hight to low values).
+export type SortFunctionAtom = { fn: string, isIncrease: boolean }
