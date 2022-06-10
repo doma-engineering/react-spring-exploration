@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { SortFunctionAtom, SortingFunction, SortingMode, userStatusSortingWeight } from "./candidateTableTypes";
+import { SortFunctionAtom, SortingFunction, SortingMode, UserStatus, userStatusSortingWeight } from "./candidateTableTypes";
 
 const sortByScore: SortingFunction = (candidate1, candidate2) => (
   candidate2.score - candidate1.score
@@ -9,8 +9,12 @@ const sortByDate: SortingFunction = (candidate1, candidate2) => (
   candidate2.taskEndDate.valueOf() - candidate1.taskEndDate.valueOf()
 );
 
+const getUserStatusSortingWeight = (status: UserStatus) => (
+  userStatusSortingWeight.get(status) ?? -1
+)
+
 const sortByStatus: SortingFunction = (candidate1, candidate2) => (
-  userStatusSortingWeight.get(candidate2.userStatus)! - userStatusSortingWeight.get(candidate1.userStatus)!
+  getUserStatusSortingWeight(candidate2.userStatus) - getUserStatusSortingWeight(candidate1.userStatus)
 );
 
 export const candidateSortingFunctionsTypes = new Map<string, SortingFunction>([
