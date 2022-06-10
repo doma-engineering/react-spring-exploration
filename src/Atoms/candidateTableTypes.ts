@@ -78,6 +78,14 @@ export type CandidateTableFilters = {
   tableFilters: boolean[];
 }
 
+export type CandidateTableSettings = {
+  table: string,
+  filters: boolean[],
+  //sorting: SortFunctionAtom
+}
+
+export type CandidateTablesSettings = CandidateTableSettings[];
+
 export type TableResult = {
   tableID: string,
   pending: number,
