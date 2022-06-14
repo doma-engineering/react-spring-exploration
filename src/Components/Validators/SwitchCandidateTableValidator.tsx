@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentTable } from "../../Atoms/CandidateTables";
-import { filters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
+import { filters, savedUrlFilters } from "../../Atoms/Filters";
 import { comeChanges, selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 import ErrorSwitcherCandidateTable from "../../Pages/ErrorSwitcherCandidateTable";
 import CandidateTableSwitcherPage from "../../Pages/SwitcherCandidateTable";

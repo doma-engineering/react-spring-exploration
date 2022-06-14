@@ -1,4 +1,6 @@
 import { atom } from "jotai"
+import { CandidateTableFilters, CandidateTableSettings } from "./candidateTableTypes"
+import { defaultSettingsTable, tablesSettings, tablesSettingsLocalStorage, tablesSettingsSessionStorage, tablesSettingsURL } from "./LoadData"
 
 export const createLocalStorageAtom = <T>(key: string, initialValue: T) => {
   const getInitialValue = () => {
@@ -46,3 +48,31 @@ export const createSessionStorageAtom = <T>(key: string, initialValue: T) => {
   )
   return derivedAtom
 }
+
+export const filterSubscribeToSettingsAtom = () => (
+  atom(
+    (get): CandidateTableFilters[] => (
+      get(tablesSettings).map((table: CandidateTableSettings): CandidateTableFilters => ({
+        tableID: table.table,
+        tableFilters: table.filters,
+      }))
+    ),
+    (get, set, arg: CandidateTableFilters[]) => {
+      const usedTables = get(tablesSettings).map((t) => t.table);
+      set(tablesSettings,
+        arg.map((table): CandidateTableSettings => {
+          if (table.tableID in usedTables)
+            return ({
+              ...get(tablesSettings).find((tableItem: CandidateTableSettings) => (table.tableID === tableItem.table))!,
+              filters: table.tableFilters,
+            });
+          return ({
+            ...defaultSettingsTable,
+            table: table.tableID,
+            filters: table.tableFilters,
+          });
+        })
+      );
+    }
+  )
+);

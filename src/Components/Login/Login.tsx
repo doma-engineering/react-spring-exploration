@@ -21,7 +21,7 @@ const Login = () => {
       setTryToEntry(false);
       navigate(enterTo);
     }
-  }
+  }// eslint-disable-next-line react-hooks/exhaustive-deps  
     , [tryToEnter]);
 
   return (
