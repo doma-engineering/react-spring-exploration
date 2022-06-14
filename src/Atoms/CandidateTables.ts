@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { filterData } from "../Components/CandidateTable/filterData";
-import { candidateSortingFunctionsTypes, sortFunction } from "./CandidatesSorting";
+import { candidateSortingFunctionsTypes, currentSortFunction } from "./CandidatesSorting";
 import { CandidateTable } from "./candidateTableTypes";
 import { currentFilters } from "./Filters";
 
@@ -10,7 +10,7 @@ export const tableData = atom(
   (get) => {
     const dataDecrease = get(currentTable).table
       .sort((item1, item2) => (
-        candidateSortingFunctionsTypes.get(get(sortFunction).fn)
+        candidateSortingFunctionsTypes.get(get(currentSortFunction).fn)
         ?? candidateSortingFunctionsTypes.get("date")!               //if sortFunction haven't in candidateSortingFunctions will called sorting by date.
       )(item1, item2)
       )
@@ -20,7 +20,7 @@ export const tableData = atom(
           .map(rank => rank.id)
           .includes(candidate.rank)
       ))
-    if (get(sortFunction).isIncrease) return dataDecrease.reverse();
+    if (get(currentSortFunction).isIncrease) return dataDecrease.reverse();
     return dataDecrease;
   }
 )

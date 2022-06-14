@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 import { atomWithHash } from "jotai/utils";
-import { CandidateTable, CandidateTableSettings, CandidateTablesSettings, Company, FilterProperty } from "./candidateTableTypes";
+import { defaultSortingParams } from "./CandidatesSorting";
+import { CandidateTable, CandidateTableSettings, CandidateTablesSettings, Company, FilterProperty, SortFunctionAtom } from "./candidateTableTypes";
 import { defaultFilterParams, fakeCompanies, fakeFilterData, fakeTables } from "./mocks/fakeData";
 import { createLocalStorageAtom, createSessionStorageAtom } from "./storageHelpsFunctions";
 
@@ -17,7 +18,7 @@ export const tablesSettings = atom(
   }
 );
 
-export const defaultSettingsTable: CandidateTableSettings = { table: "DefaultTable", filters: defaultFilterParams };
+export const defaultSettingsTable: CandidateTableSettings = { table: "DefaultTable", filters: defaultFilterParams, sorting: defaultSortingParams };
 
 export const tablesSettingsURL = atomWithHash<CandidateTablesSettings>("tables", []);
 export const tablesSettingsLocalStorage = createLocalStorageAtom<CandidateTablesSettings>("tableSettings", []);

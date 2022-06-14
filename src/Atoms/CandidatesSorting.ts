@@ -1,5 +1,7 @@
 import { atom } from "jotai";
-import { SortFunctionAtom, SortingFunction, SortingMode, UserStatus, userStatusSortingWeight } from "./candidateTableTypes";
+import { currentTable } from "./CandidateTables";
+import { CandidateTableSettings, SortFunctionAtom, SortingFunction, SortingMode, UserStatus, userStatusSortingWeight } from "./candidateTableTypes";
+import { tablesSettings } from "./LoadData";
 
 const sortByScore: SortingFunction = (candidate1, candidate2) => (
   candidate2.score - candidate1.score
@@ -23,7 +25,22 @@ export const candidateSortingFunctionsTypes = new Map<string, SortingFunction>([
   ["status", sortByStatus],
 ]);
 
-export const sortFunction = atom<SortFunctionAtom>({ fn: "sortByDate", isIncrease: false });
+export const defaultSortingParams: SortFunctionAtom = { fn: "date", isIncrease: false };
+
+export const currentSortFunction = atom(
+  (get): SortFunctionAtom => get(tablesSettings)
+    .find((t: CandidateTableSettings) => (t.table === get(currentTable).id))
+    ?.sorting
+    ?? defaultSortingParams,
+  (get, set, arg: SortFunctionAtom) => set(
+    tablesSettings,
+    get(tablesSettings).map((table) => {
+      if (table.table === get(currentTable).id)
+        return { ...table, sorting: arg }
+      return table;
+    })
+  )
+);
 
 export const doPassiveMode = (before: SortingMode) => {
   if (before === SortingMode.decActive) return SortingMode.decPassive;

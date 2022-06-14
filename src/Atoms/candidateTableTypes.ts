@@ -81,7 +81,7 @@ export type CandidateTableFilters = {
 export type CandidateTableSettings = {
   table: string,
   filters: boolean[],
-  //sorting: SortFunctionAtom
+  sorting: SortFunctionAtom
 }
 
 export type CandidateTablesSettings = CandidateTableSettings[];

@@ -1,7 +1,7 @@
 import { config, useTransition, animated } from "@react-spring/web";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { doPassiveMode, sortFunction } from "../../Atoms/CandidatesSorting";
+import { doPassiveMode, currentSortFunction } from "../../Atoms/CandidatesSorting";
 import { currentTable, tableData } from "../../Atoms/CandidateTables";
 import { SortingMode, SortingTriangle, SortingTriangles } from "../../Atoms/candidateTableTypes";
 import { filterData } from "./filterData";
@@ -17,7 +17,7 @@ const getDefaultValuesSortingTriangles = () => (
 const Table = () => {
 
   const [candidates] = useAtom(tableData);
-  const [sortingFunction, setSortFunction] = useAtom(sortFunction);
+  const [sortingFunction, setSortFunction] = useAtom(currentSortFunction);
   const [allTableData, setCurrentTable] = useAtom(currentTable);
 
   // In default values need be all triangles who will used in table. 
