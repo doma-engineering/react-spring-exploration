@@ -8,7 +8,7 @@ export const currentTable = atom<CandidateTable>({ id: "", displayName: "", tabl
 
 export const tableData = atom(
   (get) => {
-    const temp = get(currentTable).table
+    const dataDecrease = get(currentTable).table
       .sort((item1, item2) => (
         candidateSortingFunctionsTypes.get(get(sortFunction).fn)
         ?? candidateSortingFunctionsTypes.get("date")!               //if sortFunction haven't in candidateSortingFunctions will called sorting by date.
@@ -20,7 +20,7 @@ export const tableData = atom(
           .map(rank => rank.id)
           .includes(candidate.rank)
       ))
-    if (get(sortFunction).isIncrease) return temp.reverse();
-    return temp;
+    if (get(sortFunction).isIncrease) return dataDecrease.reverse();
+    return dataDecrease;
   }
 )

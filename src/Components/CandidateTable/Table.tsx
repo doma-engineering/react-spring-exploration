@@ -2,7 +2,7 @@ import { config, useTransition, animated } from "@react-spring/web";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { doPassiveMode, sortFunction } from "../../Atoms/CandidatesSorting";
-import { tableData } from "../../Atoms/CandidateTables";
+import { currentTable, tableData } from "../../Atoms/CandidateTables";
 import { SortingMode, SortingTriangle, SortingTriangles } from "../../Atoms/candidateTableTypes";
 import { filterData } from "./filterData";
 
@@ -18,6 +18,7 @@ const Table = () => {
 
   const [candidates] = useAtom(tableData);
   const [sortingFunction, setSortFunction] = useAtom(sortFunction);
+  const [allTableData, setCurrentTable] = useAtom(currentTable);
 
   // In default values need be all triangles who will used in table. 
   // Else they will have state SortingMode.undefined ('#') while user don't click them. 
@@ -30,7 +31,7 @@ const Table = () => {
   }
 
   const transitions = useTransition(candidates, {
-    keys: item => item.hash,
+    keys: (candidate) => candidate.hash,
     from: (candidate) => ({ opacity: 0, left: randomOffset() }),
     enter: { opacity: 1, left: 0 },
     leave: (candidate) => ({ opacity: 0, left: randomOffset() }),
@@ -56,6 +57,8 @@ const Table = () => {
       { mode: sortingFunction.isIncrease ? SortingMode.incActive : SortingMode.decActive, }
     );
 
+    setCurrentTable({ ...allTableData, table: [...allTableData.table] });
+    console.log("triggered", allTableData);
     setSortingTriangles(newSortingTriangles);
   }, [sortingFunction])
 
