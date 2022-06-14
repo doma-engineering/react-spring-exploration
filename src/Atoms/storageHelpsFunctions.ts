@@ -24,7 +24,6 @@ export const createLocalStorageAtom = <T>(key: string, initialValue: T) => {
 //TODO: why it's types <any, unknown, void> ? bc derivedAtom is hard to set type?
 export const createSessionStorageAtom = <T>(key: string, initialValue: T) => {
   // ! IF local storage is empty => try load from local storage with same key !
-  // TODO: ask zilup is it ok?
   const getInitialValue = () => {
     const item = sessionStorage.getItem(key);
     if (item !== null) {

@@ -1,6 +1,6 @@
 import ToLoginButton from "../Components/Login/toLoginButton";
 
-const ErrorSwitherCandidateTable = () => {
+const ErrorSwitcherCandidateTable = () => {
 
   return (
     <div className="flex flex-col justify-center">
@@ -14,4 +14,4 @@ const ErrorSwitherCandidateTable = () => {
   )
 }
 
-export default ErrorSwitherCandidateTable;
+export default ErrorSwitcherCandidateTable;

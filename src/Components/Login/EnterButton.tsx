@@ -5,19 +5,19 @@ import { tryToLogin } from "../../Atoms/Login";
 
 const EnterButton = () => {
   const navigate = useNavigate();
-  const [tryToEnter, setTryToEntery] = useState(false);
+  const [tryToEnter, setTryToEntry] = useState(false);
   const [enterTo, setEnterStats] = useAtom(tryToLogin);
 
   useEffect(() => {
     if (tryToEnter) {
-      setTryToEntery(false);
+      setTryToEntry(false);
       navigate(enterTo);
     }
   } // eslint-disable-next-line react-hooks/exhaustive-deps
     , [tryToEnter]);
 
   const handleClick = () => {
-    setTryToEntery(true);
+    setTryToEntry(true);
     setEnterStats();
   }
 

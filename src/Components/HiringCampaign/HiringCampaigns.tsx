@@ -14,7 +14,7 @@ const HiringCampaigns = () => {
   }
 
   const displayName = (id: string): string => {
-    return tables.find((table) => table.id === id)?.displayName || "Table dont found";
+    return tables.find((table) => table.id === id)?.displayName || "Table don't found";
   }
 
   return (

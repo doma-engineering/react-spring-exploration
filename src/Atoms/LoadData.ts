@@ -2,7 +2,7 @@ import { atom } from "jotai";
 import { atomWithHash } from "jotai/utils";
 import { CandidateTable, CandidateTableSettings, CandidateTablesSettings, Company, FilterProperty } from "./candidateTableTypes";
 import { defaultFilterParams, fakeCompanies, fakeFilterData, fakeTables } from "./mocks/fakeData";
-import { createLocalStorageAtom, createSessionStorageAtom } from "./storageHelpsFunctions";
+import { createLocalStorageAtom } from "./storageHelpsFunctions";
 
 export const companies = atom<Company[]>(fakeCompanies);
 export const tables = atom<CandidateTable[]>(fakeTables);

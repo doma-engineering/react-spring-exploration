@@ -7,18 +7,18 @@ const Login = () => {
   const navigate = useNavigate();
   const [enterTo, setEnterStats] = useAtom(tryToLogin);
   const [logStr, setLogin] = useAtom(loginInputString)
-  const [tryToEnter, setTryToEntery] = useState(false);
+  const [tryToEnter, setTryToEntry] = useState(false);
 
   const checkEnter = (e: any) => {
     if (e.key === 'Enter') {
       setEnterStats();
-      setTryToEntery(true);
+      setTryToEntry(true);
     }
   }
 
   useEffect(() => {
     if (tryToEnter) {
-      setTryToEntery(false);
+      setTryToEntry(false);
       navigate(enterTo);
     }
   }

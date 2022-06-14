@@ -38,7 +38,7 @@ const CandidateTableValidator = () => {
       return;
     }
 
-    // for always display filter propertys in URL!
+    // for always display filter properties in URL!
     setFilters([...filter]);
   }
 
@@ -47,18 +47,18 @@ const CandidateTableValidator = () => {
   }, []);
 
   useEffect(() => {
-    const findedTable = tables?.find((t) => t.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "")) ?? { id: "", displayName: "Error!", table: [] };
-    if (findedTable.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "").toLowerCase()) {
+    const foundTable = tables?.find((t) => t.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "")) ?? { id: "", displayName: "Error!", table: [] };
+    if (foundTable.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "").toLowerCase()) {
 
-      if (findedTable.id !== CandidateTable) {
-        navigate(CANDIDATE_TABLE_URL(findedTable.id));
+      if (foundTable.id !== CandidateTable) {
+        navigate(CANDIDATE_TABLE_URL(foundTable.id));
         return;
       }
 
-      updateFilters(findedTable.id);
-      setCurrentTable(findedTable);
+      updateFilters(foundTable.id);
+      setCurrentTable(foundTable);
       setReturnPage(<CandidateTablePage />);
-      setCurrentPath(CANDIDATE_TABLE_URL(findedTable.id));
+      setCurrentPath(CANDIDATE_TABLE_URL(foundTable.id));
       return;
     }
 
@@ -70,10 +70,10 @@ const CandidateTableValidator = () => {
     if (
       (urlFilter.length > 0)
       // && (urlFilter !== filter)
-      && (!urlFilter.reduce((answ, filtr, index) => (
-        answ
-        && filtr.tableID === filter[index].tableID
-        && filtr.tableFilters.toString() === filter[index].tableFilters.toString()
+      && (!urlFilter.reduce((answer, filterItem, index) => (
+        answer
+        && filterItem.tableID === filter[index].tableID
+        && filterItem.tableFilters.toString() === filter[index].tableFilters.toString()
       ), true))
     ) {
       setComeChange(true);

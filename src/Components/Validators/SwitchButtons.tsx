@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 
-const SwitherButtons = () => {
+const SwitcherButtons = () => {
 
   const [, setSelected] = useAtom(switcherSelectedTable);
   const [, setHover] = useAtom(switcherMouseHoverTable);
@@ -38,4 +38,4 @@ const SwitherButtons = () => {
   );
 }
 
-export default SwitherButtons;
+export default SwitcherButtons;

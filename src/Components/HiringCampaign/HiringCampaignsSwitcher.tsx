@@ -64,7 +64,7 @@ const SwitcherTables = () => {
   const [table] = useAtom(tableData);
   const [mouseHoverVersion] = useAtom(switcherMouseHoverTable);
 
-  const tdChangable = (oldData: number, newData: number, switchStatus: tableSwitchStatus) => {
+  const tdChangeable = (oldData: number, newData: number, switchStatus: tableSwitchStatus) => {
 
     const isSelected =
       mouseHoverVersion !== selectedType.none
@@ -89,7 +89,7 @@ const SwitcherTables = () => {
   return (
     <div className="tableDiv">
       <table
-        className="HiringCompaignsCompare"
+        className="HiringCampaignsCompare"
       >
         <thead>
           <tr>
@@ -107,10 +107,10 @@ const SwitcherTables = () => {
                   {row.tableName}
                 </td>
                 {
-                  tdChangable(row.pendingOld, row.pendingNew, row.switchStatus)
+                  tdChangeable(row.pendingOld, row.pendingNew, row.switchStatus)
                 }
                 {
-                  tdChangable(row.filteredOld, row.filteredNew, row.switchStatus)
+                  tdChangeable(row.filteredOld, row.filteredNew, row.switchStatus)
                 }
                 <td>
                   {row.total}
