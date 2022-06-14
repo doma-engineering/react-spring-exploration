@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { currentTable } from "../../Atoms/CandidateTables";
 import { filters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
-import { tables as allTables } from "../../Atoms/LoadData";
+import { tables as allTables, tablesSettings, tablesSettingsURL } from "../../Atoms/LoadData";
 import { currentPath } from "../../Atoms/Login";
 import { comeChanges } from "../../Atoms/SwithersAtoms";
 import CandidateTablePage from "../../Pages/CandidatesTablePage";
@@ -23,6 +23,8 @@ const CandidateTableValidator = () => {
   const [, setSavedUrlFilter] = useAtom(savedUrlFilters);
   const [, setCurrentPath] = useAtom(currentPath);
   const [, setComeChange] = useAtom(comeChanges);
+  const [url] = useAtom(tablesSettingsURL);
+  const [, setTablesSettings] = useAtom(tablesSettings);
 
   const [returnPage, setReturnPage] = useState(<></>);
 
@@ -81,8 +83,9 @@ const CandidateTableValidator = () => {
       navigate(CANDIDATE_TABLE_SWITCH_MODE_URL(CandidateTable || ""));
       return;
     }
+    setTablesSettings(url);
   } // eslint-disable-next-line react-hooks/exhaustive-deps
-    , [urlFilter]);
+    , [url]);
 
   return (returnPage);
 }

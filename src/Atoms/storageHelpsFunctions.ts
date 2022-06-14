@@ -61,7 +61,7 @@ export const filterSubscribeToSettingsAtom = () => (
       const usedTables = get(tablesSettings).map((t) => t.table);
       set(tablesSettings,
         arg.map((table): CandidateTableSettings => {
-          if (table.tableID in usedTables)
+          if (usedTables.includes(table.tableID))
             return ({
               ...get(tablesSettings).find((tableItem: CandidateTableSettings) => (table.tableID === tableItem.table))!,
               filters: table.tableFilters,

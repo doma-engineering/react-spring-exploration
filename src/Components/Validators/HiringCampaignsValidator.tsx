@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { currentCompany } from "../../Atoms/Company";
-import { companies, tables as allTables } from "../../Atoms/LoadData";
+import { companies, tables as allTables, tablesSettings, tablesSettingsURL } from "../../Atoms/LoadData";
 import { currentPath, loggedInCompany } from "../../Atoms/Login";
 import { filters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
 
@@ -32,6 +32,8 @@ const HiringCampaignsPageValidator = () => {
   const [, setDifferentCompanyTable] = useAtom(differentCompany);
   const [allCompanies] = useAtom(companies);
   const [loggedIn] = useAtom(loggedInCompany);
+  const [url] = useAtom(tablesSettingsURL);
+  const [tSettings, setTablesSettings] = useAtom(tablesSettings);
 
   const [returnPage, setPage] = useState(<></>);
   const [previousURLFilter, setPreviousUrlFilter] = useState("hidden Egg");
@@ -93,9 +95,8 @@ const HiringCampaignsPageValidator = () => {
       return;
     }
 
-    // for always display filter properties in URL!
-    updateHiringTablesResult(company, filter);
-    setFilters([...filter]);
+    // for always display tables settings in URL!
+    setTablesSettings([...tSettings]);
   }
 
   useEffect(() => {
@@ -143,7 +144,7 @@ const HiringCampaignsPageValidator = () => {
       setCurrentPath(HIRING_CAMPAIGNS_URL(CompanyName || ""));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [CompanyName, urlFilter]);
+  }, [CompanyName, url]);
 
   return (returnPage);
 }
