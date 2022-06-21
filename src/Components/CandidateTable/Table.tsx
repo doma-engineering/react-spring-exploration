@@ -17,6 +17,8 @@ const getDefaultValuesSortingTriangles = () => (
 
 const Table = () => {
 
+  const animationDuration = 200;
+
   const [candidates] = useAtom(tableData);
   const [sortingFunction, setSortFunction] = useAtom(currentSortFunction);
   const [url] = useAtom(tablesSettingsURL);
@@ -37,7 +39,7 @@ const Table = () => {
     from: (candidate) => ({ opacity: 0, left: randomOffset() }),
     enter: { opacity: 1, left: 0 },
     leave: (candidate) => ({ opacity: 0, left: randomOffset() }),
-    config: { ...config.slow, duration: 200 }
+    config: { ...config.slow, duration: animationDuration }
   });
 
   const rankColor = (rankName: string): string => {
@@ -61,10 +63,14 @@ const Table = () => {
 
     setCurrentTable({ ...allTableData, table: [...allTableData.table] });
     setSortingTriangles(newSortingTriangles);
-  }, [sortingFunction, url])
+  }, [sortingFunction, url]);
 
   const handleClickSorting = (sortingType: string) => {
     // Changing state of sorting function atom will trigger use effect above, for updating display
+    setCurrentTable({...allTableData, table: []});
+    setTimeout(() => {
+      setCurrentTable({...allTableData, table: [...allTableData.table]});
+    }, animationDuration);
     setSortFunction(
       {
         fn: sortingType,
