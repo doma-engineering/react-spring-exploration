@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { doPassiveMode, currentSortFunction } from "../../Atoms/CandidatesSorting";
 import { currentTable, tableData } from "../../Atoms/CandidateTables";
 import { SortingMode, SortingTriangle, SortingTriangles } from "../../Atoms/candidateTableTypes";
+import { tablesSettingsURL } from "../../Atoms/LoadData";
 import { filterData } from "./filterData";
 
 const getDefaultValuesSortingTriangles = () => (
@@ -18,6 +19,7 @@ const Table = () => {
 
   const [candidates] = useAtom(tableData);
   const [sortingFunction, setSortFunction] = useAtom(currentSortFunction);
+  const [url] = useAtom(tablesSettingsURL);
   const [allTableData, setCurrentTable] = useAtom(currentTable);
 
   // In default values need be all triangles who will used in table. 
@@ -58,16 +60,19 @@ const Table = () => {
     );
 
     setCurrentTable({ ...allTableData, table: [...allTableData.table] });
-    console.log("triggered", allTableData);
     setSortingTriangles(newSortingTriangles);
-  }, [sortingFunction])
+  }, [sortingFunction, url])
 
   const handleClickSorting = (sortingType: string) => {
     // Changing state of sorting function atom will trigger use effect above, for updating display
     setSortFunction(
       {
         fn: sortingType,
-        isIncrease: sortingType === sortingFunction.fn ? !sortingFunction.isIncrease : sortingFunction.isIncrease
+        isIncrease: 
+          sortingType === sortingFunction.fn ? 
+            !sortingFunction.isIncrease
+          : 
+            sortingTriangles.get(sortingType)?.mode === SortingMode.incPassive
       }
     );
   }

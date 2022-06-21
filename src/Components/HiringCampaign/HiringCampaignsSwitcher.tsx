@@ -1,7 +1,7 @@
-import { atom, useAtom } from "jotai"
+import { atom, useAtom } from "jotai";
 import { currentCompany } from "../../Atoms/Company";
 import { filters, savedUrlFilters } from "../../Atoms/Filters";
-import { tables as allTables } from "../../Atoms/LoadData"
+import { tables as allTables } from "../../Atoms/LoadData";
 import { selectedType, switcherMouseHoverTable } from "../../Atoms/SwithersAtoms";
 
 import { findResult } from "../Validators/HiringCampaignsValidator";

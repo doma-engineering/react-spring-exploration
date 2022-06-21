@@ -10,7 +10,7 @@ const ButtonBackToHiringCampaigns = () => {
   return (
     <button
       className="btnAccent"
-      onClick={() => navigate(HIRING_CAMPAIGNS_URL(name))}
+      onClick={() => navigate(HIRING_CAMPAIGNS_URL(name.companyId))}
     >
       Back to campaigns
     </button>

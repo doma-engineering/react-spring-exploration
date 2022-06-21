@@ -2,7 +2,8 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentTable } from "../../Atoms/CandidateTables";
-import { filters, savedUrlFilters } from "../../Atoms/Filters";
+import { filters, notEqualFilters, savedUrlFilters } from "../../Atoms/Filters";
+import { savedTablesSettingsURL, tablesSettings } from "../../Atoms/LoadData";
 import { comeChanges, selectedType, switcherMouseHoverTable, switcherSelectedTable } from "../../Atoms/SwithersAtoms";
 import ErrorSwitcherCandidateTable from "../../Pages/ErrorSwitcherCandidateTable";
 import CandidateTableSwitcherPage from "../../Pages/SwitcherCandidateTable";
@@ -16,28 +17,26 @@ const CandidateTableSwitcherValidator = () => {
 
   const [selected, setSelected] = useAtom(switcherSelectedTable);
   const [, setMouseHover] = useAtom(switcherMouseHoverTable);
-  const [oldFilter, setFilters] = useAtom(filters);
+  // switch mode is available only when changed filters
+  const [oldFilter] = useAtom(filters);
   const [newFilter] = useAtom(savedUrlFilters);
+  //
+  const [oldSettings, setTablesSettings] = useAtom(tablesSettings);
+  const [newSettings] = useAtom(savedTablesSettingsURL);
   const [table] = useAtom(currentTable);
   const [, setComeChange] = useAtom(comeChanges);
 
   useEffect(() => {
-    if (
-      //Check is newFilter === oldFilter
-      newFilter.reduce((ans, filter, index) => (
-        ans
-        && filter.tableID === oldFilter[index].tableID
-        && filter.tableFilters.toString() === oldFilter[index].tableFilters.toString()
-      ), true)
-    ) {
+    //Check is newFilter === oldFilter => trying to enter to switch mod by hand write url!
+    if (! notEqualFilters(newFilter, oldFilter)) {
       setPage(ErrorSwitcherCandidateTable);
     }
   }, [newFilter, oldFilter]);
 
   useEffect(() => {
     if (selected !== selectedType.none) {
-      if (selected === selectedType.new) setFilters([...newFilter]);
-      if (selected === selectedType.old) setFilters([...oldFilter]);
+      if (selected === selectedType.new) setTablesSettings([...newSettings]);
+      if (selected === selectedType.old) setTablesSettings([...oldSettings]);
       setSelected(selectedType.none);
       setMouseHover(selectedType.none);
       setComeChange(false);

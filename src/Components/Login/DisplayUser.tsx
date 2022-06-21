@@ -3,12 +3,12 @@ import { companies } from "../../Atoms/LoadData";
 import { loggedInCompany } from "../../Atoms/Login";
 
 const DisplayUser = () => {
-  const [companyID] = useAtom(loggedInCompany);
+  const [currentCompany] = useAtom(loggedInCompany);
   const [allCompanies] = useAtom(companies);
   const companyName = allCompanies.find(
-    (company) => company.id === companyID
+    (company) => company.id === currentCompany.companyId
   )
-    ?.displayName ?? "";
+    ?.displayName ?? "[Don't logged in]";
   return (
     <div className="text-gray-100 font-thin">
       Current company logged in as

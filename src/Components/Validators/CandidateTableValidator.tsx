@@ -2,14 +2,13 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { currentTable } from "../../Atoms/CandidateTables";
-import { filters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
-import { tables as allTables, tablesSettings, tablesSettingsURL } from "../../Atoms/LoadData";
+import { filters, notEqualFilters, savedUrlFilters, urlFilters } from "../../Atoms/Filters";
+import { defaultSettingsTable, notEqualTablesSettings, savedTablesSettingsURL, tables as allTables, tablesSettings, tablesSettingsURL } from "../../Atoms/LoadData";
 import { currentPath } from "../../Atoms/Login";
 import { comeChanges } from "../../Atoms/SwithersAtoms";
 import CandidateTablePage from "../../Pages/CandidatesTablePage";
 import Error404Page from "../../Pages/Error404Page";
 import { CANDIDATE_TABLE_SWITCH_MODE_URL, CANDIDATE_TABLE_URL } from "../../routes";
-import { defaultFilterParams } from "../../Atoms/mocks/fakeData";
 
 const CandidateTableValidator = () => {
 
@@ -18,35 +17,33 @@ const CandidateTableValidator = () => {
 
   const [, setCurrentTable] = useAtom(currentTable);
   const [tables] = useAtom(allTables);
-  const [filter, setFilters] = useAtom(filters);
+  const [filter,] = useAtom(filters);
   const [urlFilter] = useAtom(urlFilters);
-  const [, setSavedUrlFilter] = useAtom(savedUrlFilters);
+  const [, setSavedUrl] = useAtom(savedTablesSettingsURL);
+  const [, setSavedUrlFilters] = useAtom(savedUrlFilters);
   const [, setCurrentPath] = useAtom(currentPath);
   const [, setComeChange] = useAtom(comeChanges);
   const [url] = useAtom(tablesSettingsURL);
-  const [, setTablesSettings] = useAtom(tablesSettings);
+  const [tSettings, setTablesSettings] = useAtom(tablesSettings);
 
   const [returnPage, setReturnPage] = useState(<></>);
 
-  const updateFilters = (tableID: string) => {
-
-    if (!filter.map((filter) => filter.tableID)
+  const updateURL = (tableID: string) => {
+    // if current table haven't in tables settings => add settings to url&etc.
+    if ( 
+      !filter
+      .map((filter) => filter.tableID)
       .includes(tableID)
     ) {
-      setFilters([
-        ...filter,
-        { tableID, tableFilters: defaultFilterParams }
+      setTablesSettings([
+        ...tSettings,
+        {...defaultSettingsTable, table: tableID}
       ]);
       return;
     }
-
-    // for always display filter properties in URL!
-    setFilters([...filter]);
+    // for always display tables properties in URL!
+    setTablesSettings([...tSettings]);
   }
-
-  useEffect(() => {
-
-  }, []);
 
   useEffect(() => {
     const foundTable = tables?.find((t) => t.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? "")) ?? { id: "", displayName: "Error!", table: [] };
@@ -56,8 +53,7 @@ const CandidateTableValidator = () => {
         navigate(CANDIDATE_TABLE_URL(foundTable.id));
         return;
       }
-
-      updateFilters(foundTable.id);
+      updateURL(foundTable.id);
       setCurrentTable(foundTable);
       setReturnPage(<CandidateTablePage />);
       setCurrentPath(CANDIDATE_TABLE_URL(foundTable.id));
@@ -69,21 +65,31 @@ const CandidateTableValidator = () => {
     , [CandidateTable]);
 
   useEffect(() => {
-    if (
-      (urlFilter.length > 0)
-      // && (urlFilter !== filter)
-      && (!urlFilter.reduce((answer, filterItem, index) => (
-        answer
-        && filterItem.tableID === filter[index].tableID
-        && filterItem.tableFilters.toString() === filter[index].tableFilters.toString()
-      ), true))
+
+    if ( 
+      url.length > 0 && 
+      notEqualTablesSettings(url, tSettings) 
     ) {
-      setComeChange(true);
-      setSavedUrlFilter([...urlFilter]);
-      navigate(CANDIDATE_TABLE_SWITCH_MODE_URL(CandidateTable || ""));
-      return;
+
+      // if open window without loggin in but with url settings => open table with current settings
+      if ( filter === undefined && url.length > 0 ){
+        setTablesSettings([...url]);
+        return;
+      }
+
+      // if url filters come changes and filter is not empty => go to switchMode
+      if ( notEqualFilters(urlFilter, filter) && filter.length > 0){
+        setComeChange(true);
+        setSavedUrl([...url]);
+        setSavedUrlFilters([...urlFilter]);
+        navigate(CANDIDATE_TABLE_SWITCH_MODE_URL(CandidateTable || ""));
+      }
+
+      // for update if changed not filter part, like sorting mode.
+      else {
+        setTablesSettings([...url]);
+      }
     }
-    setTablesSettings(url);
   } // eslint-disable-next-line react-hooks/exhaustive-deps
     , [url]);
 

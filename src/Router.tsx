@@ -46,6 +46,7 @@ import {
 } from "./routes";
 
 import "./styles.css"
+import RootValidator from "./Components/Validators/RootValidator";
 
 const App = () => {
   return (
@@ -53,7 +54,7 @@ const App = () => {
       <Router>
         <UpsideMenu />
         <Routes>
-          <Route path={ROOT_URL} element={<Navigate to={`Login`} />} />
+          <Route path={ROOT_URL} element={<RootValidator />} />
           <Route path={LOGIN_URL} element={<LoginValidator />} />
           <Route path={HIRING_CAMPAIGNS_URL_path} element={<HiringCampaignsPageValidator />} />
           <Route path={HIRING_CAMPAIGNS_SWITCH_MODE_URL_path} element={<SwitchHiringCampaignsValidator />} />
