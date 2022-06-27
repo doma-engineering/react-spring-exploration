@@ -1,17 +1,17 @@
-import { atom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
+import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
 export type LoggedInCompany = {
-  isLoggedIn: boolean;
-  companyId: string;
+    isLoggedIn: boolean;
+    companyId: string;
 };
 
-export const loginInputString = atomWithStorage("loginInputString", "");
+export const loginInputString = atomWithStorage('loginInputString', '');
 export const loggedInCompany = atomWithStorage<LoggedInCompany>(
-  "loggedInCompany",
-  { isLoggedIn: false, companyId: "" }
+    'loggedInCompany',
+    { isLoggedIn: false, companyId: '' }
 );
 
 export const pressedEnterButton = atom(false);
 
-export const currentPath = atomWithStorage("currentPath", "");
+export const currentPath = atomWithStorage('currentPath', '');

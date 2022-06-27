@@ -1,16 +1,16 @@
-import { atom } from "jotai";
+import { atom } from 'jotai';
 
 export enum selectedType {
-  none = "none",
-  old = "old",
-  new = "new",
+    none = 'none',
+    old = 'old',
+    new = 'new',
 }
 
 export enum candidateSwitchStatus {
-  notDisplayed = "notDisplayed",
-  removed = "removed",
-  added = "added",
-  inBoth = "inBoth",
+    notDisplayed = 'notDisplayed',
+    removed = 'removed',
+    added = 'added',
+    inBoth = 'inBoth',
 }
 
 export const switcherMouseHoverTable = atom<selectedType>(selectedType.none);
