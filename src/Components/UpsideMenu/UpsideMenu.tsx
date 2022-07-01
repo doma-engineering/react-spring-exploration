@@ -1,15 +1,28 @@
+import { useAtomValue } from 'jotai';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loggedInCompany } from '../../Atoms/Login';
+import { HIRING_CAMPAIGNS_URL, LOGIN_URL } from '../../routes';
 import ToLoginButton from '../Login/toLoginButton';
 
 const UpsideMenu = () => {
+    const navigate = useNavigate();
+    const loggedIn = useAtomValue(loggedInCompany);
     const [isMenu, setIsMenu] = useState(false);
 
     const handleClickMenu = () => setIsMenu(!isMenu);
+    const handleClickLogo = () => {
+        if (loggedIn.isLoggedIn) {
+            navigate(HIRING_CAMPAIGNS_URL(loggedIn.companyId));
+        } else {
+            navigate(LOGIN_URL);
+        }
+    };
 
     return (
         <div>
             <div className="bg-slate-900 border-b border-slate-600 flex">
-                <button className="flex p-2 pr-8">
+                <button className="flex p-2 pr-8" onClick={handleClickLogo}>
                     <img
                         className="w-10 h-10 ml-5 invert"
                         src="https://raw.githubusercontent.com/doma-engineering/design-exploration/main/layout%20prototype/LogoPlay-04.png"
