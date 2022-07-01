@@ -2,7 +2,13 @@ import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loggedInCompany } from '../../Atoms/Login';
-import { HIRING_CAMPAIGNS_URL, LOGIN_URL } from '../../routes';
+import {
+    COMMUNITY_URL,
+    COMPANIES_URL,
+    HIRING_CAMPAIGNS_URL,
+    LOGIN_URL,
+    TASKS_URL,
+} from '../../routes';
 import ToLoginButton from '../Login/toLoginButton';
 
 const UpsideMenu = () => {
@@ -12,8 +18,16 @@ const UpsideMenu = () => {
 
     const handleClickMenu = () => setIsMenu(!isMenu);
     const handleClickLogo = () => {
+        navigateToHiringCampaigns();
+    };
+    const navigateToHiringCampaigns = () => {
         if (loggedIn.isLoggedIn) {
-            navigate(HIRING_CAMPAIGNS_URL(loggedIn.companyId));
+            if (
+                window.location.pathname !==
+                HIRING_CAMPAIGNS_URL(loggedIn.companyId)
+            ) {
+                navigate(HIRING_CAMPAIGNS_URL(loggedIn.companyId));
+            }
         } else {
             navigate(LOGIN_URL);
         }
@@ -32,9 +46,30 @@ const UpsideMenu = () => {
                 </button>
                 <div className="hidden md:flex md:w-full md:justify-between">
                     <div className="ml-10">
-                        <button className="upsideCategory">Companies</button>
-                        <button className="upsideCategory">Tasks</button>
-                        <button className="upsideCategory">Community</button>
+                        <button
+                            className="upsideCategory"
+                            onClick={() => navigate(COMPANIES_URL)}
+                        >
+                            Companies
+                        </button>
+                        <button
+                            className="upsideCategory"
+                            onClick={() => navigate(TASKS_URL)}
+                        >
+                            Tasks
+                        </button>
+                        <button
+                            className="upsideCategory"
+                            onClick={() => navigate(COMMUNITY_URL)}
+                        >
+                            Community
+                        </button>
+                        <button
+                            className="upsideCategory"
+                            onClick={handleClickLogo}
+                        >
+                            Hiring campaigns
+                        </button>
                     </div>
                     <div className="flex items-center">
                         <ToLoginButton
@@ -45,7 +80,7 @@ const UpsideMenu = () => {
                 </div>
                 <div className="flex w-full justify-end md:hidden">
                     <button
-                        onClick={handleClickMenu}
+                        onClick={navigateToHiringCampaigns}
                         className="btnAccent bg-cyan-800 rounded-full px-8"
                     >
                         {isMenu ? 'Close' : 'Menu'}

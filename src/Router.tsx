@@ -42,15 +42,21 @@ import Error404Page from './Pages/Error404Page';
 import {
     CANDIDATE_TABLE_SWITCH_MODE_URL_path,
     CANDIDATE_TABLE_URL_path,
+    COMMUNITY_URL,
+    COMPANIES_URL,
     HIRING_CAMPAIGNS_MISS_COMPANY_URL_errorPath,
     HIRING_CAMPAIGNS_SWITCH_MODE_URL_path,
     HIRING_CAMPAIGNS_URL_path,
     LOGIN_URL,
     ROOT_URL,
+    TASKS_URL,
 } from './routes';
 
 import './styles.css';
 import RootValidator from './Components/Validators/RootValidator';
+import CommunityPage from './Pages/CommunityPage';
+import CompaniesPage from './Pages/CompaniesPage';
+import TasksPage from './Pages/TasksPage';
 
 const App = () => {
     return (
@@ -80,6 +86,11 @@ const App = () => {
                         path={HIRING_CAMPAIGNS_MISS_COMPANY_URL_errorPath}
                         element={<Navigate to={LOGIN_URL} />}
                     />
+                    {/* Decorative pages */}
+                    <Route path={COMMUNITY_URL} element={<CommunityPage />} />
+                    <Route path={COMPANIES_URL} element={<CompaniesPage />} />
+                    <Route path={TASKS_URL} element={<TasksPage />} />
+                    {/* end of decorative page */}
                     <Route path="*" element={<Error404Page />} />
                 </Routes>
             </Router>
