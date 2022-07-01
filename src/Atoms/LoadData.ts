@@ -40,7 +40,8 @@ export const defaultSettingsTable: CandidateTableSettings = {
 
 export const tablesSettingsURL = atomWithHash<CandidateTablesSettings>(
     'tables',
-    []
+    [],
+    { replaceState: true }
 );
 export const tablesSettingsLocalStorage =
     createLocalStorageAtom<CandidateTablesSettings>('tableSettings', []);
