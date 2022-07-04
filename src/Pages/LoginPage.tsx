@@ -5,7 +5,9 @@ const LoginPage = () => {
     return (
         <div className="flex justify-center mt-40 space-x-3">
             <Login />
-            <EnterButton />
+            <div className="pt-2">
+                <EnterButton />
+            </div>
         </div>
     );
 };

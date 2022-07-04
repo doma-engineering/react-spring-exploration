@@ -55,14 +55,22 @@ const Login = () => {
             <div className="flex items-center text-stone-200 ">
                 <span className="mr-2">Login as:</span>
                 <input
-                    className="bg-slate-900 p-1 px-2"
+                    className="pl-5"
                     type="text"
                     onChange={(e) => setLogin(e.target.value)}
                     onKeyDown={checkPressedButton}
                     defaultValue={`${logStr}`}
                 />
             </div>
-            <div className="absolute text-red-900">{errorMessage}</div>
+            <div className="ml-20 text-red-900">{errorMessage}</div>
+            <div className="mt-2 flex items-center text-stone-200">
+                <span className="mr-2">password:</span>
+                <input
+                    className="px-2 text-stone-400"
+                    type="text"
+                    placeholder={`not checking`}
+                />
+            </div>
         </div>
     );
 };

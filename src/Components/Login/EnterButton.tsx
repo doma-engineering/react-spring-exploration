@@ -9,7 +9,7 @@ const EnterButton = () => {
     };
 
     return (
-        <button className="btnAccent py-1 px-9" onClick={handleClick}>
+        <button className="btnAccent py-2 px-9" onClick={handleClick}>
             Enter
         </button>
     );
