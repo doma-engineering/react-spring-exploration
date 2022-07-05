@@ -28,6 +28,7 @@
 
 import {
     BrowserRouter as Router,
+    Link,
     Navigate,
     Route,
     Routes,
@@ -61,7 +62,7 @@ import TasksPage from './Pages/TasksPage';
 const App = () => {
     return (
         <div className="bg-slate-800 w-screen h-screen">
-            <Router>
+            <Router basename="ZHR">
                 <UpsideMenu />
                 <Routes>
                     <Route path={ROOT_URL} element={<RootValidator />} />
@@ -92,6 +93,42 @@ const App = () => {
                     <Route path={TASKS_URL} element={<TasksPage />} />
                     {/* end of decorative page */}
                     <Route path="*" element={<Error404Page />} />
+                </Routes>
+            </Router>
+
+            <Router basename="getHired">
+                <Routes>
+                    <Route path="*" element={<Error404Page />} />
+                </Routes>
+            </Router>
+
+            {/* Developer help */}
+            <Router basename="">
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <div className="flex flex-col items-center">
+                                <p className="mt-16 text-3xl text-slate-200">
+                                    Welcome to <b>Zero HR</b> testing front end.
+                                </p>
+                                <Link
+                                    className="mt-10 text-orange-400 text-3xl bg-slate-700/50 py-2 px-4 rounded-lg"
+                                    to={'ZHR'}
+                                    reloadDocument
+                                >
+                                    Go to ZeroHR for HR
+                                </Link>
+                                <Link
+                                    className="mt-5 text-blue-900 text-3xl bg-slate-700/50 py-2 px-4 rounded-lg"
+                                    to={'getHired'}
+                                    reloadDocument
+                                >
+                                    Go to ZeroHR for Candidates
+                                </Link>
+                            </div>
+                        }
+                    />
                 </Routes>
             </Router>
         </div>
