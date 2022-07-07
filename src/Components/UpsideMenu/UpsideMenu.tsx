@@ -1,12 +1,14 @@
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { loggedInCompany } from '../../Atoms/Login';
 import {
     COMMUNITY_URL,
     COMPANIES_URL,
+    GET_STARTED_URL,
     HIRING_CAMPAIGNS_URL,
     LOGIN_URL,
+    REGISTRATION_URL,
     TASKS_URL,
 } from '../../routes';
 import ToLoginButton from '../Login/toLoginButton';
@@ -29,7 +31,7 @@ const UpsideMenu = () => {
                 navigate(HIRING_CAMPAIGNS_URL(loggedIn.companyId));
             }
         } else {
-            navigate(LOGIN_URL);
+            navigate(GET_STARTED_URL);
         }
     };
 
@@ -66,17 +68,34 @@ const UpsideMenu = () => {
                         </button>
                         <button
                             className="upsideCategory"
-                            onClick={handleClickLogo}
+                            onClick={() => navigateToHiringCampaigns()}
                         >
                             Hiring campaigns
                         </button>
                     </div>
-                    <div className="flex items-center">
-                        <ToLoginButton
-                            text="logout"
-                            style="px-5 mr-5 border-2 p-1 rounded-full border-stone-400 text-stone-300 hover:border-0 hover:bg-sky-900"
-                        />
-                    </div>
+                    {loggedIn.isLoggedIn ? (
+                        <div className="flex items-center">
+                            <ToLoginButton
+                                text="logout"
+                                style="px-5 mr-5 border-2 p-1 rounded-full border-stone-400 text-stone-300 hover:border-0 hover:bg-sky-900"
+                            />
+                        </div>
+                    ) : (
+                        <div className="flex items-center">
+                            <Link
+                                to={REGISTRATION_URL}
+                                className="px-5 mr-2 border-2 p-1 rounded-full border-stone-400 text-stone-300 hover:border-0 hover:bg-sky-900"
+                            >
+                                register
+                            </Link>
+                            <Link
+                                to={LOGIN_URL}
+                                className="mr-5 border-2 py-1 px-7 rounded-full border-stone-400 text-stone-300 hover:border-0 hover:bg-sky-900"
+                            >
+                                login
+                            </Link>
+                        </div>
+                    )}
                 </div>
                 <div className="flex w-full justify-end md:hidden">
                     <button

@@ -45,11 +45,14 @@ import {
     CANDIDATE_TABLE_URL_path,
     COMMUNITY_URL,
     COMPANIES_URL,
+    GET_STARTED_URL,
     HIRING_CAMPAIGNS_MISS_COMPANY_URL_errorPath,
     HIRING_CAMPAIGNS_SWITCH_MODE_URL_path,
     HIRING_CAMPAIGNS_URL_path,
     LOGIN_URL,
+    REGISTRATION_URL,
     ROOT_URL,
+    TASKS_BY_CATEGORY_URL_path,
     TASKS_URL,
 } from './routes';
 
@@ -58,6 +61,9 @@ import RootValidator from './Components/Validators/RootValidator';
 import CommunityPage from './Pages/CommunityPage';
 import CompaniesPage from './Pages/CompaniesPage';
 import TasksPage from './Pages/TasksPage';
+import GetStartedPage from './Pages/GetStartedPage';
+import RegistrationPage from './Pages/RegistrationPage';
+import TasksCategoryValidator from './Components/Validators/TasksCategoryValidator';
 
 const App = () => {
     return (
@@ -66,6 +72,14 @@ const App = () => {
                 <UpsideMenu />
                 <Routes>
                     <Route path={ROOT_URL} element={<RootValidator />} />
+                    <Route
+                        path={GET_STARTED_URL}
+                        element={<GetStartedPage />}
+                    />
+                    <Route
+                        path={REGISTRATION_URL}
+                        element={<RegistrationPage />}
+                    />
                     <Route path={LOGIN_URL} element={<LoginValidator />} />
                     <Route
                         path={HIRING_CAMPAIGNS_URL_path}
@@ -86,6 +100,10 @@ const App = () => {
                     <Route
                         path={HIRING_CAMPAIGNS_MISS_COMPANY_URL_errorPath}
                         element={<Navigate to={LOGIN_URL} />}
+                    />
+                    <Route
+                        path={TASKS_BY_CATEGORY_URL_path}
+                        element={<TasksCategoryValidator />}
                     />
                     {/* Decorative pages */}
                     <Route path={COMMUNITY_URL} element={<CommunityPage />} />

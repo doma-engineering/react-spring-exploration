@@ -5,6 +5,8 @@ import {
     FilterProperty,
     Gender,
     Rank,
+    TaskCategories,
+    TaskTiers,
     User,
     UserStatus,
 } from '../candidateTableTypes';
@@ -33,7 +35,7 @@ export const fakeUserData: User[] = [
 
         taskInProgress: ['Java'],
         taskCompleted: ['Haskell'],
-        taskNotFinished: ['Python'],
+        taskNotFinished: ['Elixir'],
     },
     {
         id: 2,
@@ -74,7 +76,7 @@ export const fakeUserData: User[] = [
         languages: ['en', 'es'],
         status: UserStatus.NotSelected,
 
-        taskCompleted: ['Java', 'Typescript', 'Python'],
+        taskCompleted: ['Java', 'Typescript', 'Elixir'],
         taskNotFinished: ['Haskell'],
     },
     {
@@ -96,7 +98,7 @@ export const fakeUserData: User[] = [
         programLanguages: ['Typescript'],
         status: UserStatus.FindNewJob,
 
-        taskInProgress: ['Python'],
+        taskInProgress: ['Elixir'],
         taskCompleted: ['Typescript'],
     },
     {
@@ -134,10 +136,10 @@ export const fakeUserData: User[] = [
         address: 'Alter Wall 38, 97804 Lohr',
         phoneNumber: '09352 38 11 66',
         languages: ['fo', 'en'],
-        programLanguages: ['Typescript', 'Java', 'Python', 'Haskell'],
+        programLanguages: ['Typescript', 'Java', 'Elixir', 'Haskell'],
         status: UserStatus.TryChangeJob,
 
-        taskInProgress: ['Python'],
+        taskInProgress: ['Elixir'],
         taskCompleted: ['Typescript', 'Haskell'],
     },
     {
@@ -179,7 +181,7 @@ export const fakeUserData: User[] = [
         status: UserStatus.FindNewJob,
 
         taskCompleted: ['Typescript'],
-        taskNotFinished: ['Python'],
+        taskNotFinished: ['Elixir'],
     },
     {
         id: 9,
@@ -223,7 +225,7 @@ export const fakeUserData: User[] = [
         status: UserStatus.TryChangeJob,
 
         taskInProgress: ['Java'],
-        taskCompleted: ['Haskell', 'Python'],
+        taskCompleted: ['Haskell', 'Elixir'],
         taskNotFinished: ['Typescript'],
     },
 ];
@@ -385,10 +387,10 @@ export const fakeCandidatesDataTypescript: Candidate[] = [
 ];
 
 //
-//  Python
+//  Elixir
 //
 
-export const fakeCandidatesDataPython: Candidate[] = [
+export const fakeCandidatesDataElixir: Candidate[] = [
     {
         hash: '04a5246b7a8d173dceb2e6befd05206f30d80e67aa2ebce0b230b80e7fe05397',
         score: -22,
@@ -420,7 +422,7 @@ export const fakeCompanyTEAData: Company = {
 export const fakeCompanyWHALEData: Company = {
     id: 'WHALE',
     displayName: 'WHALE',
-    tables: ['Typescript', 'Java', 'Python'],
+    tables: ['Typescript', 'Java', 'Elixir'],
 };
 
 // -------- compound fake data --------- //
@@ -429,22 +431,30 @@ export const fakeTables: CandidateTable[] = [
     {
         id: 'Java',
         displayName: 'Java',
+        category: TaskCategories.Java,
+        tier: TaskTiers.base,
         table: fakeCandidatesDataJava,
     },
     {
         id: 'Haskell',
         displayName: 'Haskell',
+        category: TaskCategories.Haskell,
+        tier: TaskTiers.base,
         table: fakeCandidatesDataHaskell,
     },
     {
         id: 'Typescript',
         displayName: 'Typescript',
+        category: TaskCategories.TypeScript,
+        tier: TaskTiers.base,
         table: fakeCandidatesDataTypescript,
     },
     {
-        id: 'Python',
-        displayName: 'Python',
-        table: fakeCandidatesDataPython,
+        id: 'Elixir',
+        displayName: 'Elixir',
+        category: TaskCategories.Elixir,
+        tier: TaskTiers.new,
+        table: fakeCandidatesDataElixir,
     },
 ];
 

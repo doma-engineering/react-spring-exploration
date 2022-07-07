@@ -39,6 +39,7 @@ import {
     HIRING_CAMPAIGNS_URL,
 } from '../../routes';
 import { comeChanges } from '../../Atoms/SwithersAtoms';
+import { emptyTable } from '../../Atoms/CandidateTables';
 
 const HiringCampaignsPageValidator = () => {
     const { CompanyName } = useParams();
@@ -69,13 +70,8 @@ const HiringCampaignsPageValidator = () => {
     ) => {
         setResult(
             company.tables.map((tableID) => {
-                const tableData = tables?.find(
-                    (table) => table.id === tableID
-                ) ?? {
-                    id: '',
-                    displayName: 'Table not found',
-                    table: [],
-                };
+                const tableData =
+                    tables?.find((table) => table.id === tableID) ?? emptyTable;
                 const filterData: boolean[] =
                     filters?.find(
                         (filter: CandidateTableFilters) =>

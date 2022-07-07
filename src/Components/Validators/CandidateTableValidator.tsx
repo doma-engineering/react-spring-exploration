@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { currentTable } from '../../Atoms/CandidateTables';
+import { currentTable, emptyTable } from '../../Atoms/CandidateTables';
 import {
     filters,
     notEqualFilters,
@@ -57,10 +57,12 @@ const CandidateTableValidator = () => {
 
     useEffect(
         () => {
-            const foundTable = tables?.find(
-                (t) =>
-                    t.id.toLowerCase() === (CandidateTable?.toLowerCase() ?? '')
-            ) ?? { id: '', displayName: 'Error!', table: [] };
+            const foundTable =
+                tables?.find(
+                    (t) =>
+                        t.id.toLowerCase() ===
+                        (CandidateTable?.toLowerCase() ?? '')
+                ) ?? emptyTable;
             if (
                 foundTable.id.toLowerCase() ===
                 (CandidateTable?.toLowerCase() ?? '').toLowerCase()

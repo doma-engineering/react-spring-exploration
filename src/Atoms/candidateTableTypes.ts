@@ -1,3 +1,12 @@
+export enum TaskCategories {
+    Java = 'Java',
+    TypeScript = 'TypeScript',
+    Haskell = 'Haskell',
+    Elixir = 'Elixir',
+    bespoke = 'Bespoke',
+    notSelected = '',
+}
+
 export enum Gender {
     Male = 'male',
     Female = 'female',
@@ -25,6 +34,12 @@ export enum Rank {
     Senior = 'Senior',
     Middle = 'Middle',
     Junior = 'Junior',
+}
+
+export enum TaskTiers {
+    base = 'main',
+    new = 'newest',
+    bespoke = 'bespoke',
 }
 
 export type Company = {
@@ -68,6 +83,8 @@ export type Candidate = {
 
 export type CandidateTable = {
     id: string;
+    category: TaskCategories;
+    tier: TaskTiers;
     displayName: string;
     table: Candidate[];
 };

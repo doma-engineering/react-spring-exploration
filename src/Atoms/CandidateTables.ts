@@ -4,14 +4,22 @@ import {
     candidateSortingFunctionsTypes,
     currentSortFunction,
 } from './CandidatesSorting';
-import { CandidateTable } from './candidateTableTypes';
+import {
+    CandidateTable,
+    TaskCategories,
+    TaskTiers,
+} from './candidateTableTypes';
 import { currentFilters } from './Filters';
 
-export const currentTable = atom<CandidateTable>({
+export const emptyTable: CandidateTable = {
     id: '',
+    category: TaskCategories.notSelected,
+    tier: TaskTiers.base,
     displayName: '',
     table: [],
-});
+};
+
+export const currentTable = atom<CandidateTable>(emptyTable);
 
 export const tableData = atom((get) => {
     const dataDecrease = get(currentTable)

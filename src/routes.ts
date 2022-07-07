@@ -1,7 +1,19 @@
 // _path          mean what in url contain parametric parts. Like ":CompanyName"
 // _errorPath     mean what that path need for errors catch.
 
+import { TaskCategories } from './Atoms/candidateTableTypes';
+
+// ------------------------ ZHR --------------------------//
+// ZHR - part where HR can find candidate for their company.
+
 export const ROOT_URL = '/';
+export const GET_STARTED_URL = '/GetStarted';
+export const REGISTRATION_URL = '/Registration';
+export const TERMS_AND_CONDITIONS = '/TermsAndConditions';
+export const TASKS_BY_CATEGORY_URL_path = '/Tasks/:CategoryName';
+export const TASKS_BY_CATEGORY_URL = (category: TaskCategories) =>
+    `/Tasks/${category}`;
+
 export const LOGIN_URL = '/Login';
 export const HIRING_CAMPAIGNS_URL_path = '/Companies/:CompanyName/Campaigns';
 export const HIRING_CAMPAIGNS_URL = (companyID: string) =>
