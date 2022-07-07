@@ -1,4 +1,4 @@
-import DecorativeTable from './DecorativeTable';
+import UniversalTable from '../UniversalTable/UniversalTable';
 import Header from './Header';
 
 const DecorativePageContent = ({ PageName }: { PageName: string }) => {
@@ -10,8 +10,8 @@ const DecorativePageContent = ({ PageName }: { PageName: string }) => {
             <div className="text-center text-stone-200 text-5xl py-5">
                 {PageName}
             </div>
-            <div className="flex justify-center mt-5">
-                <DecorativeTable />
+            <div className="flex justify-center mt-5 pb-20">
+                <UniversalTable />
             </div>
         </div>
     );

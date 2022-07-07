@@ -770,12 +770,25 @@ input {
   position: relative;
 }
 
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
 .z-20 {
   z-index: 20;
 }
 
 .z-50 {
   z-index: 50;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.z-10 {
+  z-index: 10;
 }
 
 .m-2 {
@@ -810,6 +823,11 @@ input {
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
 }
 
 .mt-16 {
@@ -928,6 +946,20 @@ input {
   height: 2.5rem;
 }
 
+.h-full {
+  height: 100%;
+}
+
+.h-fit {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
 .w-screen {
   width: 100vw;
 }
@@ -1043,6 +1075,18 @@ input {
   --tw-space-x-reverse: 0;
   margin-right: calc(1.25rem * var(--tw-space-x-reverse));
   margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-clip {
+  overflow: clip;
+}
+
+.overflow-visible {
+  overflow: visible;
 }
 
 .rounded-lg {
@@ -1211,6 +1255,23 @@ input {
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
+.bg-teal-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(45 212 191 / var(--tw-bg-opacity));
+}
+
+.bg-fixed {
+  background-attachment: fixed;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+.fill-slate-900 {
+  fill: #0f172a;
+}
+
 .p-2 {
   padding: 0.5rem;
 }
@@ -1311,6 +1372,16 @@ input {
   padding-right: 3.5rem;
 }
 
+.px-32 {
+  padding-left: 8rem;
+  padding-right: 8rem;
+}
+
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
 .pt-1 {
   padding-top: 0.25rem;
 }
@@ -1373,6 +1444,18 @@ input {
 
 .pb-5 {
   padding-bottom: 1.25rem;
+}
+
+.pb-20 {
+  padding-bottom: 5rem;
+}
+
+.pr-10 {
+  padding-right: 2.5rem;
+}
+
+.pr-32 {
+  padding-right: 8rem;
 }
 
 .text-center {
@@ -1631,6 +1714,16 @@ input {
 .hover\:bg-green-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(21 128 61 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-slate-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
+}
+
+.hover\:px-32:hover {
+  padding-left: 8rem;
+  padding-right: 8rem;
 }
 
 .hover\:text-slate-200:hover {
