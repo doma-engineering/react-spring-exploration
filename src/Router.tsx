@@ -54,6 +54,7 @@ import {
     ROOT_URL,
     TASKS_BY_CATEGORY_URL_path,
     TASKS_URL,
+    TERMS_AND_CONDITIONS,
 } from './routes';
 
 import './styles.css';
@@ -64,6 +65,7 @@ import TasksPage from './Pages/TasksPage';
 import GetStartedPage from './Pages/GetStartedPage';
 import RegistrationPage from './Pages/RegistrationPage';
 import TasksCategoryValidator from './Components/Validators/TasksCategoryValidator';
+import TermsAndConditionsPage from './Pages/TermsAndConditionsPage';
 
 const App = () => {
     return (
@@ -79,6 +81,10 @@ const App = () => {
                     <Route
                         path={REGISTRATION_URL}
                         element={<RegistrationPage />}
+                    />
+                    <Route
+                        path={TERMS_AND_CONDITIONS}
+                        element={<TermsAndConditionsPage />}
                     />
                     <Route path={LOGIN_URL} element={<LoginValidator />} />
                     <Route
