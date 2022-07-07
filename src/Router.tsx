@@ -69,7 +69,7 @@ import TermsAndConditionsPage from './Pages/TermsAndConditionsPage';
 
 const App = () => {
     return (
-        <div className="bg-slate-800 w-screen h-screen">
+        <div className="bg-slate-800 max-w-screen min-h-screen">
             <Router basename="ZHR">
                 <UpsideMenu />
                 <Routes>
