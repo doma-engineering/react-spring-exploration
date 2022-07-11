@@ -6,16 +6,18 @@ import { selectedCategory as selectedCategoryAtom } from '../Atoms/Categories';
 import TaskCategoriesGrid from '../Components/TaskCategories/TaskCategoriesGrid';
 import { REGISTRATION_URL } from '../routes';
 
-const wasRedirectedAtom = atom(false);
+const wasRedirectedAtom = atom(true);
 
 const GetStartedPage = () => {
     const navigate = useNavigate();
-    const [selectedCategory] = useAtom(selectedCategoryAtom);
+    const [selectedCategory, setSelectedCategory] =
+        useAtom(selectedCategoryAtom);
     const [wasRedirected, setWasRedirected] = useAtom(wasRedirectedAtom);
 
     useEffect(() => {
         if (wasRedirected) {
             setWasRedirected(false);
+            setSelectedCategory(TaskCategories.notSelected);
             return;
         }
         if (selectedCategory !== TaskCategories.notSelected) {
