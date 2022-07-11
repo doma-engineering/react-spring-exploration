@@ -7,7 +7,7 @@ const TaskCategoriesGrid = () => {
     const [, setSelectedCategory] = useAtom(selectedCategory);
 
     return (
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 text-slate-200">
             <div
                 className="categoryGridContainer active:text-orange-400"
                 onClick={() => setSelectedCategory(TaskCategories.Java)}
