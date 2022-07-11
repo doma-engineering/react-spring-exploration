@@ -1,28 +1,26 @@
 import { atom, useAtom } from 'jotai';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TaskCategories } from '../Atoms/candidateTableTypes';
 import { selectedCategory as selectedCategoryAtom } from '../Atoms/Categories';
 import TaskCategoriesGrid from '../Components/TaskCategories/TaskCategoriesGrid';
 import { REGISTRATION_URL } from '../routes';
 
-const wasRedirectedAtom = atom(true);
-
 const GetStartedPage = () => {
     const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] =
         useAtom(selectedCategoryAtom);
-    const [wasRedirected, setWasRedirected] = useAtom(wasRedirectedAtom);
+    const [needClearSelection, setClearSelection] = useState(true);
 
     useEffect(() => {
-        if (wasRedirected) {
-            setWasRedirected(false);
+        if (needClearSelection) {
+            setClearSelection(false);
             setSelectedCategory(TaskCategories.notSelected);
             return;
         }
         if (selectedCategory !== TaskCategories.notSelected) {
             navigate(REGISTRATION_URL);
-            setWasRedirected(true);
+            setClearSelection(true);
         }
     }, [selectedCategory]);
 
