@@ -6,10 +6,14 @@ const UniversalTable = () => {
     const tableData = useAtomValue(universalTable);
 
     return (
-        <div className="tableDiv px-3">
+        <div
+            className={`tableDiv px-3 ${tableData.header?.options?.className}`}
+        >
             <table>
                 <thead>
-                    <tr className="pb-2 mx-3 h-14 text-center border-b-2 border-slate-800">
+                    <tr
+                        className={`pb-2 mx-3 h-14 text-center border-b-2 border-slate-800 ${tableData.header?.options?.className}`}
+                    >
                         {tableData.header?.content.map((cell, i) => (
                             <th className="text-center" key={`decTblC0${i}`}>
                                 {typeof cell === 'string' ? cell : cell}

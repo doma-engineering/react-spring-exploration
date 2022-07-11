@@ -4,22 +4,22 @@ import React from 'react';
 export type UniversalTable = {
     header?: {
         options?: {
-            className: string;
-            onClick: (
+            className?: string;
+            onClick?: (
                 e: React.MouseEvent<HTMLTableRowElement, MouseEvent>
             ) => void;
         };
-        content: (string | JSX.Element)[];
+        content: (string | number | JSX.Element)[];
     };
     body?: {
         options?: {
             className?: string;
             onClick?: (
                 e: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
-                rowIndex?: number
+                rowIndex: number
             ) => void;
         };
-        content: (string | JSX.Element)[][];
+        content: (string | number | JSX.Element)[][];
     };
 };
 export const emptyUniversalTable: UniversalTable = {};
