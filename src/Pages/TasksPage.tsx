@@ -10,6 +10,7 @@ import { selectedCategory as selectedCategoryAtom } from '../Atoms/Categories';
 import { CANDIDATE_TABLE_URL, TASKS_BY_CATEGORY_URL } from '../routes';
 import { TaskCategories } from '../Atoms/candidateTableTypes';
 import { AiOutlineCheck } from 'react-icons/ai';
+import UniversalTable from '../Components/UniversalTable/UniversalTable';
 
 const TasksPage = () => {
     const navigate = useNavigate();
@@ -117,7 +118,12 @@ const TasksPage = () => {
             <div className="mt-10">
                 <TaskCategoriesGrid />
             </div>
-            <DecorativePageContent PageName="Tasks" />
+            <div className="text-center text-stone-200 text-5xl py-5 mt-12">
+                Tasks
+            </div>
+            <div className="flex justify-center mt-5 pb-20">
+                <UniversalTable />
+            </div>
         </div>
     );
 };

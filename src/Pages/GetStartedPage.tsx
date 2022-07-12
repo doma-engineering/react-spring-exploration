@@ -34,7 +34,7 @@ const GetStartedPage = () => {
             <p> Competence is guaranteed.</p>
             <p> First hire on us.</p>
             <div className="pt-7">
-                <TaskCategoriesGrid />
+                <TaskCategoriesGrid size="xl" />
             </div>
         </div>
     );
