@@ -50,7 +50,14 @@ const TasksCategoryPage = () => {
     const fillUniversalTable = () => {
         setUniversalTableValue({
             header: {
-                content: ['Task name', 'Task tier', 'Members count', '', ''],
+                content: [
+                    'Task name',
+                    'Task tier',
+                    'Members count',
+                    '',
+                    '',
+                    'You have',
+                ],
             },
             body: {
                 content: tasks.map((task) => [
