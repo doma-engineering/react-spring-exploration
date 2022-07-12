@@ -4,13 +4,93 @@ import { universalTable } from '../Atoms/UniversalTable';
 import { companies, tables as tablesAtom } from '../Atoms/LoadData';
 import DecorativePageContent from '../Components/DecorativePageElements/DecorativePageContent';
 import { loggedInCompany } from '../Atoms/Login';
+import TaskCategoriesGrid from '../Components/TaskCategories/TaskCategoriesGrid';
+import { useNavigate } from 'react-router-dom';
+import { selectedCategory as selectedCategoryAtom } from '../Atoms/Categories';
+import { CANDIDATE_TABLE_URL, TASKS_BY_CATEGORY_URL } from '../routes';
+import { TaskCategories } from '../Atoms/candidateTableTypes';
+import { AiOutlineCheck } from 'react-icons/ai';
 
 const TasksPage = () => {
+    const navigate = useNavigate();
+
     const [, setTableData] = useAtom(universalTable);
-    const tasks = useAtomValue(tablesAtom);
     const [companiesData, setCompaniesData] = useAtom(companies);
-    const [addedTable, setAddedTable] = useState<string>('');
+    const [selectedCategory, setSelectedCategory] =
+        useAtom(selectedCategoryAtom);
     const loggedIn = useAtomValue(loggedInCompany);
+    const tasks = useAtomValue(tablesAtom);
+
+    const [addedTable, setAddedTable] = useState<string>('');
+    const [needClearSelection, setNeedClearSelection] = useState(true);
+
+    const fillTableData = () => {
+        setTableData({
+            header: {
+                content: [
+                    'Task name',
+                    'Category',
+                    'Tier',
+                    'Members count',
+                    '',
+                    '',
+                    'You have',
+                ],
+            },
+            body: {
+                content: tasks.map((task) => [
+                    task.displayName,
+                    task.category,
+                    task.tier,
+                    task.table.length.toString(),
+                    <button
+                        className="btnAccent px-5 py-2"
+                        onClick={() => handleClickGetTask(task.id)}
+                    >
+                        Get
+                    </button>,
+                    <button
+                        className="btnAccent px-5 py-2 z-50"
+                        onClick={() => handleClickLookTask(task.id)}
+                    >
+                        Look
+                    </button>,
+                    companiesData
+                        .find((company) => company.id === loggedIn.companyId)
+                        ?.tables.includes(task.id) ? (
+                        <div className="flex w-full justify-center">
+                            <AiOutlineCheck />
+                        </div>
+                    ) : (
+                        <></>
+                    ),
+                ]),
+            },
+        });
+    };
+
+    const handleClickGetTask = (taskID: string) => {
+        if (!loggedIn.isLoggedIn) {
+            alert('Please enter to ZHR to get tasks!');
+        }
+        setAddedTable(taskID);
+    };
+
+    const handleClickLookTask = (taskId: string) => {
+        navigate(CANDIDATE_TABLE_URL(taskId));
+    };
+
+    useEffect(() => {
+        if (needClearSelection) {
+            setNeedClearSelection(false);
+            setSelectedCategory(TaskCategories.notSelected);
+            return;
+        }
+        if (selectedCategory !== TaskCategories.notSelected) {
+            navigate(TASKS_BY_CATEGORY_URL(selectedCategory));
+            setNeedClearSelection(true);
+        }
+    }, [selectedCategory]);
 
     useEffect(() => {
         setCompaniesData(
@@ -24,32 +104,22 @@ const TasksPage = () => {
         );
     }, [addedTable]);
 
-    const handleClickGetTask = (taskID: string) => {
-        if (!loggedIn.isLoggedIn) {
-            alert('Please enter to ZHR to get tasks!');
-        }
-        setAddedTable(taskID);
-    };
+    useEffect(() => {
+        fillTableData();
+    }, companiesData);
 
     useEffect(() => {
-        setTableData({
-            header: { content: ['Task name', 'member complete count', ''] },
-            body: {
-                content: tasks.map((task) => [
-                    task.displayName,
-                    task.table.length.toString(),
-                    <button
-                        className="btnAccent px-5 py-2"
-                        onClick={() => handleClickGetTask(task.id)}
-                    >
-                        Get
-                    </button>,
-                ]),
-            },
-        });
+        fillTableData();
     }, []);
 
-    return <DecorativePageContent PageName="Tasks" />;
+    return (
+        <div className="flex items-center flex-col">
+            <div className="mt-10">
+                <TaskCategoriesGrid />
+            </div>
+            <DecorativePageContent PageName="Tasks" />
+        </div>
+    );
 };
 
 export default TasksPage;
