@@ -28,7 +28,10 @@ const UpsideMenu = () => {
                 window.location.pathname !==
                 HIRING_CAMPAIGNS_URL(loggedIn.companyId)
             ) {
-                navigate(HIRING_CAMPAIGNS_URL(loggedIn.companyId));
+                navigate(
+                    HIRING_CAMPAIGNS_URL(loggedIn.companyId) +
+                        window.location.hash // for save url tables settings
+                );
             }
         } else {
             navigate(GET_STARTED_URL);
@@ -37,7 +40,7 @@ const UpsideMenu = () => {
 
     return (
         <div>
-            <div className="bg-slate-900 border-b border-slate-600 flex">
+            <div className="bg-slate-900 border-b border-slate-600 flex shadow-md shadow-gray-100/10">
                 <button className="flex p-2 pr-8" onClick={handleClickLogo}>
                     <img
                         className="w-10 h-10 ml-5 invert"
