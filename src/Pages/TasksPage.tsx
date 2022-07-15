@@ -2,7 +2,6 @@ import { useAtom, useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
 import { universalTable } from '../Atoms/UniversalTable';
 import { companies, tables as tablesAtom } from '../Atoms/LoadData';
-import DecorativePageContent from '../Components/DecorativePageElements/DecorativePageContent';
 import { loggedInCompany } from '../Atoms/Login';
 import TaskCategoriesGrid from '../Components/TaskCategories/TaskCategoriesGrid';
 import { useNavigate } from 'react-router-dom';
