@@ -18,14 +18,13 @@ const HiringCampaignPage = () => {
 
             <div className="z-50 flex flex-col w-full items-center justify-center mt-2 px-4">
                 <div className="text-2xl text-center text-stone-300 border-b-2 border-slate-600 pb-3 w-full mb-5">
-                    Hiring campaigns
                     {isTableForNotLoggedIn ? (
-                        <></>
-                    ) : (
                         <span>
-                            {' '}
-                            for <b>{company.displayName}</b>
+                            Hiring campaigns for <b>{company.displayName}</b>{' '}
+                            {isTableForNotLoggedIn ? 'true' : 'false'}
                         </span>
+                    ) : (
+                        <span>Hiring campaigns</span>
                     )}
                 </div>
                 <div className="flex flex-col">
@@ -33,6 +32,8 @@ const HiringCampaignPage = () => {
                         <HiringCampaigns />
                     </div>
                     {isTableForNotLoggedIn ? (
+                        <></>
+                    ) : (
                         <div className="flex flex-col items-center rounded mt-5 pb-5 px-5 bg-gray-700 shadow-lg text-lg shadow-slate-900/50">
                             <p className="text-center my-3 text-slate-200 font-semibold">
                                 You can add new task!
@@ -42,8 +43,6 @@ const HiringCampaignPage = () => {
                                 styleModify="bg-cyan-800 rounded shadow-md"
                             />
                         </div>
-                    ) : (
-                        <></>
                     )}
                 </div>
             </div>
