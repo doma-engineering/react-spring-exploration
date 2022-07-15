@@ -21,7 +21,6 @@ const HiringCampaignPage = () => {
                     {isTableForNotLoggedIn ? (
                         <span>
                             Hiring campaigns for <b>{company.displayName}</b>{' '}
-                            {isTableForNotLoggedIn ? 'true' : 'false'}
                         </span>
                     ) : (
                         <span>Hiring campaigns</span>
