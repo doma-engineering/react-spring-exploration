@@ -29,17 +29,20 @@ import {
     CandidateTableFilters,
     CandidateTableSettings,
     Company,
+    TaskCategories,
 } from '../../Atoms/candidateTableTypes';
 
 import ErrorPage from '../../Pages/HiringCampaignsErrorPage';
 import HiringCampaignPage from '../../Pages/HiringCampaignsPage';
-import { differentCompany, tablesResult } from '../../Atoms/HiringCampaign';
+import { tablesResult } from '../../Atoms/HiringCampaign';
 import {
     HIRING_CAMPAIGNS_SWITCH_MODE_URL,
     HIRING_CAMPAIGNS_URL,
+    TASKS_BY_CATEGORY_URL,
 } from '../../routes';
 import { comeChanges } from '../../Atoms/SwithersAtoms';
 import { emptyTable } from '../../Atoms/CandidateTables';
+import { selectedCategory as selectedCategoryAtom } from '../../Atoms/Categories';
 
 const HiringCampaignsPageValidator = () => {
     const { CompanyName } = useParams();
@@ -52,15 +55,17 @@ const HiringCampaignsPageValidator = () => {
     const [urlFilter] = useAtom(urlFilters);
     const [, setCurrentPath] = useAtom(currentPath);
     const [, setComeChange] = useAtom(comeChanges);
-    const [, setDifferentCompanyTable] = useAtom(differentCompany);
     const [allCompanies] = useAtom(companies);
     const [loggedIn] = useAtom(loggedInCompany);
     const [url] = useAtom(tablesSettingsURL);
     const [, setSavedUrl] = useAtom(savedTablesSettingsURL);
     const [tSettings, setTablesSettings] = useAtom(tablesSettings);
+    const [selectedCategory, setSelectedCategory] =
+        useAtom(selectedCategoryAtom);
 
     const [returnPage, setPage] = useState(<></>);
     const [previousURLFilter, setPreviousUrlFilter] = useState('hidden Egg');
+    const [needClearCategory, setNeedClearCategory] = useState(true);
 
     const [, setSavedUrlFilter] = useAtom(savedUrlFilters);
 
@@ -116,12 +121,6 @@ const HiringCampaignsPageValidator = () => {
             setCurrentPath(HIRING_CAMPAIGNS_URL(company.id));
             setCurrentCompany(company);
             updateHiringTablesResult(company, filter);
-
-            if (company.id !== loggedIn.companyId) {
-                setDifferentCompanyTable(company.displayName);
-            } else {
-                setDifferentCompanyTable('');
-            }
         } else {
             setPage(<ErrorPage />);
             setCurrentPath(HIRING_CAMPAIGNS_URL(CompanyName || ''));
@@ -171,6 +170,18 @@ const HiringCampaignsPageValidator = () => {
             setTablesSettings([...tSettings]);
         }
     }, [url, displayedCompany]);
+
+    useEffect(() => {
+        if (needClearCategory) {
+            setNeedClearCategory(false);
+            setSelectedCategory(TaskCategories.notSelected);
+            return;
+        }
+        if (selectedCategory !== TaskCategories.notSelected) {
+            navigate(TASKS_BY_CATEGORY_URL(selectedCategory));
+            setNeedClearCategory(true);
+        }
+    }, [selectedCategory]);
 
     return returnPage;
 };

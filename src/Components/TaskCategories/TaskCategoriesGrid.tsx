@@ -12,8 +12,10 @@ enum gridSize {
 
 const TaskCategoriesGrid = ({
     size = gridSize.base,
+    styleModify,
 }: {
     size?: gridSize | string;
+    styleModify?: string;
 }) => {
     const [, setSelectedCategory] = useAtom(selectedCategory);
     const [containerSize, setContainerSize] = useState<string>('');
@@ -41,31 +43,31 @@ const TaskCategoriesGrid = ({
     return (
         <div className="flex space-x-4 text-slate-200 text">
             <div
-                className={`categoryGridContainer ${containerSize} ${textSize} active:text-orange-400`}
+                className={`categoryGridContainer ${styleModify} ${containerSize} ${textSize} active:text-orange-400`}
                 onClick={() => setSelectedCategory(TaskCategories.Java)}
             >
                 <SiJava />
             </div>
             <div
-                className={`categoryGridContainer ${containerSize} ${typeScriptTextSize} active:text-sky-600 hover:shadow-sky-600`}
+                className={`categoryGridContainer ${styleModify} ${containerSize} ${typeScriptTextSize} active:text-sky-600 hover:shadow-sky-600`}
                 onClick={() => setSelectedCategory(TaskCategories.TypeScript)}
             >
                 <SiTypescript />
             </div>
             <div
-                className={`categoryGridContainer ${containerSize} ${textSize} active:text-gray-400 hover:shadow-gray-400`}
+                className={`categoryGridContainer ${styleModify} ${containerSize} ${textSize} active:text-gray-400 hover:shadow-gray-400`}
                 onClick={() => setSelectedCategory(TaskCategories.Haskell)}
             >
                 <SiHaskell />
             </div>
             <div
-                className={`categoryGridContainer ${containerSize} ${textSize} active:text-violet-500 hover:shadow-violet-500`}
+                className={`categoryGridContainer ${styleModify} ${containerSize} ${textSize} active:text-violet-500 hover:shadow-violet-500`}
                 onClick={() => setSelectedCategory(TaskCategories.Elixir)}
             >
                 <SiElixir />
             </div>
             <div
-                className={`categoryGridContainer ${containerSize} ${bespokeTextSize} text-center active:text-yellow-400 hover:shadow-yellow-400`}
+                className={`categoryGridContainer ${styleModify} ${containerSize} ${bespokeTextSize} text-center active:text-yellow-400 hover:shadow-yellow-400`}
                 onClick={() => setSelectedCategory(TaskCategories.bespoke)}
             >
                 Bespoke task
