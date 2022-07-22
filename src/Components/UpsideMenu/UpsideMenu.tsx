@@ -19,6 +19,10 @@ const UpsideMenu = () => {
     const [isMenu, setIsMenu] = useState(false);
 
     const handleClickMenu = () => setIsMenu(!isMenu);
+    const handleClickCategory = (URL: string) => {
+        navigate(URL);
+        setIsMenu(false);
+    };
     const handleClickLogo = () => {
         navigateToHiringCampaigns();
     };
@@ -39,8 +43,8 @@ const UpsideMenu = () => {
     };
 
     return (
-        <div>
-            <div className="bg-slate-900 border-b border-slate-600 flex shadow-md shadow-gray-100/10">
+        <div className="">
+            <div className="bg-slate-900 border-b border-slate-600 flex w-full absolute md:fixed shadow-md shadow-gray-100/10 z-50">
                 <button className="flex p-2 pr-8" onClick={handleClickLogo}>
                     <img
                         className="w-10 h-10 ml-5 invert"
@@ -50,7 +54,7 @@ const UpsideMenu = () => {
                     <div className="text-white font-mono text-4xl">∅HR</div>
                 </button>
                 <div className="hidden md:flex md:w-full md:justify-between">
-                    <div className="ml-10">
+                    <div className="flex flex-nowrap">
                         <button
                             className="upsideCategory"
                             onClick={() => navigate(COMPANIES_URL)}
@@ -102,37 +106,79 @@ const UpsideMenu = () => {
                 </div>
                 <div className="flex w-full justify-end md:hidden">
                     <button
-                        onClick={navigateToHiringCampaigns}
-                        className="btnAccent bg-cyan-800 rounded-full px-8"
+                        onClick={handleClickMenu}
+                        className="btnAccent bg-cyan-800 rounded-full px-8 py-1"
                     >
                         {isMenu ? 'Close' : 'Menu'}
                     </button>
                 </div>
             </div>
-            <div className="md:hidden">
+            <div
+                className="absolute mt-14 w-full md:hidden z-50"
+                onClick={handleClickMenu}
+            >
                 <div className={isMenu ? '' : 'hidden'}>
-                    <div className="flex flex-col text-2xl bg-slate-900">
-                        <button className="upsideCategory text-3xl border-b-4 py-4 pd-3 border-slate-600">
-                            Companies
-                        </button>
-                        <button className="upsideCategory text-3xl border-b-4 py-4 pd-3 border-slate-600">
-                            Tasks
-                        </button>
-                        <button className="upsideCategory text-3xl border-b-4 py-4 pd-3 border-slate-600">
-                            Community
-                        </button>
-                    </div>
-                    <div
-                        className="py-8 flex justify-center"
-                        onClick={handleClickMenu}
-                    >
-                        <ToLoginButton
-                            text="logout"
-                            style="bg-cyan-800 px-14 py-3 rounded-full text-slate-200 hover:border-0 hover:bg-sky-900"
-                        />
+                    <div className="bg-slate-600 rounded-bl-lg pb-5 shadow-md shadow-slate-900/50">
+                        <div className="flex flex-col text-2xl bg-slate-800 ml-4">
+                            <button
+                                className="upsideCategory text-xl border-b-2 py-4 pd-3 border-slate-600"
+                                onClick={() =>
+                                    handleClickCategory(COMPANIES_URL)
+                                }
+                            >
+                                Companies
+                            </button>
+                            <button
+                                className="upsideCategory text-xl border-b-2 py-4 pd-3 border-slate-600"
+                                onClick={() => handleClickCategory(TASKS_URL)}
+                            >
+                                Tasks
+                            </button>
+                            <button
+                                className="upsideCategory text-xl border-b-2 py-4 pd-3 border-slate-600"
+                                onClick={() =>
+                                    handleClickCategory(COMMUNITY_URL)
+                                }
+                            >
+                                Community
+                            </button>
+                            <button
+                                className="upsideCategory text-xl border-b-2 py-4 pd-3 border-slate-600"
+                                onClick={() => {
+                                    navigateToHiringCampaigns();
+                                    setIsMenu(false);
+                                }}
+                            >
+                                Hiring campaigns
+                            </button>
+                        </div>
+                        {loggedIn.isLoggedIn ? (
+                            <div className="flex items-center justify-center pt-5">
+                                <ToLoginButton
+                                    text="logout"
+                                    style="px-5 mr-5 border-2 p-1 rounded-full border-stone-400 text-stone-300 hover:border-0 hover:bg-sky-900"
+                                />
+                            </div>
+                        ) : (
+                            <div className="flex items-center justify-center pt-5">
+                                <Link
+                                    to={REGISTRATION_URL}
+                                    className="px-5 mr-2 border-2 p-1 rounded-full border-stone-400 text-stone-300 hover:border-0 hover:bg-sky-900"
+                                >
+                                    register
+                                </Link>
+                                <Link
+                                    to={LOGIN_URL}
+                                    className="mr-5 border-2 py-1 px-7 rounded-full border-stone-400 text-stone-300 hover:border-0 hover:bg-sky-900"
+                                >
+                                    login
+                                </Link>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
+            <div className="w-full h-14"></div>
         </div>
     );
 };

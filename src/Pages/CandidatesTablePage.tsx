@@ -35,13 +35,16 @@ const CandidateTablePage = () => {
                     <Table />
                 </div>
             </div>
-            <div className="fixed flex z-50 w-full xl:hidden pt-1 flex-col mr-3">
+            <div className="fixed flex z-30 xl:hidden pt-1 flex-col mr-3">
                 <div className="flex">
                     <div
                         className={
                             isLeftMenu ? 'bg-gray-700 px-4 py-4' : 'hidden'
                         }
                     >
+                        <div className="text-2xl text-stone-300 text-center">
+                            {table.displayName}
+                        </div>
                         <div>
                             <ButtonBackToHiringCampaigns />
                         </div>
@@ -52,7 +55,7 @@ const CandidateTablePage = () => {
                     <div
                         className="flex items-center bg-slate-600 pb-2 rounded-r h-40 text-center text-stone-200
                           hover:bg-gray-800 
-                          active:bg-gray-600 px-2"
+                          active:bg-gray-600 px-1"
                         onClick={handleLeftMenuClick}
                     >
                         {isLeftMenu ? '<' : '>'}

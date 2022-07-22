@@ -4,7 +4,7 @@ import ToLoginButton from '../Components/Login/toLoginButton';
 const ErrorPage = () => {
     const { CompanyName } = useParams();
     return (
-        <div className="flex justify-center text-slate-200 items-center flex-col text-3xl mt-10">
+        <div className="flex justify-center text-slate-200 items-center flex-col text-3xl mt-10 px-4">
             <div>
                 Company <b className="">{CompanyName}</b> haven't registered in
                 ∅HR

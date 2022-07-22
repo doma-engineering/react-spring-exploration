@@ -25,15 +25,22 @@ const GetStartedPage = () => {
     }, [selectedCategory]);
 
     return (
-        <div className="flex flex-col items-center text-slate-200 text-5xl space-y-5">
-            <p className="pt-12">
+        <div
+            className="flex flex-col items-center text-slate-200 
+                       text-2xl px-5
+                       lg:text-5xl lg:space-y-5"
+        >
+            <p
+                className="pt-2 first-letter:pl-5 text-center
+                          lg:pt-12"
+            >
                 Zhr enables you to <span className="text-teal-500">hire</span>{' '}
                 the IT professionals your business needs.
             </p>
             <p className="text-teal-500"> In twenty four hours.</p>
             <p> Competence is guaranteed.</p>
             <p> First hire on us.</p>
-            <div className="pt-7">
+            <div className="lg:pt-7">
                 <TaskCategoriesGrid size="xl" />
             </div>
         </div>

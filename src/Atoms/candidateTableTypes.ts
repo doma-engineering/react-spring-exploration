@@ -141,3 +141,10 @@ export type SortingTriangles = Map<string, SortingTriangle>;
 
 // by default sort function need be decreased (from hight to low values).
 export type SortFunctionAtom = { fn: string; isIncrease: boolean };
+
+export const getDefaultValuesSortingTriangles = () =>
+    new Map<string, SortingTriangle>([
+        ['score', { mode: SortingMode.decPassive }],
+        ['date', { mode: SortingMode.decPassive }],
+        ['status', { mode: SortingMode.decPassive }],
+    ]);

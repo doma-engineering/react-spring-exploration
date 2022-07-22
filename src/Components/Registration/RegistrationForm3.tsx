@@ -28,21 +28,29 @@ const RegistrationForm3 = ({
         navigate(TASKS_BY_CATEGORY_URL(selectedTaskCategory));
     };
     return (
-        <div className="text-2xl">
-            <p>Please open your mail for confirm your mail</p>
-            <p>if you don't receive mail click button below</p>
+        <div className="text-md lg:text-2xl">
+            <p className="mt-2">Please open your mail for confirm your mail.</p>
+            <p className="mt-2">
+                If you don't receive mail click button below.
+            </p>
             <button
                 onClick={() =>
                     alert(
                         "Now there haven't back-end support, and all registration do nothing"
                     )
                 }
-                className="mt-5 rounded-md border-4 border-sky-800 py-3 px-5 hover:bg-gray-700/50"
+                className="rounded-md border-4 border-sky-800  
+                         hover:bg-gray-700/50
+                           text-md ml-4 mt-3 py-2 px-4
+                           lg:py-3 lg:px-5 "
             >
                 resend mail
             </button>
             <button
-                className="ml-4 rounded-md border-4 border-sky-800 py-3 px-5 hover:bg-gray-700/50"
+                className="rounded-md border-4 border-sky-800  
+                         hover:bg-gray-700/50
+                           ml-4 mt-3 py-2 px-2 text-md
+                           lg:text-2xl lg:py-3 lg:px-5"
                 onClick={handleClickDevContinue}
             >
                 {'<Developers button> Continue'}

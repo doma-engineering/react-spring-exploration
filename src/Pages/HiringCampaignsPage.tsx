@@ -16,7 +16,7 @@ const HiringCampaignPage = () => {
                 </div>
             </div>
 
-            <div className="z-50 flex flex-col w-full items-center justify-center mt-2 px-4">
+            <div className="flex flex-col w-full items-center justify-center mt-2 px-4">
                 <div className="text-2xl text-center text-stone-300 border-b-2 border-slate-600 pb-3 w-full mb-5">
                     {isTableForNotLoggedIn ? (
                         <span>

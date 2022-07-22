@@ -7,19 +7,13 @@ import {
 } from '../../Atoms/CandidatesSorting';
 import { currentTable, tableData } from '../../Atoms/CandidateTables';
 import {
+    getDefaultValuesSortingTriangles,
     SortingMode,
     SortingTriangle,
     SortingTriangles,
 } from '../../Atoms/candidateTableTypes';
 import { tablesSettingsURL } from '../../Atoms/LoadData';
 import { filterData } from './filterData';
-
-const getDefaultValuesSortingTriangles = () =>
-    new Map<string, SortingTriangle>([
-        ['score', { mode: SortingMode.decPassive }],
-        ['date', { mode: SortingMode.decPassive }],
-        ['status', { mode: SortingMode.decPassive }],
-    ]);
 
 const Table = () => {
     const animationDuration = 200;
@@ -100,45 +94,68 @@ const Table = () => {
     return (
         <div className="tableDiv">
             <div className="tableDivHeaderRow">
-                <div className="flex w-20 sm:w-24 md:w-32 lg:w-52 tableDivHeaderCell items-center justify-center">
-                    Candidate
-                </div>
                 <div
-                    className="flex w-16 sm:w-20 md:w-24 lg:w-24 tableDivHeaderCell items-center justify-center"
+                    className="flex tableDivHeaderCell items-center justify-center
+                                w-10 
+                                sm:w-24
+                                md:w-32 
+                                lg:w-52"
+                >
+                    <div className="hidden sm:block text-center">Candidate</div>
+                    <div className="block sm:hidden text-center">Rank</div>
+                </div>
+                <button
+                    className="tableDivHeaderCell
+                               w-14 
+                               sm:w-20 sm:flex sm:items-center sm:justify-center
+                               md:w-24 
+                               lg:w-24"
                     onClick={() => handleClickSorting('score')}
                 >
                     <div>Score</div>
-                    <div className="text-sm text-center p-2">
+                    <div className="text-sm text-center px-2">
                         {sortingTriangles.get('score')?.mode ??
                             SortingMode.undefined}
                     </div>
-                </div>
+                </button>
                 <div
-                    className="flex w-16 sm:w-20 md:w-24 lg:w-32 tableDivHeaderCell items-center justify-center"
+                    className="tableDivHeaderCell
+                               w-14 
+                               sm:w-20 sm:flex sm:items-center sm:justify-center
+                               md:w-24 
+                               lg:w-32"
                     onClick={() => handleClickSorting('score')}
                 >
                     Score(%)
-                    <div className="text-sm text-center p-2">
+                    <div className="text-sm text-center px-2">
                         {sortingTriangles.get('score')?.mode ??
                             SortingMode.undefined}
                     </div>
                 </div>
                 <div
-                    className="flex w-20 sm:w-32 md:w-36 lg:w-40 tableDivHeaderCell md:px-12 items-center justify-center"
+                    className="tableDivHeaderCell
+                               w-20
+                               sm:w-32 sm:flex sm:items-center sm:justify-center
+                               md:w-36 
+                               lg:w-40"
                     onClick={() => handleClickSorting('status')}
                 >
                     Status
-                    <div className="text-sm text-center p-2">
+                    <div className="text-sm text-center px-2">
                         {sortingTriangles.get('status')?.mode ??
                             SortingMode.undefined}
                     </div>
                 </div>
                 <div
-                    className="flex w-20 sm:w-24 md:w-32 lg:w-52 tableDivHeaderCell items-center justify-center"
+                    className="tableDivHeaderCell
+                               w-20 
+                               sm:w-24 sm:flex sm:items-center sm:justify-center
+                               md:w-32 
+                               lg:w-52"
                     onClick={() => handleClickSorting('date')}
                 >
                     Finish date
-                    <div className="text-sm text-center p-2">
+                    <div className="text-sm text-center px-2">
                         {sortingTriangles.get('date')?.mode ??
                             SortingMode.undefined}
                     </div>
@@ -153,19 +170,26 @@ const Table = () => {
                             ...style,
                         }}
                     >
-                        <div className=" w-20 sm:w-24 md:w-32 lg:w-52 tableDivCell">
+                        <div className=" w-10 sm:w-24 md:w-32 lg:w-52 tableDivCell">
                             <div
-                                className={`border-l-4 w-40 border-${rankColor(
+                                className={`hidden sm:block border-l-4 w-40 border-${rankColor(
                                     candidate.rank
                                 )}`}
                             >
                                 {formatHash(candidate.hash)}
                             </div>
+                            <div
+                                className={`block sm:hidden border-l-4 w-40 border-${rankColor(
+                                    candidate.rank
+                                )}`}
+                            >
+                                {candidate.rank.slice(0, 3)}
+                            </div>
                         </div>
-                        <div className=" w-16 sm:w-20 md:w-24 lg:w-24 tableDivCell">
+                        <div className=" w-14 sm:w-20 md:w-24 lg:w-24 tableDivCell">
                             <div>{candidate.score}</div>
                         </div>
-                        <div className=" w-16 sm:w-20 md:w-24 lg:w-32 tableDivCell">
+                        <div className=" w-14 sm:w-20 md:w-24 lg:w-32 tableDivCell">
                             <div>{candidate.scorePercent}%</div>
                         </div>
                         <div className=" w-20 sm:w-32 md:w-36 lg:w-40 tableDivCell text-sm md:text-base">

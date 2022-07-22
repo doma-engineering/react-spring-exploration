@@ -29,7 +29,7 @@ const ErrorTaskCategoryPage = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <div className="mt-10 text-slate-200 text-xl">
+            <div className="mt-10 text-slate-200 text-3xl space-y-4 px-4">
                 <p>Sorry, we haven't category '{CategoryName}'</p>
                 <p>Try select one of category below: </p>
             </div>

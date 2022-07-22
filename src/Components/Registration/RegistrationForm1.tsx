@@ -125,18 +125,21 @@ const RegistrationForm1 = ({
     }, [namePassed, cardPassed, payMethodPassed]);
 
     return (
-        <div className="flex flex-col items-center">
+        <div
+            className="flex flex-col items-center
+                        text-sm
+                        lg:text-xl"
+        >
             <div>
                 <input
                     type="text"
-                    size={40}
                     placeholder="Hint Ltd."
                     defaultValue={name}
                     onChange={handleWriteName}
                     className={
                         namePassed || !pressedButtonNext
-                            ? ''
-                            : 'border-2 border-red-600'
+                            ? 'longTextInput'
+                            : 'longTextInput border-2 border-red-600'
                     }
                 />
                 <p className="text-sm text-center mb-5">
@@ -145,22 +148,24 @@ const RegistrationForm1 = ({
                 <input
                     className={
                         cardPassed || !pressedButtonNext
-                            ? ''
-                            : 'border-2 border-red-600'
+                            ? 'longTextInput'
+                            : 'longTextInput border-2 border-red-600'
                     }
-                    size={40}
                     placeholder="6666 6666 6666 6666"
                     maxLength={19}
                     value={card}
                     onChange={handleWriteCard}
                 />
-                <p className="text-sm text-center">
+                <p className="text-sm text-center w">
                     Card number of your company
                 </p>
             </div>
 
             <div
-                className={`mt-5 flex flex-col w-2/4 bg-slate-900 rounded-xl p-3
+                className={`flex flex-col bg-slate-900 rounded-xl p-3
+                            mt-5 
+                            md:w-3/4
+                            lg:w-2/4
                                 ${
                                     payMethodPassed || !pressedButtonNext
                                         ? ''
@@ -235,7 +240,11 @@ const RegistrationForm1 = ({
                     </div>
                 </div>
             </div>
-            <div className="flex w-3/4 justify-end">
+            <div
+                className="flex justify-end
+                            w-full
+                            lg:w-2/4"
+            >
                 <button
                     className="btnAccent disabled:bg-slate-700/50"
                     onClick={handleClickNext}

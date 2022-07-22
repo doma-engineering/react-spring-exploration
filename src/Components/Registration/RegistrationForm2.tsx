@@ -123,8 +123,12 @@ const RegistrationForm2 = ({
     }, [emailPassed, passwordPassed, passwordConfirmPassed, agreeWithTerms]);
 
     return (
-        <div className="flex flex-col space-y-4">
-            <div className="flex w-full justify-end border border-gray-500/70 p-3 rounded">
+        <div
+            className="flex flex-col 
+                       space-y-4 text-sm m-2  
+                       lg:text-xl"
+        >
+            <div className="borderedContainer">
                 <label className="mr-3 w-full text-right">Email</label>
                 <input
                     type={'email'}
@@ -133,12 +137,12 @@ const RegistrationForm2 = ({
                     onChange={handleWriteEmail}
                     className={
                         emailPassed || !pressedButtonFinish
-                            ? ''
-                            : 'border-2 border-red-600'
+                            ? 'baseTextInput'
+                            : 'baseTextInput border-2 border-red-600'
                     }
                 />
             </div>
-            <div className="flex w-full justify-end border border-gray-500/70 p-3 rounded">
+            <div className="borderedContainer">
                 <label className="mr-3 w-full text-right">Password</label>
                 <input
                     type="password"
@@ -146,12 +150,12 @@ const RegistrationForm2 = ({
                     onChange={handleWritePassword}
                     className={
                         passwordPassed || !pressedButtonFinish
-                            ? ''
-                            : 'border-2 border-red-600'
+                            ? 'baseTextInput'
+                            : 'baseTextInput border-2 border-red-600'
                     }
                 />
             </div>
-            <div className="flex w-full justify-end border border-gray-500/70 p-3 rounded">
+            <div className="borderedContainer">
                 <label className="mr-3  w-full text-right">
                     Confirm password
                 </label>
@@ -160,8 +164,8 @@ const RegistrationForm2 = ({
                     onChange={handleWritePasswordConfirm}
                     className={
                         passwordConfirmPassed || !pressedButtonFinish
-                            ? ''
-                            : 'border-2 border-red-600'
+                            ? 'baseTextInput'
+                            : 'baseTextInput border-2 border-red-600'
                     }
                 />
             </div>
@@ -173,8 +177,12 @@ const RegistrationForm2 = ({
                     checked={agreeWithTerms}
                     className={
                         agreeWithTerms || !pressedButtonFinish
-                            ? 'w-7 checked:bg-green-500'
-                            : 'appearance-none w-7 bg-red-500'
+                            ? `checked:bg-green-500
+                                 w-5
+                                 lg:w-7`
+                            : `appearance-none bg-red-500
+                               w-5
+                               lg:w-7`
                     }
                 />
                 <label
@@ -198,10 +206,16 @@ const RegistrationForm2 = ({
                 </label>
             </div>
             <div className="flex justify-between">
-                <button className="btnAccent px-12" onClick={handleClickBack}>
+                <button
+                    className="btnAccent lg:px-12"
+                    onClick={handleClickBack}
+                >
                     Back
                 </button>
-                <button className="btnAccent px-6" onClick={handleClickFinish}>
+                <button
+                    className="btnAccent lg:px-6"
+                    onClick={handleClickFinish}
+                >
                     Finish registration
                 </button>
             </div>
