@@ -1,18 +1,19 @@
-import { atom, useAtom } from 'jotai';
-import { useState } from 'react';
+import Tippy from '@tippyjs/react';
+import { atom, useAtom, useAtomValue } from 'jotai';
+import { ReactNode, useEffect, useState } from 'react';
 import {
     candidateSortingFunctionsTypes,
-    currentSortFunction,
+    doPassiveMode,
 } from '../../Atoms/CandidatesSorting';
 import { currentTable } from '../../Atoms/CandidateTables';
 import {
     getDefaultValuesSortingTriangles,
     Rank,
     SortingMode,
+    SortingTriangle,
     SortingTriangles,
     UserStatus,
 } from '../../Atoms/candidateTableTypes';
-import { filters, savedUrlFilters } from '../../Atoms/Filters';
 import { savedTablesSettingsURL, tablesSettings } from '../../Atoms/LoadData';
 import { defaultFilterParams } from '../../Atoms/mocks/fakeData';
 import {
@@ -33,6 +34,27 @@ type CandidateInSwitching = {
     userStatus: UserStatus;
 };
 
+const selectedSorting = atom((get) => {
+    const oldTable = get(tablesSettings).find(
+        (table) => table.table === get(currentTable).id
+    );
+    const newTable = get(savedTablesSettingsURL).find(
+        (table) => table.table === get(currentTable).id
+    );
+
+    const oldSorting = oldTable?.sorting ?? { fn: 'date', isIncrease: false };
+    const newSorting = newTable?.sorting ?? { fn: 'date', isIncrease: false };
+
+    const selectedSorting =
+        get(switcherMouseHoverTable) === selectedType.none
+            ? oldSorting
+            : get(switcherMouseHoverTable) === selectedType.new
+            ? newSorting
+            : oldSorting;
+
+    return selectedSorting;
+});
+
 const tableData = atom((get) => {
     const oldTable = get(tablesSettings).find(
         (table) => table.table === get(currentTable).id
@@ -44,16 +66,6 @@ const tableData = atom((get) => {
     // filters
     const oldF = oldTable?.filters ?? defaultFilterParams;
     const newF = newTable?.filters ?? defaultFilterParams;
-
-    const oldSorting = oldTable?.sorting;
-    const newSorting = newTable?.sorting;
-
-    const selectedSorting =
-        get(switcherMouseHoverTable) === selectedType.none
-            ? oldSorting
-            : get(switcherMouseHoverTable) === selectedType.new
-            ? newSorting
-            : oldSorting;
 
     const dataDecrease = get(currentTable)
         .table.map((candidate) => {
@@ -90,25 +102,41 @@ const tableData = atom((get) => {
         .filter((c) => c.switchStatus !== candidateSwitchStatus.notDisplayed)
         .sort((c1, c2) =>
             //if currentSortFunction haven't in candidateSortingFunctionsTypes will called sorting by date.
-            candidateSortingFunctionsTypes.get(selectedSorting?.fn ?? 'date')!(
-                c1,
-                c2
-            )
+            candidateSortingFunctionsTypes.get(get(selectedSorting).fn)!(c1, c2)
         );
 
-    if (selectedSorting?.isIncrease) return dataDecrease.reverse();
+    if (get(selectedSorting).isIncrease) return dataDecrease.reverse();
     return dataDecrease;
 });
 
 const CandidateTableSwitcher = () => {
     const [mouseHoverVersion] = useAtom(switcherMouseHoverTable);
     const [data] = useAtom(tableData);
+    const sortingFunction = useAtomValue(selectedSorting);
 
     const [sortingTriangles, setSortingTriangles] = useState<SortingTriangles>(
         getDefaultValuesSortingTriangles()
     );
 
-    const handleClickSorting = (s: any) => {};
+    useEffect(() => {
+        const newSortingTriangles = new Map<string, SortingTriangle>();
+
+        //Do all triangles passive.
+        sortingTriangles.forEach((triangleItem, columKey) => {
+            newSortingTriangles.set(columKey, {
+                mode: doPassiveMode(triangleItem.mode),
+            });
+        });
+
+        // Current selected do active
+        newSortingTriangles.set(sortingFunction.fn, {
+            mode: sortingFunction.isIncrease
+                ? SortingMode.incActive
+                : SortingMode.decActive,
+        });
+
+        setSortingTriangles(newSortingTriangles);
+    }, [sortingFunction]);
 
     const formatDate = (date: Date) => date.toLocaleDateString();
     const formatHash = (hash: string) => hash.substring(hash.length - 8);
@@ -139,72 +167,58 @@ const CandidateTableSwitcher = () => {
     return (
         <div className="tableDiv">
             <div className="tableDivHeaderRow">
-                <div
-                    className="flex tableDivHeaderCell items-center justify-center
-                                w-10 
+                <SwitcherHeaderCell
+                    content={
+                        <div className="flex justify-center items-center h-full">
+                            <div className="hidden sm:block text-center">
+                                Candidate
+                            </div>
+                            <div className="block sm:hidden text-center">
+                                Rank
+                            </div>
+                        </div>
+                    }
+                    adaptation="w-10 
                                 sm:w-24
                                 md:w-32 
                                 lg:w-52"
-                >
-                    <div className="hidden sm:block text-center">Candidate</div>
-                    <div className="block sm:hidden text-center">Rank</div>
-                </div>
-                <button
-                    className="tableDivHeaderCell
-                               w-14 
-                               sm:w-20 sm:flex sm:items-center sm:justify-center
-                               md:w-24 
-                               lg:w-24"
-                    onClick={() => handleClickSorting('score')}
-                >
-                    <div>Score</div>
-                    <div className="text-sm text-center px-2">
-                        {sortingTriangles.get('score')?.mode ??
-                            SortingMode.undefined}
-                    </div>
-                </button>
-                <div
-                    className="tableDivHeaderCell
-                               w-14 
-                               sm:w-20 sm:flex sm:items-center sm:justify-center
-                               md:w-24 
-                               lg:w-32"
-                    onClick={() => handleClickSorting('score')}
-                >
-                    Score(%)
-                    <div className="text-sm text-center px-2">
-                        {sortingTriangles.get('score')?.mode ??
-                            SortingMode.undefined}
-                    </div>
-                </div>
-                <div
-                    className="tableDivHeaderCell
-                               w-20
+                />
+                <SwitcherHeaderCell
+                    content="Score"
+                    adaptation="w-14 
+                                sm:w-20 sm:flex sm:items-center sm:justify-center
+                                md:w-24 
+                                lg:w-24"
+                    sortable={true}
+                    sortingTriangle={sortingTriangles.get('score')}
+                />
+                <SwitcherHeaderCell
+                    content="Score(%)"
+                    adaptation="w-14 
+                                sm:w-20 sm:flex sm:items-center sm:justify-center
+                                md:w-24 
+                                lg:w-32"
+                    sortable={true}
+                    sortingTriangle={sortingTriangles.get('score')}
+                />
+                <SwitcherHeaderCell
+                    content="Status"
+                    adaptation="w-20
                                sm:w-32 sm:flex sm:items-center sm:justify-center
                                md:w-36 
                                lg:w-40"
-                    onClick={() => handleClickSorting('status')}
-                >
-                    Status
-                    <div className="text-sm text-center px-2">
-                        {sortingTriangles.get('status')?.mode ??
-                            SortingMode.undefined}
-                    </div>
-                </div>
-                <div
-                    className="tableDivHeaderCell
-                               w-20 
+                    sortable={true}
+                    sortingTriangle={sortingTriangles.get('status')}
+                />
+                <SwitcherHeaderCell
+                    content="Finish date"
+                    adaptation="w-20 
                                sm:w-24 sm:flex sm:items-center sm:justify-center
                                md:w-32 
                                lg:w-52"
-                    onClick={() => handleClickSorting('date')}
-                >
-                    Finish date
-                    <div className="text-sm text-center px-2">
-                        {sortingTriangles.get('date')?.mode ??
-                            SortingMode.undefined}
-                    </div>
-                </div>
+                    sortable={true}
+                    sortingTriangle={sortingTriangles.get('date')}
+                />
             </div>
             {data.map((candidate) => (
                 <div className={displayType(candidate)} key={candidate.hash}>
@@ -239,6 +253,52 @@ const CandidateTableSwitcher = () => {
                 </div>
             ))}
         </div>
+    );
+};
+
+const SwitcherHeaderCell = ({
+    content,
+    adaptation,
+    sortable = false,
+    sortingTriangle,
+}: {
+    content: ReactNode;
+    adaptation?: string;
+    sortable?: boolean;
+    sortingTriangle?: SortingTriangle;
+}) => {
+    return (
+        <Tippy
+            className="bg-red-500/80 py-2 px-4 rounded-full text-sm text-stone-200"
+            arrow={false}
+            content={
+                <div>
+                    You <b className="text-slate-200">can't</b> change sorting{' '}
+                    <b className="text-slate-200">in Switch Mode</b>
+                </div>
+            }
+            disabled={!sortable}
+            trigger="click"
+            onShow={(instance) => {
+                setTimeout(() => {
+                    instance.hide();
+                }, 800);
+            }}
+        >
+            <div
+                className={`tableDivHeaderCell
+                            ${adaptation}`}
+            >
+                {content}
+                {sortingTriangle ? (
+                    <div className="text-sm text-center px-2">
+                        {sortingTriangle.mode ?? SortingMode.undefined}
+                    </div>
+                ) : (
+                    <></>
+                )}
+            </div>
+        </Tippy>
     );
 };
 

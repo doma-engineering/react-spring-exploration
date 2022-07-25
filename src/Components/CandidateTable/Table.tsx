@@ -65,12 +65,12 @@ const Table = () => {
                 : SortingMode.decActive,
         });
 
-        setCurrentTable({ ...allTableData, table: [...allTableData.table] });
         setSortingTriangles(newSortingTriangles);
     }, [sortingFunction, url]);
 
     const handleClickSorting = (sortingType: string) => {
-        // Changing state of sorting function atom will trigger use effect above, for updating display
+        // Make animation for sorting.
+        // Candidates go out, and after small pause go back.
         setCurrentTable({ ...allTableData, table: [] });
         setTimeout(() => {
             setCurrentTable({
@@ -78,6 +78,8 @@ const Table = () => {
                 table: [...allTableData.table],
             });
         }, animationDuration);
+
+        // Changing state of sorting function atom will trigger use effect above, for updating display of sorting triangles.
         setSortFunction({
             fn: sortingType,
             isIncrease:
