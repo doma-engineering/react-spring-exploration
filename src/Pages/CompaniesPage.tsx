@@ -4,14 +4,17 @@ import { universalTable } from '../Atoms/UniversalTable';
 import { companies as companiesAtom } from '../Atoms/LoadData';
 import DecorativePageContent from '../Components/DecorativePageElements/DecorativePageContent';
 import { useNavigate } from 'react-router-dom';
-import { HIRING_CAMPAIGNS_URL } from '../routes';
+import { COMPANIES_URL, HIRING_CAMPAIGNS_URL } from '../routes';
+import { currentPath } from '../Atoms/Login';
 
 const CompaniesPage = () => {
     const navigate = useNavigate();
     const [, setTableData] = useAtom(universalTable);
+    const [, setCurrentPath] = useAtom(currentPath);
     const companies = useAtomValue(companiesAtom);
 
     useEffect(() => {
+        setCurrentPath(COMPANIES_URL);
         setTableData({
             header: {
                 content: ['Companies', 'Hiring campaigns count'],

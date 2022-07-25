@@ -3,9 +3,16 @@ import { useEffect } from 'react';
 import { universalTable } from '../Atoms/UniversalTable';
 import { fakeUserData } from '../Atoms/mocks/fakeData';
 import DecorativePageContent from '../Components/DecorativePageElements/DecorativePageContent';
+import { currentPath } from '../Atoms/Login';
+import { COMMUNITY_URL } from '../routes';
 
 const CommunityPage = () => {
     const [, setTableData] = useAtom(universalTable);
+    const [, setCurrentPath] = useAtom(currentPath);
+
+    useEffect(() => {
+        setCurrentPath(COMMUNITY_URL);
+    }, []);
 
     useEffect(() => {
         setTableData({

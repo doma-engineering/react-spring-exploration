@@ -1,12 +1,20 @@
-import { useAtomValue } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
+import { useEffect } from 'react';
 import { selectedCategory } from '../Atoms/Categories';
+import { currentPath } from '../Atoms/Login';
 import TaskCategoriesLogo, {
     TaskCategoriesColors,
 } from '../Components/TaskCategories/TasksLogo';
 import TasksCategoryTable from '../Components/TasksTable/TaskCategoryTable';
+import { TASKS_BY_CATEGORY_URL } from '../routes';
 
 const TasksCategoryPage = () => {
+    const [, setCurrentPath] = useAtom(currentPath);
     const category = useAtomValue(selectedCategory);
+
+    useEffect(() => {
+        setCurrentPath(TASKS_BY_CATEGORY_URL(category));
+    }, []);
 
     return (
         <div className="flex justify-between">

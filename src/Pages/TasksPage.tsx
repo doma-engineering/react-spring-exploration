@@ -3,17 +3,23 @@ import { useEffect, useState } from 'react';
 import TaskCategoriesGrid from '../Components/TaskCategories/TaskCategoriesGrid';
 import { useNavigate } from 'react-router-dom';
 import { selectedCategory as selectedCategoryAtom } from '../Atoms/Categories';
-import { TASKS_BY_CATEGORY_URL } from '../routes';
+import { TASKS_BY_CATEGORY_URL, TASKS_URL } from '../routes';
 import { TaskCategories } from '../Atoms/candidateTableTypes';
 import TasksTable from '../Components/TasksTable/TasksTable';
+import { currentPath } from '../Atoms/Login';
 
 const TasksPage = () => {
     const navigate = useNavigate();
 
     const [selectedCategory, setSelectedCategory] =
         useAtom(selectedCategoryAtom);
+    const [, setCurrentPath] = useAtom(currentPath);
 
     const [needClearSelection, setNeedClearSelection] = useState(true);
+
+    useEffect(() => {
+        setCurrentPath(TASKS_URL);
+    }, []);
 
     useEffect(() => {
         if (needClearSelection) {
