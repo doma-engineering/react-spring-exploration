@@ -1,11 +1,11 @@
 import { useAtom } from 'jotai';
-import { RiAddFill, RiAddLine } from 'react-icons/ri';
+import { RiAddFill } from 'react-icons/ri';
 import { companyPinnedTasks } from '../../Atoms/Login';
 
 const ButtonAddTask = ({ taskID }: { taskID: string }) => {
     const [tasks, setTasks] = useAtom(companyPinnedTasks);
     const hoverClick = () => {
-        if (tasks) setTasks([...tasks, taskID]);
+        if (tasks && !tasks.includes(taskID)) setTasks([...tasks, taskID]);
     };
     return (
         <button
