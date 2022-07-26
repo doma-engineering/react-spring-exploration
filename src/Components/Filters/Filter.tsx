@@ -1,4 +1,4 @@
-import { atom, useAtom } from 'jotai';
+import { atom, useAtom, WritableAtom } from 'jotai';
 import { currentTable } from '../../Atoms/CandidateTables';
 import { currentFilters } from '../../Atoms/Filters';
 import { FilterProperty } from '../../Atoms/candidateTableTypes';
@@ -11,15 +11,23 @@ const ActiveButtons = atom(
         ) !== -1
 );
 
-const Filter = () => {
-    const [isSelected, setSelected] = useAtom(currentFilters);
+const Filter = ({
+    filter = currentFilters,
+    disabled = false,
+}: {
+    filter?: WritableAtom<boolean[], boolean[], void>;
+    disabled?: boolean;
+}) => {
+    const [isSelected, setSelected] = useAtom(filter);
 
     const [isActive] = useAtom(ActiveButtons);
 
     const rankOnClick = (index: number): void => {
-        const newSelection = [...isSelected];
-        newSelection[index] = !newSelection[index];
-        setSelected(newSelection);
+        if (!disabled) {
+            const newSelection = [...isSelected];
+            newSelection[index] = !newSelection[index];
+            setSelected(newSelection);
+        }
     };
 
     return (

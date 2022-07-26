@@ -85,4 +85,7 @@
     .borderedContainer {
         @apply flex border p-3 border-gray-500/70 rounded;
     }
+    .tippy-error {
+        @apply bg-red-500/80 py-2 px-4 rounded-full text-sm text-stone-200;
+    }
 }

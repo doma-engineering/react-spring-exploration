@@ -11,7 +11,7 @@ import {
     switcherSelectedTable,
 } from '../../Atoms/SwithersAtoms';
 import ErrorSwitcherCandidateTable from '../../Pages/ErrorSwitcherCandidateTable';
-import CandidateTableSwitcherPage from '../../Pages/SwitcherCandidateTable';
+import CandidateTableSwitcherPage from '../../Pages/SwitcherCandidateTablePage';
 import { CANDIDATE_TABLE_URL } from '../../routes';
 
 const CandidateTableSwitcherValidator = () => {

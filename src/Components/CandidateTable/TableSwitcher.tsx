@@ -21,7 +21,7 @@ import {
     selectedType,
     switcherMouseHoverTable,
 } from '../../Atoms/SwithersAtoms';
-import { filterData } from './filterData';
+import { filterData } from '../Filters/filterData';
 
 type CandidateInSwitching = {
     switchStatus: candidateSwitchStatus;

@@ -8,7 +8,7 @@ import {
     UserStatus,
     userStatusSortingWeight,
 } from './candidateTableTypes';
-import { tablesSettings } from './LoadData';
+import { savedTablesSettingsURL, tablesSettings } from './LoadData';
 
 const sortByScore: SortingFunction = (candidate1, candidate2) =>
     candidate2.score - candidate1.score;
@@ -43,6 +43,22 @@ export const currentSortFunction = atom(
         set(
             tablesSettings,
             get(tablesSettings).map((table) => {
+                if (table.table === get(currentTable).id)
+                    return { ...table, sorting: arg };
+                return table;
+            })
+        )
+);
+
+export const currentSavedUrlSortFunction = atom(
+    (get): SortFunctionAtom =>
+        get(savedTablesSettingsURL).find(
+            (t: CandidateTableSettings) => t.table === get(currentTable).id
+        )?.sorting ?? defaultSortingParams,
+    (get, set, arg: SortFunctionAtom) =>
+        set(
+            savedTablesSettingsURL,
+            get(savedTablesSettingsURL).map((table) => {
                 if (table.table === get(currentTable).id)
                     return { ...table, sorting: arg };
                 return table;

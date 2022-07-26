@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { filterData } from '../Components/CandidateTable/filterData';
+import { filterData } from '../Components/Filters/filterData';
 import {
     candidateSortingFunctionsTypes,
     currentSortFunction,

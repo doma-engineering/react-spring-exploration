@@ -13,7 +13,7 @@ import {
     SortingTriangles,
 } from '../../Atoms/candidateTableTypes';
 import { tablesSettingsURL } from '../../Atoms/LoadData';
-import { filterData } from './filterData';
+import { filterData } from '../Filters/filterData';
 
 const Table = () => {
     const animationDuration = 200;

@@ -40,6 +40,26 @@ export const urlFilters = atom((get): CandidateTableFilters[] =>
 
 export const savedUrlFilters = atom<CandidateTableFilters[]>([]);
 
+export const currentSavedUrlFilters = atom(
+    (get): boolean[] =>
+        get(savedUrlFilters)?.find(
+            (filter: CandidateTableFilters) =>
+                filter.tableID === get(currentTable).id
+        )?.tableFilters ?? defaultFilterParams,
+    (get, set, newFilterSelection: boolean[]) =>
+        set(
+            savedUrlFilters,
+            get(savedUrlFilters).map((filter: CandidateTableFilters) => {
+                if (filter.tableID === get(currentTable).id)
+                    return {
+                        tableID: get(currentTable).id,
+                        tableFilters: newFilterSelection,
+                    };
+                return filter;
+            })
+        )
+);
+
 export const notEqualFilters = (
     urlFilter: CandidateTableFilters[],
     savedFilters: CandidateTableFilters[]

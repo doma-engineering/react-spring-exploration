@@ -1,4 +1,4 @@
-import Filter from '../Components/CandidateTable/Filter';
+import Filter from '../Components/Filters/Filter';
 import Table from '../Components/CandidateTable/Table';
 import DisplayUser from '../Components/Login/DisplayUser';
 import ButtonBackToHiringCampaigns from '../Components/HiringCampaign/ButtonBackToHiringCampaigns';
