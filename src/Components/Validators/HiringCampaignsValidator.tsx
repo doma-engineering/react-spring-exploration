@@ -32,7 +32,7 @@ import {
     TaskCategories,
 } from '../../Atoms/candidateTableTypes';
 
-import ErrorPage from '../../Pages/HiringCampaignsErrorPage';
+import ErrorPage from '../../Pages/ErrorHiringCampaignsPage';
 import HiringCampaignPage from '../../Pages/HiringCampaignsPage';
 import { tablesResult } from '../../Atoms/HiringCampaign';
 import {
