@@ -67,6 +67,11 @@ import RegistrationPage from './Pages/RegistrationPage';
 import TasksCategoryValidator from './Components/Validators/TasksCategoryValidator';
 import TermsAndConditionsPage from './Pages/TermsAndConditionsPage';
 
+import Test1 from './Components/Tests/Test1';
+import Test2 from './Components/Tests/Test2';
+import { MdOutlineArrowBackIos } from 'react-icons/md';
+import Test3 from './Components/Tests/Test3';
+
 const App = () => {
     return (
         <div className="bg-slate-800 max-w-screen min-h-screen">
@@ -132,27 +137,72 @@ const App = () => {
                     <Route
                         path="/"
                         element={
-                            <div className="flex flex-col items-center">
+                            <div className="flex flex-col items-center px-4">
                                 <p className="mt-16 text-3xl text-slate-200">
                                     Welcome to <b>Zero HR</b> testing front end.
                                 </p>
                                 <Link
-                                    className="mt-10 text-orange-400 text-3xl bg-slate-700/50 py-2 px-4 rounded-lg"
+                                    className="mt-10 text-orange-400 text-3xl text-center bg-slate-700/50 py-2 px-4 rounded-lg"
                                     to={'ZHR'}
                                     reloadDocument
                                 >
                                     Go to ZeroHR for HR
                                 </Link>
                                 <Link
-                                    className="mt-5 text-blue-900 text-3xl bg-slate-700/50 py-2 px-4 rounded-lg"
+                                    className="mt-5 text-blue-500 text-3xl text-center bg-slate-700/50 py-2 px-4 rounded-lg"
                                     to={'getHired'}
                                     reloadDocument
                                 >
                                     Go to ZeroHR for Candidates
                                 </Link>
+                                <Link
+                                    className="mt-5 text-lime-300 text-3xl text-center bg-slate-700/50 py-2 px-4 rounded-lg"
+                                    to={'tests'}
+                                    reloadDocument
+                                >
+                                    Tests!
+                                </Link>
                             </div>
                         }
                     />
+                </Routes>
+            </Router>
+            <Router basename="tests">
+                <Link
+                    className="z-50 w-10 h-10 text-orange-500 text-xl border-2 border-orange-400 absolute m-3 rounded-full flex justify-center items-center"
+                    to={'/'}
+                >
+                    <MdOutlineArrowBackIos />
+                </Link>
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            <div className="w-full flex flex-col items-center flex-wrap">
+                                <Link
+                                    to={'1'}
+                                    className="text-2xl text-slate-200 py-3 bg-slate-700 mt-5 rounded w-10/12 lg:w-3/12 text-center"
+                                >
+                                    Test Spring
+                                </Link>
+                                <Link
+                                    to={'2'}
+                                    className="text-2xl text-slate-200 py-3 bg-slate-700 mt-5 rounded w-10/12 lg:w-3/12 text-center"
+                                >
+                                    Spring with Gestures
+                                </Link>
+                                <Link
+                                    to={'3'}
+                                    className="text-2xl text-slate-200 py-3 bg-slate-700 mt-5 rounded w-10/12 lg:w-3/12 text-center"
+                                >
+                                    Menu with Gestures
+                                </Link>
+                            </div>
+                        }
+                    />
+                    <Route path="/1" element={<Test1 />} />
+                    <Route path="/2" element={<Test2 />} />
+                    <Route path="/3" element={<Test3 />} />
                 </Routes>
             </Router>
         </div>
