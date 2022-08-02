@@ -1983,6 +1983,11 @@ input {
   outline-color: #6366f1;
 }
 
+.first-letter\:hover\:bg-gray-800:hover::first-letter {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+
 .active\:border-sky-500:active {
   --tw-border-opacity: 1;
   border-color: rgb(14 165 233 / var(--tw-border-opacity));
