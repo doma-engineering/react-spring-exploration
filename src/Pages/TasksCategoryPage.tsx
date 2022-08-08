@@ -1,5 +1,5 @@
 import { useAtom, useAtomValue } from 'jotai';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { selectedCategory } from '../Atoms/Categories';
 import { currentPath } from '../Atoms/Login';
 import TaskCategoriesLogo, {
@@ -8,7 +8,7 @@ import TaskCategoriesLogo, {
 import TasksCategoryTable from '../Components/TasksTable/TaskCategoryTable';
 import { TASKS_BY_CATEGORY_URL } from '../routes';
 
-const TasksCategoryPage = () => {
+const TasksCategoryPage = ({ header }: { header?: ReactNode }) => {
     const [, setCurrentPath] = useAtom(currentPath);
     const category = useAtomValue(selectedCategory);
 
@@ -31,6 +31,7 @@ const TasksCategoryPage = () => {
             </div>
             <div className="w-5/6 h-screen flex flex-col items-center bg-slate-600/20 shadow-xl shadow-slate-900">
                 <div className="pt-10">
+                    {header}
                     <TasksCategoryTable />
                 </div>
             </div>

@@ -1,6 +1,10 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { useNavigate } from 'react-router-dom';
-import { selectedCategory } from '../../Atoms/Categories';
+import { TaskCategories } from '../../Atoms/candidateTableTypes';
+import {
+    isOpenNewTaskCreating,
+    selectedCategory,
+} from '../../Atoms/Categories';
 import { companies as companiesAtom } from '../../Atoms/LoadData';
 import { loggedInCompany } from '../../Atoms/Login';
 import { TASKS_BY_CATEGORY_URL } from '../../routes';
@@ -14,6 +18,7 @@ const RegistrationForm3 = ({
     const navigate = useNavigate();
     const [companies, setCompanies] = useAtom(companiesAtom);
     const [, setLoggedIn] = useAtom(loggedInCompany);
+    const [, setWillOpenedTaskCreating] = useAtom(isOpenNewTaskCreating);
     const selectedTaskCategory = useAtomValue(selectedCategory);
     const handleClickDevContinue = () => {
         setCompanies([
@@ -25,7 +30,10 @@ const RegistrationForm3 = ({
             },
         ]);
         setLoggedIn({ companyId: registrationData.company, isLoggedIn: true });
-        navigate(TASKS_BY_CATEGORY_URL(selectedTaskCategory));
+        setWillOpenedTaskCreating(
+            selectedTaskCategory === TaskCategories.bespoke
+        );
+        navigate(TASKS_BY_CATEGORY_URL(selectedTaskCategory ?? ''));
     };
     return (
         <div className="text-md lg:text-2xl">
