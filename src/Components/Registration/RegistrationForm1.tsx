@@ -188,10 +188,7 @@ const RegistrationForm1 = ({
                             }
                             checked={selectedPayMethod === PayMethod.base}
                         />
-                        <label
-                            className="p-2"
-                            onClick={() => handleClickPayMethod(PayMethod.base)}
-                        >
+                        <label className="p-2" htmlFor="main">
                             135€ per month: main tasks and you vacancy
                         </label>
                     </div>
@@ -206,12 +203,7 @@ const RegistrationForm1 = ({
                             }
                             checked={selectedPayMethod === PayMethod.advanced}
                         />
-                        <label
-                            className="p-2 "
-                            onClick={() =>
-                                handleClickPayMethod(PayMethod.advanced)
-                            }
-                        >
+                        <label className="p-2 " htmlFor="advanced">
                             1350€ per month: newest task, access to score points
                             in tables priority support and get choice our
                             technology and task developing direction
@@ -228,12 +220,7 @@ const RegistrationForm1 = ({
                             }
                             checked={selectedPayMethod === PayMethod.premium}
                         />
-                        <label
-                            className="p-2"
-                            onClick={() =>
-                                handleClickPayMethod(PayMethod.premium)
-                            }
-                        >
+                        <label className="p-2" htmlFor="premium">
                             Implementation Zhr to your infrastructure. Price for
                             white label individual.
                         </label>
